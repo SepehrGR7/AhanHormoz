@@ -24,10 +24,6 @@ export const siteConfig = {
       label: 'تماس با ما',
       href: '/contact',
     },
-    {
-      label: 'خرید و مشاوره',
-      href: '/buy-form',
-    },
   ],
   navMenuItems: [
     {
