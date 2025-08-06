@@ -38,9 +38,9 @@ export const Navbar = () => {
     <HeroUINavbar maxWidth='2xl' position='sticky' dir='rtl' className='py-5'>
       <NavbarContent className='basis-1/5 sm:basis-full' justify='start'>
         <NavbarBrand as='li' className='gap-3 max-w-fit'>
-          <NextLink className='flex justify-start items-center gap-4' href='/'>
+          <NextLink className='flex justify-start items-center gap-2' href='/'>
             <Logo className='w-[70] h-[70] sm:w-[80] sm:h-[80]' />
-            <p className='font-bold text-inherit text-xl sm:text-2xl'>
+            <p className='font-extrabold text-inherit text-xl sm:text-2xl'>
               آهن هرمز
             </p>
           </NextLink>
