@@ -16,6 +16,7 @@ import clsx from 'clsx'
 import { siteConfig } from '@/config/site'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { SearchIcon, Logo } from '@/components/icons'
+import { Divider } from '@heroui/divider'
 
 export const Navbar = () => {
   const searchInput = (
@@ -44,7 +45,8 @@ export const Navbar = () => {
             </p>
           </NextLink>
         </NavbarBrand>
-        <ul className='hidden lg:flex gap-5 justify-start mr-5'>
+        <Divider orientation='vertical' />
+        <ul className='hidden lg:flex gap-5 justify-start'>
           {siteConfig.navItems.map(item => (
             <NavbarItem key={item.href}>
               <NextLink
@@ -66,9 +68,6 @@ export const Navbar = () => {
         className='hidden sm:flex basis-1/5 sm:basis-full'
         justify='end'
       >
-        <NextLink href='/buy' color='foreground'>
-          خرید و مشاوره
-        </NextLink>
         <NavbarItem className='hidden sm:flex gap-2'>
           <ThemeSwitch />
         </NavbarItem>
