@@ -43,69 +43,69 @@ export const Logo: React.FC<IconSvgProps> = ({
     <defs>
       <linearGradient
         id='paint0_linear_5_3'
-        x1='101.415'
-        y1='0.000185946'
-        x2='1055.04'
-        y2='617.894'
+        x1='448'
+        y1='-2.65106e-09'
+        x2='448.06'
+        y2='614'
         gradientUnits='userSpaceOnUse'
       >
-        <stop stopColor='#5A8DED' />
-        <stop offset='1' stopColor='#68D094' />
+        <stop stopColor='#5EA2EF' />
+        <stop offset='1' stopColor='#0072F5' />
       </linearGradient>
       <linearGradient
         id='paint1_linear_5_3'
-        x1='101.415'
-        y1='0.000185946'
-        x2='1055.04'
-        y2='617.894'
+        x1='448'
+        y1='-2.65106e-09'
+        x2='448.06'
+        y2='614'
         gradientUnits='userSpaceOnUse'
       >
-        <stop stopColor='#5A8DED' />
-        <stop offset='1' stopColor='#68D094' />
+        <stop stopColor='#5EA2EF' />
+        <stop offset='1' stopColor='#0072F5' />
       </linearGradient>
       <linearGradient
         id='paint2_linear_5_3'
-        x1='101.415'
-        y1='0.000185946'
-        x2='1055.04'
-        y2='617.894'
+        x1='448'
+        y1='-2.65106e-09'
+        x2='448.06'
+        y2='614'
         gradientUnits='userSpaceOnUse'
       >
-        <stop stopColor='#5A8DED' />
-        <stop offset='1' stopColor='#68D094' />
+        <stop stopColor='#5EA2EF' />
+        <stop offset='1' stopColor='#0072F5' />
       </linearGradient>
       <linearGradient
         id='paint3_linear_5_3'
-        x1='101.415'
-        y1='0.000185946'
-        x2='1055.04'
-        y2='617.894'
+        x1='448'
+        y1='-2.65106e-09'
+        x2='448.06'
+        y2='614'
         gradientUnits='userSpaceOnUse'
       >
-        <stop stopColor='#5A8DED' />
-        <stop offset='1' stopColor='#68D094' />
+        <stop stopColor='#5EA2EF' />
+        <stop offset='1' stopColor='#0072F5' />
       </linearGradient>
       <linearGradient
         id='paint4_linear_5_3'
-        x1='101.415'
-        y1='0.000185946'
-        x2='1055.04'
-        y2='617.894'
+        x1='448'
+        y1='-2.65106e-09'
+        x2='448.06'
+        y2='614'
         gradientUnits='userSpaceOnUse'
       >
-        <stop stopColor='#5A8DED' />
-        <stop offset='1' stopColor='#68D094' />
+        <stop stopColor='#5EA2EF' />
+        <stop offset='1' stopColor='#0072F5' />
       </linearGradient>
       <linearGradient
         id='paint5_linear_5_3'
-        x1='101.415'
-        y1='0.000185946'
-        x2='1055.04'
-        y2='617.894'
+        x1='448'
+        y1='-2.65106e-09'
+        x2='448.06'
+        y2='614'
         gradientUnits='userSpaceOnUse'
       >
-        <stop stopColor='#5A8DED' />
-        <stop offset='1' stopColor='#68D094' />
+        <stop stopColor='#5EA2EF' />
+        <stop offset='1' stopColor='#0072F5' />
       </linearGradient>
     </defs>
   </svg>
