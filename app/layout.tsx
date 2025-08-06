@@ -35,6 +35,7 @@ export default function RootLayout({
     <html suppressHydrationWarning lang='en'>
       <head />
       <body
+        dir='rtl'
         className={clsx(
           'min-h-screen text-foreground bg-background antialiased',
           IranYekan.className,
