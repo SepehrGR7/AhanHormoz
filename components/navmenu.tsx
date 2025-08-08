@@ -19,8 +19,8 @@ export default function NavMenu() {
   return (
     <Menubar>
       <MenubarMenu>
-        <MenubarTrigger className='text-sm font-normal'>
-          قیمت محصولات
+        <MenubarTrigger className='flex items-center text-sm font-normal text-nowrap'>
+          <p>قیمت محصولات</p>
           <ChevronDown className='h-4 w-4 mr-0.5' />
         </MenubarTrigger>
         <MenubarContent>
