@@ -17,6 +17,7 @@ import { siteConfig } from '@/config/site'
 import { ThemeSwitch } from '@/components/theme-switch'
 import { SearchIcon, Logo } from '@/components/icons'
 import { Divider } from '@heroui/divider'
+import NavbarPhone from './navbarPhone'
 
 export const Navbar = () => {
   const searchInput = (
@@ -35,24 +36,24 @@ export const Navbar = () => {
   )
 
   return (
-    <HeroUINavbar maxWidth='2xl' position='sticky' dir='rtl' className='py-5'>
+    <HeroUINavbar maxWidth='xl' position='sticky'>
       <NavbarContent className='basis-1/5 sm:basis-full' justify='start'>
         <NavbarBrand as='li' className='gap-3 max-w-fit'>
           <NextLink className='flex justify-start items-center gap-2' href='/'>
-            <Logo className='w-[70] h-[70] sm:w-[80] sm:h-[80]' />
-            <p className='font-extrabold text-inherit text-xl sm:text-2xl'>
+            <Logo className='w-[50] h-[50] sm:w-[70] sm:h-[70]' />
+            <p className='font-bold sm:font-extrabold text-inherit text-lg sm:text-xl'>
               آهن هرمز
             </p>
           </NextLink>
         </NavbarBrand>
-        <Divider orientation='vertical' />
+        <Divider orientation='vertical' className='hidden lg:block' />
         <ul className='hidden lg:flex gap-5 justify-start'>
           {siteConfig.navItems.map(item => (
             <NavbarItem key={item.href}>
               <NextLink
                 className={clsx(
                   linkStyles({ color: 'foreground' }),
-                  'data-[active=true]:text-primary data-[active=true]:font-medium',
+                  'data-[active=true]:text-primary data-[active=true]:font-medium text-xs',
                 )}
                 color='foreground'
                 href={item.href}
@@ -65,22 +66,22 @@ export const Navbar = () => {
       </NavbarContent>
 
       <NavbarContent
-        className='hidden sm:flex basis-1/5 sm:basis-full'
+        className='hidden lg:flex basis-1/5 sm:basis-full'
         justify='end'
       >
-        <NavbarItem className='hidden sm:flex gap-2'>
+        <NavbarItem className='hidden lg:flex gap-4 items-center'>
+          <NavbarPhone />
           <ThemeSwitch />
         </NavbarItem>
-        <NavbarItem>{searchInput}</NavbarItem>
       </NavbarContent>
 
-      <NavbarContent className='sm:hidden basis-1' justify='end'>
+      <NavbarContent className='lg:hidden basis-1' justify='end'>
         <ThemeSwitch />
         <NavbarMenuToggle />
       </NavbarContent>
 
       <NavbarMenu>
-        <div className='mx-4 mt-2 flex flex-col gap-4 items-end'>
+        <div className='mx-4 mt-2 flex flex-col gap-4'>
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link color={'foreground'} href='#' size='lg'>
