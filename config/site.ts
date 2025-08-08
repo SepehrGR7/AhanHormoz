@@ -5,7 +5,7 @@ export const siteConfig = {
   description: 'آهن هرمز،بروز ترین مرجع اطلاع رسانی قیمت انواع آهن آلات',
   navItems: [
     {
-      label: 'قیمت آهن',
+      label: 'قیمت محصولات',
       href: '/',
     },
     {
@@ -45,6 +45,52 @@ export const siteConfig = {
     {
       label: 'تماس با ما',
       href: '/contact',
+    },
+  ],
+  heroItems: [
+    {
+      name: 'rebar',
+      icon: 'icon-rebar',
+      label: 'میلگرد',
+      items: [
+        {
+          label: '',
+          href: '',
+        },
+      ],
+    },
+    {
+      name: 'sheet',
+      icon: 'icon-sheet',
+      label: 'ورق',
+      items: [
+        {
+          label: '',
+          href: '',
+        },
+      ],
+    },
+    {
+      name: 'pipe',
+      icon: 'icon-pipe',
+      label: 'لوله',
+      items: [
+        {
+          label: '',
+          href: '',
+        },
+      ],
+    },
+    {
+      name: 'profile',
+      icon: 'icon-profile',
+      label: 'پروفیل',
+      items: [
+        {
+          label: '',
+          href: '',
+        },
+      ],
     },
   ],
   links: {
