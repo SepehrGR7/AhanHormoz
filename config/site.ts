@@ -5,10 +5,6 @@ export const siteConfig = {
   description: 'آهن هرمز،بروز ترین مرجع اطلاع رسانی قیمت انواع آهن آلات',
   navItems: [
     {
-      label: 'قیمت محصولات',
-      href: '/',
-    },
-    {
       label: 'وزن آهن آلات',
       href: '/pricing',
     },
