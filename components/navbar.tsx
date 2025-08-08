@@ -37,24 +37,25 @@ export const Navbar = () => {
   )
 
   return (
-    <HeroUINavbar maxWidth='xl' position='sticky' isBordered>
+    <HeroUINavbar maxWidth='xl' position='sticky' isBordered className='py-2'>
       <NavbarContent className='basis-1/5 sm:basis-full' justify='start'>
         <NavbarBrand as='li' className='gap-3 max-w-fit'>
           <NextLink className='flex items-center justify-start gap-2' href='/'>
-            <Logo className='w-[50] h-[50] sm:w-[70] sm:h-[70]' />
+            <Logo className='w-[50] h-[50] lg:w-[65] lg:h-[65]' />
             <p className='text-lg font-bold sm:font-extrabold text-inherit sm:text-xl'>
               آهن هرمز
             </p>
           </NextLink>
         </NavbarBrand>
-        <ul className='items-center hidden gap-5 mr-2 lg:flex'>
+        <Divider orientation='vertical' className='hidden h-14 lg:block' />
+        <ul className='items-center hidden gap-5 lg:flex'>
           <NavMenu />
           {siteConfig.navItems.map(item => (
             <NavbarItem key={item.href}>
               <NextLink
                 className={clsx(
                   linkStyles({ color: 'foreground' }),
-                  'data-[active=true]:text-primary data-[active=true]:font-medium text-xs',
+                  'data-[active=true]:text-primary data-[active=true]:font-medium text-sm',
                 )}
                 color='foreground'
                 href={item.href}
