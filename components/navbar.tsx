@@ -30,7 +30,7 @@ export const Navbar = () => {
       }}
       labelPlacement='outside'
       startContent={
-        <SearchIcon className='text-base text-default-400 pointer-events-none flex-shrink-0' />
+        <SearchIcon className='flex-shrink-0 text-base pointer-events-none text-default-400' />
       }
       type='search'
     />
@@ -40,15 +40,14 @@ export const Navbar = () => {
     <HeroUINavbar maxWidth='xl' position='sticky'>
       <NavbarContent className='basis-1/5 sm:basis-full' justify='start'>
         <NavbarBrand as='li' className='gap-3 max-w-fit'>
-          <NextLink className='flex justify-start items-center gap-2' href='/'>
+          <NextLink className='flex items-center justify-start gap-2' href='/'>
             <Logo className='w-[50] h-[50] sm:w-[70] sm:h-[70]' />
-            <p className='font-bold sm:font-extrabold text-inherit text-lg sm:text-xl'>
+            <p className='text-lg font-bold sm:font-extrabold text-inherit sm:text-xl'>
               آهن هرمز
             </p>
           </NextLink>
         </NavbarBrand>
-        <Divider orientation='vertical' className='hidden lg:block' />
-        <ul className='hidden lg:flex gap-5 items-center'>
+        <ul className='items-center hidden gap-5 mr-2 lg:flex'>
           <NavMenu />
           {siteConfig.navItems.map(item => (
             <NavbarItem key={item.href}>
@@ -71,7 +70,7 @@ export const Navbar = () => {
         className='hidden lg:flex basis-1/5 sm:basis-full'
         justify='end'
       >
-        <NavbarItem className='hidden lg:flex gap-4 items-center'>
+        <NavbarItem className='items-center hidden gap-4 lg:flex'>
           <NavbarPhone />
           <ThemeSwitch />
         </NavbarItem>
@@ -83,7 +82,7 @@ export const Navbar = () => {
       </NavbarContent>
 
       <NavbarMenu>
-        <div className='mx-4 mt-2 flex flex-col gap-4'>
+        <div className='flex flex-col gap-4 mx-4 mt-2'>
           <NavMenu />
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
