@@ -19,7 +19,7 @@ export default function NavMenu() {
   return (
     <Menubar>
       <MenubarMenu>
-        <MenubarTrigger className='text-xs font-normal'>
+        <MenubarTrigger className='text-sm font-normal'>
           قیمت محصولات
           <ChevronDown className='h-4 w-4 mr-0.5' />
         </MenubarTrigger>
