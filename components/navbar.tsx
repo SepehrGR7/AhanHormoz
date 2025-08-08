@@ -18,6 +18,7 @@ import { ThemeSwitch } from '@/components/theme-switch'
 import { SearchIcon, Logo } from '@/components/icons'
 import { Divider } from '@heroui/divider'
 import NavbarPhone from './navbarPhone'
+import NavMenu from './navmenu'
 
 export const Navbar = () => {
   const searchInput = (
@@ -47,7 +48,8 @@ export const Navbar = () => {
           </NextLink>
         </NavbarBrand>
         <Divider orientation='vertical' className='hidden lg:block' />
-        <ul className='hidden lg:flex gap-5 justify-start'>
+        <ul className='hidden lg:flex gap-5 items-center'>
+          <NavMenu />
           {siteConfig.navItems.map(item => (
             <NavbarItem key={item.href}>
               <NextLink
