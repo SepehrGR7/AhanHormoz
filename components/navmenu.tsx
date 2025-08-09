@@ -30,9 +30,10 @@ export default function NavMenu() {
                 href='/rebar'
                 className={clsx(
                   linkStyles({ color: 'foreground' }),
-                  'data-[active=true]:text-primary data-[active=true]:font-medium text-xs',
+                  'data-[active=true]:text-primary data-[active=true]:font-medium text-sm',
                 )}
               >
+                <i className='icon-rebar text-[32px] ml-1' />
                 قیمت میلگرد
               </NextLink>
             </MenubarSubTrigger>
