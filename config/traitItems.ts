@@ -1,8 +1,8 @@
 export const traitItems: {
-  id: number
-  title: string
-  icon: 'Coins' | 'Banknote' | 'ShieldCheck' | 'PhoneCall'
-  description: string
+  id: number;
+  title: string;
+  icon: 'Coins' | 'Banknote' | 'ShieldCheck' | 'PhoneCall';
+  description: string;
 }[] = [
   {
     id: 4,
@@ -31,4 +31,4 @@ export const traitItems: {
     description:
       'کالا به دقت فراوان توسط کارشناسان کنترل کیفیت بازرسی شده و در صورت تایید، مجوز بارگیری صادر می‌شود.',
   },
-]
+];

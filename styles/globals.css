@@ -218,3 +218,51 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* بهبود hover behavior برای navbar */
+@layer components {
+  .menubar-content {
+    pointer-events: auto !important;
+  }
+  
+  .menubar-sub-content {
+    pointer-events: auto !important;
+  }
+  
+  /* اضافه کردن delay برای بهتر شدن UX */
+  [data-radix-menubar-content] {
+    animation-delay: 0ms !important;
+  }
+  
+  [data-radix-menubar-sub-content] {
+    animation-delay: 100ms !important;
+  }
+  
+  /* بهبود hover states */
+  [data-radix-menubar-trigger]:hover {
+    background-color: var(--accent);
+    color: var(--accent-foreground);
+  }
+  
+  [data-radix-menubar-item]:hover {
+    background-color: var(--accent);
+    color: var(--accent-foreground);
+  }
+  
+  [data-radix-menubar-sub-trigger]:hover {
+    background-color: var(--accent);
+    color: var(--accent-foreground);
+  }
+  
+  /* اطمینان از نمایش افقی navbar */
+  [data-radix-menubar-root] {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+  }
+  
+  [data-radix-menubar-root] > * {
+    display: inline-flex !important;
+  }
+}
