@@ -27,7 +27,10 @@ export default function ProductsPage() {
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {PRODUCT_CATEGORIES.map((category) => (
-            <Card key={category.id} className="hover:shadow-lg transition-shadow">
+            <Card
+              key={category.id}
+              className="hover:shadow-lg transition-shadow"
+            >
               <CardHeader>
                 <CardTitle className="flex items-center gap-3 text-xl">
                   <span className="text-3xl">{category.icon}</span>
@@ -39,8 +42,8 @@ export default function ProductsPage() {
                   {category.subcategories.map((subcategory) => {
                     // پیدا کردن route مربوط به این subcategory
                     const routeEntry = Object.entries(PRODUCT_ROUTES).find(
-                      ([_, route]) => 
-                        route.category === category.id && 
+                      ([_, route]) =>
+                        route.category === category.id &&
                         route.subcategory === subcategory
                     );
 
@@ -76,7 +79,8 @@ export default function ProductsPage() {
               چرا آهن هرمز؟
             </h2>
             <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-              ما با بیش از 15 سال تجربه، بهترین محصولات فولادی را با کیفیت تضمینی ارائه می‌دهیم
+              ما با بیش از 15 سال تجربه، بهترین محصولات فولادی را با کیفیت
+              تضمینی ارائه می‌دهیم
             </p>
           </div>
 
@@ -121,7 +125,8 @@ export default function ProductsPage() {
             نیاز به مشاوره دارید؟
           </h2>
           <p className="text-slate-600 dark:text-slate-400 mb-8 max-w-2xl mx-auto">
-            کارشناسان ما آماده ارائه مشاوره رایگان و انتخاب بهترین محصول برای پروژه شما هستند
+            کارشناسان ما آماده ارائه مشاوره رایگان و انتخاب بهترین محصول برای
+            پروژه شما هستند
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="bg-blue-600 hover:bg-blue-700">

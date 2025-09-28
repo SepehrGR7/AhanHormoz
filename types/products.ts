@@ -44,7 +44,15 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     id: 'rebar',
     name: 'میلگرد',
     icon: '🔩',
-    subcategories: ['آجدار', 'ساده', 'کلاف', 'حرارتی', 'بستر', 'ترانس', 'استیل'],
+    subcategories: [
+      'آجدار',
+      'ساده',
+      'کلاف',
+      'حرارتی',
+      'بستر',
+      'ترانس',
+      'استیل',
+    ],
   },
   {
     id: 'profile',
@@ -69,7 +77,16 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     id: 'sheet',
     name: 'ورق',
     icon: '📋',
-    subcategories: ['گرم', 'سیاه', 'سرد', 'گالوانیزه', 'رنگی', 'استیل', 'آلومینیوم', 'مس'],
+    subcategories: [
+      'گرم',
+      'سیاه',
+      'سرد',
+      'گالوانیزه',
+      'رنگی',
+      'استیل',
+      'آلومینیوم',
+      'مس',
+    ],
   },
   {
     id: 'angle',
@@ -108,80 +125,225 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     id: 'mesh',
     name: 'توری',
     icon: '🕸️',
-    subcategories: ['توری حصاری', 'توری جوشی', 'توری گالوانیزه', 'توری پلاستیکی'],
+    subcategories: [
+      'توری حصاری',
+      'توری جوشی',
+      'توری گالوانیزه',
+      'توری پلاستیکی',
+    ],
   },
 ];
 
 // مسیرهای محصولات برای routing
 export const PRODUCT_ROUTES = {
   // میلگرد
-  'milgerd-ajdar': { category: 'rebar', subcategory: 'آجدار', name: 'میلگرد آجدار' },
-  'milgerd-sade': { category: 'rebar', subcategory: 'ساده', name: 'میلگرد ساده' },
-  'milgerd-kolaf': { category: 'rebar', subcategory: 'کلاف', name: 'میلگرد کلاف' },
-  'milgerd-harati': { category: 'rebar', subcategory: 'حرارتی', name: 'میلگرد حرارتی' },
-  'milgerd-bastar': { category: 'rebar', subcategory: 'بستر', name: 'میلگرد بستر' },
-  'milgerd-trans': { category: 'rebar', subcategory: 'ترانس', name: 'میلگر�� ترانس' },
-  'milgerd-steel': { category: 'rebar', subcategory: 'استیل', name: 'میلگرد استیل' },
-  
+  'milgerd-ajdar': {
+    category: 'rebar',
+    subcategory: 'آجدار',
+    name: 'میلگرد آجدار',
+  },
+  'milgerd-sade': {
+    category: 'rebar',
+    subcategory: 'ساده',
+    name: 'میلگرد ساده',
+  },
+  'milgerd-kolaf': {
+    category: 'rebar',
+    subcategory: 'کلاف',
+    name: 'میلگرد کلاف',
+  },
+  'milgerd-harati': {
+    category: 'rebar',
+    subcategory: 'حرارتی',
+    name: 'میلگرد حرارتی',
+  },
+  'milgerd-bastar': {
+    category: 'rebar',
+    subcategory: 'بستر',
+    name: 'میلگرد بستر',
+  },
+  'milgerd-trans': {
+    category: 'rebar',
+    subcategory: 'ترانس',
+    name: 'میلگرد ترانس',
+  },
+  'milgerd-steel': {
+    category: 'rebar',
+    subcategory: 'استیل',
+    name: 'میلگرد استیل',
+  },
+
   // پروفیل
-  'profile-sakhtmani': { category: 'profile', subcategory: 'ساختمانی', name: 'پروفیل ساختمانی' },
-  'profile-kongre': { category: 'profile', subcategory: 'کنگره', name: 'پروفیل کنگره' },
-  'profile-sanati': { category: 'profile', subcategory: 'صنعتی', name: 'پروفیل صنعتی' },
+  'profile-sakhtmani': {
+    category: 'profile',
+    subcategory: 'ساختمانی',
+    name: 'پروفیل ساختمانی',
+  },
+  'profile-kongre': {
+    category: 'profile',
+    subcategory: 'کنگره',
+    name: 'پروفیل کنگره',
+  },
+  'profile-sanati': {
+    category: 'profile',
+    subcategory: 'صنعتی',
+    name: 'پروفیل صنعتی',
+  },
   'profile-z': { category: 'profile', subcategory: 'Z', name: 'پروفیل Z' },
-  'profile-galvanize': { category: 'profile', subcategory: 'گالوانیزه', name: 'پروفیل گالوانیزه' },
-  'profile-sabk': { category: 'profile', subcategory: 'سبک', name: 'پروفیل سبک' },
-  'profile-steel': { category: 'profile', subcategory: 'استیل', name: 'پروفیل استیل' },
-  'profile-aluminum': { category: 'profile', subcategory: 'آلومینیوم', name: 'پروفیل آلومینیوم' },
-  'profile-upe': { category: 'profile', subcategory: 'UPE', name: 'پروفیل UPE' },
-  'profile-ipe': { category: 'profile', subcategory: 'IPE', name: 'پروفیل IPE' },
-  'profile-hea': { category: 'profile', subcategory: 'HEA', name: 'پروفیل HEA' },
-  'profile-heb': { category: 'profile', subcategory: 'HEB', name: 'پروفیل HEB' },
-  
+  'profile-galvanize': {
+    category: 'profile',
+    subcategory: 'گالوانیزه',
+    name: 'پروفیل گالوانیزه',
+  },
+  'profile-sabk': {
+    category: 'profile',
+    subcategory: 'سبک',
+    name: 'پروفیل سبک',
+  },
+  'profile-steel': {
+    category: 'profile',
+    subcategory: 'استیل',
+    name: 'پروفیل استیل',
+  },
+  'profile-aluminum': {
+    category: 'profile',
+    subcategory: 'آلومینیوم',
+    name: 'پروفیل آلومینیوم',
+  },
+  'profile-upe': {
+    category: 'profile',
+    subcategory: 'UPE',
+    name: 'پروفیل UPE',
+  },
+  'profile-ipe': {
+    category: 'profile',
+    subcategory: 'IPE',
+    name: 'پروفیل IPE',
+  },
+  'profile-hea': {
+    category: 'profile',
+    subcategory: 'HEA',
+    name: 'پروفیل HEA',
+  },
+  'profile-heb': {
+    category: 'profile',
+    subcategory: 'HEB',
+    name: 'پروفیل HEB',
+  },
+
   // ورق
   'varagh-garm': { category: 'sheet', subcategory: 'گرم', name: 'ورق گرم' },
   'varagh-siah': { category: 'sheet', subcategory: 'سیاه', name: 'ورق سیاه' },
   'varagh-sard': { category: 'sheet', subcategory: 'سرد', name: 'ورق سرد' },
-  'varagh-galvanize': { category: 'sheet', subcategory: 'گالوانیزه', name: 'ورق گالوانیزه' },
+  'varagh-galvanize': {
+    category: 'sheet',
+    subcategory: 'گالوانیزه',
+    name: 'ورق گالوانیزه',
+  },
   'varagh-rangi': { category: 'sheet', subcategory: 'رنگی', name: 'ورق رنگی' },
-  'varagh-steel': { category: 'sheet', subcategory: 'استیل', name: 'ورق استیل' },
-  'varagh-aluminum': { category: 'sheet', subcategory: 'آلومینیوم', name: 'ورق آلومینیوم' },
+  'varagh-steel': {
+    category: 'sheet',
+    subcategory: 'استیل',
+    name: 'ورق استیل',
+  },
+  'varagh-aluminum': {
+    category: 'sheet',
+    subcategory: 'آلومینیوم',
+    name: 'ورق آلومینیوم',
+  },
   'varagh-mes': { category: 'sheet', subcategory: 'مس', name: 'ورق مس' },
-  
+
   // نبشی و ناودانی
-  'nabshi': { category: 'angle', subcategory: 'نبشی', name: 'نبشی' },
-  'navodani': { category: 'angle', subcategory: 'ناودانی', name: 'ناودانی' },
-  'separi': { category: 'angle', subcategory: 'سپری', name: 'سپری' },
-  'nabshi-galvanize': { category: 'angle', subcategory: 'گالوانیزه', name: 'نبشی گالوانیزه' },
-  
+  nabshi: { category: 'angle', subcategory: 'نبشی', name: 'نبشی' },
+  navodani: { category: 'angle', subcategory: 'ناودانی', name: 'ناودانی' },
+  separi: { category: 'angle', subcategory: 'سپری', name: 'سپری' },
+  'nabshi-galvanize': {
+    category: 'angle',
+    subcategory: 'گالوانیزه',
+    name: 'نبشی گالوانیزه',
+  },
+
   // تیرآهن
-  'tirahan': { category: 'beam', subcategory: 'تیرآهن', name: 'تیرآهن' },
-  'hash': { category: 'beam', subcategory: 'هاش', name: 'هاش' },
-  'lane-zanbori': { category: 'beam', subcategory: 'لانه زنبوری', name: 'لانه زنبوری' },
-  'rail': { category: 'beam', subcategory: 'ریل', name: 'ریل' },
-  'tirahan-sangin': { category: 'beam', subcategory: 'سنگین', name: 'تیرآهن سنگین' },
+  tirahan: { category: 'beam', subcategory: 'تیرآهن', name: 'تیرآهن' },
+  hash: { category: 'beam', subcategory: 'هاش', name: 'هاش' },
+  'lane-zanbori': {
+    category: 'beam',
+    subcategory: 'لانه زنبوری',
+    name: 'لانه زنبوری',
+  },
+  rail: { category: 'beam', subcategory: 'ریل', name: 'ریل' },
+  'tirahan-sangin': {
+    category: 'beam',
+    subcategory: 'سنگین',
+    name: 'تیرآهن سنگین',
+  },
   'tirahan-sabk': { category: 'beam', subcategory: 'سبک', name: 'تیرآهن سبک' },
-  
+
   // لوله
-  'lole-darzdar': { category: 'pipe', subcategory: 'درزدار', name: 'لوله درزدار' },
-  'lole-bedone-darz': { category: 'pipe', subcategory: 'بدون درز', name: 'لوله بدون درز' },
-  'lole-galvanize': { category: 'pipe', subcategory: 'گالوانیزه', name: 'لوله گالوانیزه' },
+  'lole-darzdar': {
+    category: 'pipe',
+    subcategory: 'درزدار',
+    name: 'لوله درزدار',
+  },
+  'lole-bedone-darz': {
+    category: 'pipe',
+    subcategory: 'بدون درز',
+    name: 'لوله بدون درز',
+  },
+  'lole-galvanize': {
+    category: 'pipe',
+    subcategory: 'گالوانیزه',
+    name: 'لوله گالوانیزه',
+  },
   'lole-steel': { category: 'pipe', subcategory: 'استیل', name: 'لوله استیل' },
   'lole-mes': { category: 'pipe', subcategory: 'مس', name: 'لوله مس' },
-  'lole-aluminum': { category: 'pipe', subcategory: 'آلومینیوم', name: 'لوله آلومینیوم' },
-  'lole-polyethylene': { category: 'pipe', subcategory: 'پلی‌اتیلن', name: 'لوله پلی‌اتیلن' },
+  'lole-aluminum': {
+    category: 'pipe',
+    subcategory: 'آلومینیوم',
+    name: 'لوله آلومینیوم',
+  },
+  'lole-polyethylene': {
+    category: 'pipe',
+    subcategory: 'پلی‌اتیلن',
+    name: 'لوله پلی‌اتیلن',
+  },
   'lole-pvc': { category: 'pipe', subcategory: 'PVC', name: 'لوله PVC' },
-  
+
   // سی��
   'sim-siah': { category: 'wire', subcategory: 'سیم سیاه', name: 'سیم سیاه' },
-  'sim-galvanize': { category: 'wire', subcategory: 'سیم گالوانیزه', name: 'سیم گالوانیزه' },
-  'sim-khardar': { category: 'wire', subcategory: 'سیم خاردار', name: 'سیم خاردار' },
-  'kabel': { category: 'wire', subcategory: 'کابل', name: 'کابل' },
-  
+  'sim-galvanize': {
+    category: 'wire',
+    subcategory: 'سیم گالوانیزه',
+    name: 'سیم گالوانیزه',
+  },
+  'sim-khardar': {
+    category: 'wire',
+    subcategory: 'سیم خاردار',
+    name: 'سیم خاردار',
+  },
+  kabel: { category: 'wire', subcategory: 'کابل', name: 'کابل' },
+
   // توری
-  'tori-hesari': { category: 'mesh', subcategory: 'توری حصاری', name: 'توری حصاری' },
-  'tori-joshi': { category: 'mesh', subcategory: 'توری جوشی', name: 'توری جوشی' },
-  'tori-galvanize': { category: 'mesh', subcategory: 'توری گالوانیزه', name: 'توری گالوانیزه' },
-  'tori-plastic': { category: 'mesh', subcategory: 'توری پلاستیکی', name: 'توری پلاستیکی' },
+  'tori-hesari': {
+    category: 'mesh',
+    subcategory: 'توری حصاری',
+    name: 'توری حصاری',
+  },
+  'tori-joshi': {
+    category: 'mesh',
+    subcategory: 'توری جوشی',
+    name: 'توری جوشی',
+  },
+  'tori-galvanize': {
+    category: 'mesh',
+    subcategory: 'توری گالوانیزه',
+    name: 'توری گالوانیزه',
+  },
+  'tori-plastic': {
+    category: 'mesh',
+    subcategory: 'توری پلاستیکی',
+    name: 'توری پلاستیکی',
+  },
 };
 
 // برندهای معروف
@@ -364,7 +526,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     inStock: true,
     lastUpdated: '2024-01-15',
   },
-  
+
   // میلگرد نیشابور
   {
     id: 'rebar-12-nishabur',
@@ -498,7 +660,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
   },
   {
     id: 'beam-12-fayko',
-    name: 'تیرآ��ن 12',
+    name: 'تیرآهن 12',
     category: PRODUCT_CATEGORIES[4],
     subcategory: 'تیرآهن',
     brand: 'فایکو',
@@ -705,7 +867,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     size: '1 اینچ',
     price: 215000,
     unit: 'kg',
-    description: 'لوله گالوانیزه سایز 1 اینچ برند اهواز - مقاوم در برابر خورندگی',
+    description:
+      'لوله گالوانیزه سایز 1 اینچ برند اهواز - مقاوم در برابر خورندگی',
     inStock: true,
     lastUpdated: '2024-01-15',
   },
