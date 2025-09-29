@@ -51,16 +51,16 @@ export default function CategoryTable({
                 <th className='px-2 py-3 font-semibold text-right text-slate-700 dark:text-slate-300'>
                   محصول
                 </th>
-                <th className='px-2 py-3 font-semibold text-right text-slate-700 dark:text-slate-300'>
+                <th className='px-2 py-3 font-semibold text-center text-slate-700 dark:text-slate-300'>
                   برند
                 </th>
-                <th className='px-2 py-3 font-semibold text-right text-slate-700 dark:text-slate-300'>
+                <th className='px-2 py-3 font-semibold text-center text-slate-700 dark:text-slate-300'>
                   سایز
                 </th>
-                <th className='px-2 py-3 font-semibold text-right text-slate-700 dark:text-slate-300'>
+                <th className='px-2 py-3 font-semibold text-center text-slate-700 dark:text-slate-300'>
                   قیمت (تومان)
                 </th>
-                <th className='px-2 py-3 font-semibold text-right text-slate-700 dark:text-slate-300'>
+                <th className='px-2 py-3 font-semibold text-center text-slate-700 dark:text-slate-300'>
                   وضعیت
                 </th>
                 <th className='px-2 py-3 font-semibold text-center text-slate-700 dark:text-slate-300'>
@@ -86,13 +86,13 @@ export default function CategoryTable({
                       )}
                     </div>
                   </td>
-                  <td className='px-2 py-4 text-slate-700 dark:text-slate-300'>
+                  <td className='px-2 py-4 text-center text-slate-700 dark:text-slate-300'>
                     {product.brand}
                   </td>
-                  <td className='px-2 py-4'>
+                  <td className='px-2 py-4 text-center'>
                     <Badge variant='outline'>{product.size}</Badge>
                   </td>
-                  <td className='px-2 py-4'>
+                  <td className='px-2 py-4 text-center'>
                     <div className='font-semibold text-green-600 dark:text-green-400'>
                       {formatPrice(product.price)}
                     </div>
@@ -104,7 +104,7 @@ export default function CategoryTable({
                           : 'عدد'}
                     </div>
                   </td>
-                  <td className='px-2 py-4'>
+                  <td className='px-2 py-4 text-center'>
                     <Badge
                       variant={product.inStock ? 'default' : 'destructive'}
                       className={
@@ -116,7 +116,7 @@ export default function CategoryTable({
                       {product.inStock ? 'موجود' : 'ناموجود'}
                     </Badge>
                   </td>
-                  <td className='px-2 py-4'>
+                  <td className='px-2 py-4 text-center'>
                     <div className='flex items-center justify-center gap-2'>
                       <Button
                         size='sm'

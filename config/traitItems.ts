@@ -1,8 +1,8 @@
 export const traitItems: {
-  id: number;
-  title: string;
-  icon: 'Coins' | 'Banknote' | 'ShieldCheck' | 'PhoneCall';
-  description: string;
+  id: number
+  title: string
+  icon: 'Coins' | 'Banknote' | 'ShieldCheck' | 'PhoneCall'
+  description: string
 }[] = [
   {
     id: 4,
@@ -15,7 +15,8 @@ export const traitItems: {
     id: 1,
     title: 'تضمین بهترین قیمت',
     icon: 'Coins',
-    description: 'تضمین بهترین قیمت برای محصولات دیجیتال',
+    description:
+      'ارائه بهترین قیمت‌های بازار برای انواع محصولات آهن‌آلات با کیفیت برتر و تضمین قیمت مناسب برای خریداران.',
   },
   {
     id: 2,
@@ -31,4 +32,4 @@ export const traitItems: {
     description:
       'کالا به دقت فراوان توسط کارشناسان کنترل کیفیت بازرسی شده و در صورت تایید، مجوز بارگیری صادر می‌شود.',
   },
-];
+]

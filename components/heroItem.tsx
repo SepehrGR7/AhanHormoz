@@ -1,32 +1,54 @@
-import { Card, CardBody, CardHeader } from '@heroui/card';
+import Link from 'next/link'
 
 export default function HeroItem({
   label,
   icon,
+  categoryId,
 }: {
-  label: string;
-  icon: string;
+  label: string
+  icon: string
+  categoryId: string
 }) {
+  // Map category IDs to main product pages
+  const getCategoryLink = (id: string) => {
+    const links: { [key: string]: string } = {
+      rebar: '/products/milgerd-ajdar',
+      profile: '/products/profile-upe',
+      sheet: '/products/varagh-siah',
+      angle: '/products/nabshi',
+      beam: '/products/tirahan',
+      pipe: '/products/lole-galvanize',
+      wire: '/products/sim-siah',
+      mesh: '/products/tori-hesari',
+    }
+    return links[id] || '/products'
+  }
+
   return (
-    <Card className="max-w-lg relative overflow-visible">
-      <CardHeader className="flex gap-2">
-        <div className="bg-white border shadow dark:bg-gray-700 flex gap-2 items-center py-1 px-2 rounded-full absolute -top-5 z-50 text-md">
-          <i className={`${icon} text-[32px]`}></i>
-          <h3 className="font-medium">قیمت {label}</h3>
+    <Link
+      href={getCategoryLink(categoryId)}
+      className='block transition-all duration-300 transform group hover:-translate-y-1'
+    >
+      <div className='relative flex flex-col items-center justify-center p-4 sm:p-6 bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 rounded-2xl shadow-lg border border-slate-200/50 dark:border-slate-700/50 hover:shadow-xl hover:shadow-blue-500/10 dark:hover:shadow-blue-400/5 group-hover:border-blue-300 dark:group-hover:border-blue-600 transition-all duration-500 h-[180px] w-[160px] sm:h-[220px] sm:w-[220px] overflow-hidden'>
+        {/* Background decorative element */}
+        <div className='absolute top-0 right-0 w-20 h-20 transition-transform duration-700 translate-x-10 -translate-y-10 rounded-full bg-gradient-to-br from-blue-100/50 to-purple-100/50 dark:from-blue-900/20 dark:to-purple-900/20 group-hover:scale-150'></div>
+
+        {/* Icon container with enhanced styling */}
+        <div className='relative flex items-center justify-center w-16 h-16 sm:w-24 sm:h-24 mb-4 sm:mb-8 transition-all duration-500 shadow-lg bg-gradient-to-br from-blue-500 to-blue-600 dark:from-blue-400 dark:to-blue-500 rounded-2xl group-hover:shadow-blue-500/50 dark:group-hover:shadow-blue-400/30 group-hover:scale-110 '>
+          <div className='absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl'></div>
+          <i
+            className={`${icon} text-4xl sm:text-6xl text-white relative z-10 group-hover:scale-110 transition-transform duration-300`}
+          ></i>
         </div>
-      </CardHeader>
-      <CardBody className="text-sm pr-5 grid grid-cols-2 gap-10">
-        <ul className="flex flex-col items-start gap-1.5">
-          <li>میلگرد ساده</li>
-          <li>میلگرد غیر ساده</li>
-          <li>میلگرد خیلی ساده</li>
-        </ul>
-        <ul className="flex flex-col items-start gap-1">
-          <li>میلگرد ساده</li>
-          <li>میلگرد غیر ساده</li>
-          <li>میلگرد خیلی ساده</li>
-        </ul>
-      </CardBody>
-    </Card>
-  );
+
+        {/* Title with enhanced typography */}
+        <h3 className='relative text-sm sm:text-base font-bold leading-tight text-center transition-all duration-300 text-slate-700 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400'>
+          {label}
+        </h3>
+
+        {/* Subtle bottom accent */}
+        <div className='absolute bottom-0 left-0 right-0 h-1 transition-transform duration-500 origin-left transform scale-x-0 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 group-hover:scale-x-100'></div>
+      </div>
+    </Link>
+  )
 }

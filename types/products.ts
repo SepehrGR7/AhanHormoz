@@ -1,41 +1,41 @@
 export interface Product {
-  id: string;
-  name: string;
-  category: ProductCategory;
-  subcategory: string;
-  brand: string;
-  size: string;
-  price: number;
-  unit: 'kg' | 'ton' | 'piece';
-  weight?: number; // وزن تقریبی برای هر شاخه
-  description?: string;
-  image?: string;
-  inStock: boolean;
-  lastUpdated: string;
+  id: string
+  name: string
+  category: ProductCategory
+  subcategory: string
+  brand: string
+  size: string
+  price: number
+  unit: 'kg' | 'ton' | 'piece'
+  weight?: number // وزن تقریبی برای هر شاخه
+  description?: string
+  image?: string
+  inStock: boolean
+  lastUpdated: string
 }
 
 export interface ProductCategory {
-  id: string;
-  name: string;
-  icon: string;
-  subcategories: string[];
+  id: string
+  name: string
+  icon: string
+  subcategories: string[]
 }
 
 export interface PriceFilter {
-  category?: string;
-  subcategory?: string;
-  brand?: string;
-  size?: string;
-  minPrice?: number;
-  maxPrice?: number;
-  inStock?: boolean;
+  category?: string
+  subcategory?: string
+  brand?: string
+  size?: string
+  minPrice?: number
+  maxPrice?: number
+  inStock?: boolean
 }
 
 export interface WeightCalculation {
-  diameter: number;
-  length: number;
-  quantity: number;
-  totalWeight: number;
+  diameter: number
+  length: number
+  quantity: number
+  totalWeight: number
 }
 
 // دسته‌بندی محصولات
@@ -44,15 +44,7 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     id: 'rebar',
     name: 'میلگرد',
     icon: '🔩',
-    subcategories: [
-      'آجدار',
-      'ساده',
-      'کلاف',
-      'حرارتی',
-      'بستر',
-      'ترانس',
-      'استیل',
-    ],
+    subcategories: ['آجدار', 'ساده', 'کلاف', 'حرارتی', 'بستر', 'ترانس', 'استیل'],
   },
   {
     id: 'profile',
@@ -125,14 +117,9 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     id: 'mesh',
     name: 'توری',
     icon: '🕸️',
-    subcategories: [
-      'توری حصاری',
-      'توری جوشی',
-      'توری گالوانیزه',
-      'توری پلاستیکی',
-    ],
+    subcategories: ['توری حصاری', 'توری جوشی', 'توری گالوانیزه', 'توری پلاستیکی'],
   },
-];
+]
 
 // مسیرهای محصولات برای routing
 export const PRODUCT_ROUTES = {
@@ -344,7 +331,7 @@ export const PRODUCT_ROUTES = {
     subcategory: 'توری پلاستیکی',
     name: 'توری پلاستیکی',
   },
-};
+}
 
 // برندهای معروف
 export const BRANDS = [
@@ -366,7 +353,7 @@ export const BRANDS = [
   'فولاد ثامن',
   'فولاد سپهر',
   'فولاد متین',
-];
+]
 
 // سایزهای رایج میلگرد
 export const REBAR_SIZES = [
@@ -381,7 +368,7 @@ export const REBAR_SIZES = [
   '25',
   '28',
   '32',
-];
+]
 
 // سایزهای تیرآهن
 export const BEAM_SIZES = [
@@ -395,7 +382,7 @@ export const BEAM_SIZES = [
   '24',
   '27',
   '30',
-];
+]
 
 // نمونه محصولات
 export const SAMPLE_PRODUCTS: Product[] = [
@@ -412,7 +399,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     weight: 0.395,
     description: 'میلگرد آجدار سایز 8 برند اصفهان - مطابق استاندارد ملی ایران',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
   {
     id: 'rebar-10-isfahan',
@@ -426,7 +413,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     weight: 0.617,
     description: 'میلگرد آجدار سایز 10 برند اصفهان - کیفیت A3',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
   {
     id: 'rebar-12-isfahan',
@@ -440,7 +427,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     weight: 0.888,
     description: 'میلگرد آجدار سایز 12 برند اصفهان - مقاوم در برابر زلزله',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
   {
     id: 'rebar-14-isfahan',
@@ -454,7 +441,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     weight: 1.21,
     description: 'میلگرد آجدار سایز 14 برند اصفهان - استاندارد ASTM',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
   {
     id: 'rebar-16-isfahan',
@@ -468,7 +455,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     weight: 1.58,
     description: 'میلگرد آجدار سایز 16 برند اصفهان - مناسب برای سازه‌های بتنی',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
   {
     id: 'rebar-18-isfahan',
@@ -482,7 +469,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     weight: 2.0,
     description: 'میلگرد آجدار سایز 18 برند اصفهان - کیفیت فوق‌العاده',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
   {
     id: 'rebar-20-isfahan',
@@ -496,7 +483,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     weight: 2.47,
     description: 'میلگرد آجدار سایز 20 برند اصفهان - مقاومت بالا',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
   {
     id: 'rebar-22-isfahan',
@@ -510,7 +497,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     weight: 2.98,
     description: 'میلگرد آجدار سایز 22 برند اصفهان - برای پروژه‌های بزرگ',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
   {
     id: 'rebar-25-isfahan',
@@ -524,7 +511,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     weight: 3.85,
     description: 'میلگرد آجدار سایز 25 برند اصفهان - سنگین‌ترین سایز',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
 
   // میلگرد نیشابور
@@ -540,7 +527,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     weight: 0.888,
     description: 'میلگرد آجدار سایز 12 برند نیشابور - کیفیت ممتاز',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
   {
     id: 'rebar-14-nishabur',
@@ -554,7 +541,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     weight: 1.21,
     description: 'میلگرد آجدار سایز 14 برند نیشابور - مقاومت عالی',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
   {
     id: 'rebar-16-nishabur',
@@ -568,7 +555,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     weight: 1.58,
     description: 'میلگرد آجدار سایز 16 برند نیشابور - استاندارد بین‌المللی',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
   {
     id: 'rebar-18-nishabur',
@@ -582,7 +569,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     weight: 2.0,
     description: 'میلگرد آجدار سایز 18 برند نیشابور - برای سازه‌های مقاوم',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
   {
     id: 'rebar-20-nishabur',
@@ -596,7 +583,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     weight: 2.47,
     description: 'میلگرد آجدار سایز 20 برند نیشابور - کیفیت برتر',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
 
   // میلگرد ساده
@@ -612,7 +599,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     weight: 0.395,
     description: 'میلگرد ساده سایز 8 برند اصفهان - مناسب برای کاربردهای عمومی',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
   {
     id: 'rebar-simple-10-isfahan',
@@ -626,7 +613,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     weight: 0.617,
     description: 'میلگرد ساده سایز 10 برند اصفهان - اقتصادی و با کیفیت',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
   {
     id: 'rebar-simple-12-isfahan',
@@ -640,7 +627,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     weight: 0.888,
     description: 'میلگرد ساده سایز 12 برند اصفهان - مناسب برای آرماتوربندی',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
 
   // تیرآهن
@@ -656,7 +643,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     weight: 8.0,
     description: 'تیرآهن سایز 10 برند فایکو - مناسب برای سازه‌های سبک',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
   {
     id: 'beam-12-fayko',
@@ -670,7 +657,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     weight: 11.5,
     description: 'تیرآهن سایز 12 برند فایکو - کیفیت استاندارد اروپا',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
   {
     id: 'beam-14-fayko',
@@ -684,7 +671,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     weight: 15.6,
     description: 'تیرآهن سایز 14 برند فایکو - مقاومت بالا در برابر خمش',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
   {
     id: 'beam-16-fayko',
@@ -698,7 +685,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     weight: 20.4,
     description: 'تیرآهن سایز 16 برند فایکو - برای ساختمان‌های متوسط',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
   {
     id: 'beam-18-fayko',
@@ -712,7 +699,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     weight: 25.7,
     description: 'تیرآهن سایز 18 برند فایکو - مناسب برای پل‌ها و سازه‌های بزرگ',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
   {
     id: 'beam-20-fayko',
@@ -726,7 +713,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     weight: 31.4,
     description: 'تیرآهن سایز 20 برند فایکو - قدرت تحمل فوق‌العاده',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
 
   // ورق
@@ -741,7 +728,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     unit: 'kg',
     description: 'ورق سیاه ضخامت 1 میلیمتر - مناسب برای کاربردهای صنعتی',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
   {
     id: 'sheet-2mm-black',
@@ -754,7 +741,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     unit: 'kg',
     description: 'ورق سیاه ضخامت 2 میلیمتر - کیفیت بالا و قیمت مناسب',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
   {
     id: 'sheet-3mm-galvanized',
@@ -767,7 +754,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     unit: 'kg',
     description: 'ورق گالوانیزه ضخامت 3 میلیمتر - مقاوم در برابر زنگ',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
   {
     id: 'sheet-4mm-galvanized',
@@ -780,7 +767,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     unit: 'kg',
     description: 'ورق گالوانیزه ضخامت 4 میلیمتر - عمر مفید طولانی',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
 
   // نبشی
@@ -796,7 +783,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     weight: 1.39,
     description: 'نبشی سایز 30×30×3 برند اصفهان - مناسب برای قاب‌سازی',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
   {
     id: 'angle-40x40x4',
@@ -810,7 +797,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     weight: 2.42,
     description: 'نبشی سایز 40×40×4 برند اصفهان - استحکام بالا',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
   {
     id: 'angle-50x50x5',
@@ -824,7 +811,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     weight: 3.77,
     description: 'نبشی سایز 50×50×5 برند اصفهان - برای سازه‌های سنگین',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
 
   // پروفیل
@@ -840,7 +827,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     weight: 6.0,
     description: 'پروفیل UPE سایز 80 برند فایکو - مناسب برای ستون‌سازی',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
   {
     id: 'profile-upe-100',
@@ -854,7 +841,7 @@ export const SAMPLE_PRODUCTS: Product[] = [
     weight: 8.5,
     description: 'پروفیل UPE سایز 100 برند فایکو - کیفیت صنعتی',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
 
   // لوله
@@ -867,10 +854,9 @@ export const SAMPLE_PRODUCTS: Product[] = [
     size: '1 اینچ',
     price: 215000,
     unit: 'kg',
-    description:
-      'لوله گالوانیزه سایز 1 اینچ برند اهواز - مقاوم در برابر خورندگی',
+    description: 'لوله گالوانیزه سایز 1 اینچ برند اهواز - مقاوم در برابر خورندگی',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
   {
     id: 'pipe-2-inch',
@@ -883,6 +869,6 @@ export const SAMPLE_PRODUCTS: Product[] = [
     unit: 'kg',
     description: 'لوله گالوانیزه سایز 2 اینچ برند اهواز - برای تاسیسات ساختمان',
     inStock: true,
-    lastUpdated: '2024-01-15',
+    lastUpdated: '2025-09-15',
   },
-];
+]

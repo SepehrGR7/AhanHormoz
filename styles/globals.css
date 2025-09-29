@@ -1,12 +1,27 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+/* Custom animations */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out;
+}
 
 @custom-variant dark (&:is(.dark *));
 
 @config "../tailwind.config.js";
 
 @theme inline {
-
   --radius-sm: calc(var(--radius) - 4px);
 
   --radius-md: calc(var(--radius) - 2px);
@@ -79,7 +94,6 @@
 }
 
 :root {
-
   --radius: 0.625rem;
 
   --background: oklch(1 0 0);
@@ -146,7 +160,6 @@
 }
 
 .dark {
-
   --background: oklch(0.145 0 0);
 
   --foreground: oklch(0.985 0 0);
@@ -224,36 +237,36 @@
   .menubar-content {
     pointer-events: auto !important;
   }
-  
+
   .menubar-sub-content {
     pointer-events: auto !important;
   }
-  
+
   /* اضافه کردن delay برای بهتر شدن UX */
   [data-radix-menubar-content] {
     animation-delay: 0ms !important;
   }
-  
+
   [data-radix-menubar-sub-content] {
     animation-delay: 100ms !important;
   }
-  
+
   /* بهبود hover states */
   [data-radix-menubar-trigger]:hover {
     background-color: var(--accent);
     color: var(--accent-foreground);
   }
-  
+
   [data-radix-menubar-item]:hover {
     background-color: var(--accent);
     color: var(--accent-foreground);
   }
-  
+
   [data-radix-menubar-sub-trigger]:hover {
     background-color: var(--accent);
     color: var(--accent-foreground);
   }
-  
+
   /* اطمینان از نمایش افقی navbar */
   [data-radix-menubar-root] {
     display: flex !important;
@@ -261,7 +274,7 @@
     align-items: center !important;
     gap: 0.5rem !important;
   }
-  
+
   [data-radix-menubar-root] > * {
     display: inline-flex !important;
   }
