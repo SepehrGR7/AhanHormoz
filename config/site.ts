@@ -94,7 +94,7 @@ export const siteConfig = {
     },
     {
       name: 'angle',
-      icon: 'icon-angle',
+      icon: 'icon-Corners',
       label: 'نبشی و ناودانی',
       items: [
         { label: 'نبشی', href: '/products/nabshi' },
@@ -105,7 +105,7 @@ export const siteConfig = {
     },
     {
       name: 'beam',
-      icon: 'icon-beam',
+      icon: 'icon-girder',
       label: 'تیرآهن',
       items: [
         { label: 'تیرآهن', href: '/products/tirahan' },
@@ -133,7 +133,7 @@ export const siteConfig = {
     },
     {
       name: 'wire',
-      icon: 'icon-wire',
+      icon: 'icon-Wire-products',
       label: 'سیم',
       items: [
         { label: 'سیم سیاه', href: '/products/sim-siah' },
@@ -144,7 +144,7 @@ export const siteConfig = {
     },
     {
       name: 'mesh',
-      icon: 'icon-mesh',
+      icon: 'icon-wire',
       label: 'توری',
       items: [
         { label: 'توری حصاری', href: '/products/tori-hesari' },

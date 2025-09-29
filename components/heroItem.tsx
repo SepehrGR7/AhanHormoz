@@ -34,15 +34,15 @@ export default function HeroItem({
         <div className='absolute top-0 right-0 w-20 h-20 transition-transform duration-700 translate-x-10 -translate-y-10 rounded-full bg-gradient-to-br from-blue-100/50 to-purple-100/50 dark:from-blue-900/20 dark:to-purple-900/20 group-hover:scale-150'></div>
 
         {/* Icon container with enhanced styling */}
-        <div className='relative flex items-center justify-center w-16 h-16 sm:w-24 sm:h-24 mb-4 sm:mb-8 transition-all duration-500 shadow-lg bg-gradient-to-br from-blue-500 to-blue-600 dark:from-blue-400 dark:to-blue-500 rounded-2xl group-hover:shadow-blue-500/50 dark:group-hover:shadow-blue-400/30 group-hover:scale-110 '>
+        <div className='relative flex items-center justify-center w-16 h-16 mb-4 transition-all duration-500 shadow-lg sm:w-24 sm:h-24 sm:mb-8 bg-gradient-to-br from-blue-500 to-blue-600 dark:from-blue-400 dark:to-blue-500 rounded-2xl group-hover:shadow-blue-500/50 dark:group-hover:shadow-blue-400/30 group-hover:scale-110 '>
           <div className='absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-2xl'></div>
           <i
-            className={`${icon} text-4xl sm:text-6xl text-white relative z-10 group-hover:scale-110 transition-transform duration-300`}
+            className={`${icon} text-4xl sm:text-[3.5rem] text-white relative z-10 group-hover:scale-110 transition-transform duration-300`}
           ></i>
         </div>
 
         {/* Title with enhanced typography */}
-        <h3 className='relative text-sm sm:text-base font-bold leading-tight text-center transition-all duration-300 text-slate-700 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400'>
+        <h3 className='relative text-sm font-bold leading-tight text-center transition-all duration-300 sm:text-base text-slate-700 dark:text-slate-200 group-hover:text-blue-600 dark:group-hover:text-blue-400'>
           {label}
         </h3>
 
