@@ -1,29 +1,30 @@
-import { notFound } from 'next/navigation';
-import ProductPage from '@/components/product-page';
-import { PRODUCT_ROUTES } from '@/types/products';
+import { notFound } from 'next/navigation'
+import ProductPage from '@/components/product-page'
+import { PRODUCT_ROUTES } from '@/types/products'
 
 interface ProductPageProps {
-  params: {
-    productId: string;
-  };
+  params: Promise<{
+    productId: string
+  }>
 }
 
 // Generate static params for all products
 export async function generateStaticParams() {
-  return Object.keys(PRODUCT_ROUTES).map((productId) => ({
+  return Object.keys(PRODUCT_ROUTES).map(productId => ({
     productId,
-  }));
+  }))
 }
 
 // Generate metadata for each product
 export async function generateMetadata({ params }: ProductPageProps) {
+  const resolvedParams = await params
   const productData =
-    PRODUCT_ROUTES[params.productId as keyof typeof PRODUCT_ROUTES];
+    PRODUCT_ROUTES[resolvedParams.productId as keyof typeof PRODUCT_ROUTES]
 
   if (!productData) {
     return {
       title: 'محصول یافت نشد',
-    };
+    }
   }
 
   return {
@@ -33,15 +34,16 @@ export async function generateMetadata({ params }: ProductPageProps) {
       title: `${productData.name} | آهن هرمز`,
       description: `اطلاعات کامل قیمت و مشخصات ${productData.name} در آهن هرمز`,
     },
-  };
+  }
 }
 
-export default function DynamicProductPage({ params }: ProductPageProps) {
+export default async function DynamicProductPage({ params }: ProductPageProps) {
+  const resolvedParams = await params
   const productData =
-    PRODUCT_ROUTES[params.productId as keyof typeof PRODUCT_ROUTES];
+    PRODUCT_ROUTES[resolvedParams.productId as keyof typeof PRODUCT_ROUTES]
 
   if (!productData) {
-    notFound();
+    notFound()
   }
 
   // Product-specific configurations
@@ -163,7 +165,7 @@ export default function DynamicProductPage({ params }: ProductPageProps) {
           'کیفیت سطح': 'صاف',
         },
       },
-    };
+    }
 
     return (
       configs[productId] || {
@@ -185,10 +187,10 @@ export default function DynamicProductPage({ params }: ProductPageProps) {
           موجودی: 'در انبار',
         },
       }
-    );
-  };
+    )
+  }
 
-  const config = getProductConfig(params.productId);
+  const config = getProductConfig(resolvedParams.productId)
 
   return (
     <ProductPage
@@ -200,5 +202,5 @@ export default function DynamicProductPage({ params }: ProductPageProps) {
       applications={config.applications}
       specifications={config.specifications}
     />
-  );
+  )
 }
