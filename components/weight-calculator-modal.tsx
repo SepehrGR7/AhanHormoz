@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -11,12 +11,14 @@ interface WeightCalculatorModalProps {
   isOpen: boolean
   onClose: () => void
   productName?: string
+  formatPrice?: (price: number) => string
 }
 
 export default function WeightCalculatorModal({
   isOpen,
   onClose,
   productName,
+  formatPrice: customFormatPrice,
 }: WeightCalculatorModalProps) {
   const [diameter, setDiameter] = useState('')
   const [length, setLength] = useState('')
@@ -48,21 +50,53 @@ export default function WeightCalculatorModal({
     setTotalPrice(0)
   }
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('fa-IR').format(price)
-  }
+  const handleClose = useCallback(() => {
+    resetCalculator()
+    onClose()
+  }, [onClose])
+
+  // Handle ESC key press
+  useEffect(() => {
+    const handleEscKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isOpen) {
+        handleClose()
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscKey)
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscKey)
+    }
+  }, [isOpen, handleClose])
+
+  const formatPrice =
+    customFormatPrice ||
+    ((price: number) => {
+      return new Intl.NumberFormat('fa-IR').format(price)
+    })
 
   if (!isOpen) return null
 
   return (
-    <div className='fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50'>
-      <Card className='w-full max-w-lg'>
+    <div
+      className='fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50'
+      onClick={handleClose}
+    >
+      <Card className='w-full max-w-lg' onClick={e => e.stopPropagation()}>
         <CardHeader className='flex flex-row items-center justify-between'>
           <CardTitle className='flex items-center gap-2 text-xl'>
             <Calculator className='w-8 h-8' />
             محاسبه وزن و قیمت میلگرد
           </CardTitle>
-          <Button variant='ghost' size='sm' onClick={onClose}>
+          <Button
+            variant='ghost'
+            size='sm'
+            onClick={handleClose}
+            className='cursor-pointer'
+          >
             <X className='w-4 h-4' />
           </Button>
         </CardHeader>
@@ -115,11 +149,15 @@ export default function WeightCalculatorModal({
           </div>
 
           <div className='flex gap-3'>
-            <Button onClick={calculateWeight} className='flex-1'>
+            <Button onClick={calculateWeight} className='flex-1 cursor-pointer'>
               <Calculator className='w-4 h-4 ml-2' />
               محاسبه
             </Button>
-            <Button onClick={resetCalculator} variant='outline'>
+            <Button
+              onClick={resetCalculator}
+              variant='outline'
+              className='cursor-pointer'
+            >
               پاک کردن
             </Button>
           </div>

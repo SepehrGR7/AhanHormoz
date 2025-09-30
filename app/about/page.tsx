@@ -6,17 +6,37 @@ import { Logo } from '@/components/icons'
 export default function AboutPage() {
   return (
     <main className='relative'>
-      {/* Hero Section with Background */}
-      <div className='relative h-[300px] md:h-[400px] bg-gradient-to-r from-blue-900 to-blue-700 overflow-hidden'>
-        <div className='absolute inset-0 bg-black/30' />
-        <div className='container relative z-10 flex items-center justify-start h-full px-6 mx-auto'>
-          <div className='max-w-2xl'>
-            <h1 className='mb-4 text-4xl font-extrabold text-white md:text-5xl'>
+      {/* Hero Section */}
+      <div className='relative bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-600 text-white overflow-hidden'>
+        <div className='absolute inset-0 bg-black/10'></div>
+        <div className='absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -translate-y-20 translate-x-20'></div>
+        <div className='absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full translate-y-20 -translate-x-20'></div>
+
+        <div className='relative max-w-7xl mx-auto px-6 py-16'>
+          <div className='text-center'>
+            <div className='inline-flex items-center justify-center w-20 h-20 bg-white/10 backdrop-blur-sm rounded-full mb-6'>
+              <Building2 className='w-8 h-8 text-white' />
+            </div>
+            <h1 className='text-5xl font-bold mb-6 bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent'>
               درباره آهن هرمز
             </h1>
-            <p className='text-lg text-white/90'>
+            <p className='text-xl opacity-90 max-w-3xl mx-auto leading-relaxed'>
               پیشگام در تامین آهن‌آلات صنعتی و ساختمانی با بیش از یک دهه تجربه درخشان
             </p>
+            <div className='flex items-center justify-center gap-6 mt-8 text-sm'>
+              <div className='flex items-center gap-2'>
+                <Shield className='w-4 h-4 text-green-400' />
+                <span>تضمین کیفیت</span>
+              </div>
+              <div className='flex items-center gap-2'>
+                <Users2 className='w-4 h-4 text-yellow-400' />
+                <span>+۲۰۰۰ مشتری راضی</span>
+              </div>
+              <div className='flex items-center gap-2'>
+                <Clock className='w-4 h-4 text-blue-300' />
+                <span>۱۰+ سال تجربه</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -74,12 +94,6 @@ export default function AboutPage() {
           </div>
           <div className='flex items-center justify-center'>
             <Logo className='h-[300px]' />
-            {/* <Image
-              src="/Vector.svg"
-              alt="تصویر شرکت"
-              fill
-              className="object-cover"
-            /> */}
           </div>
         </div>
 

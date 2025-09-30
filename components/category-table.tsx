@@ -19,6 +19,7 @@ interface CategoryTableProps {
   products: Product[]
   onOrder: (product: Product) => void
   onCalculate: (product: Product) => void
+  formatPrice?: (price: number) => string
 }
 
 export default function CategoryTable({
@@ -26,10 +27,13 @@ export default function CategoryTable({
   products,
   onOrder,
   onCalculate,
+  formatPrice: customFormatPrice,
 }: CategoryTableProps) {
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('fa-IR').format(price)
-  }
+  const formatPrice =
+    customFormatPrice ||
+    ((price: number) => {
+      return new Intl.NumberFormat('fa-IR').format(price)
+    })
 
   return (
     <Card>
@@ -122,12 +126,12 @@ export default function CategoryTable({
                         size='sm'
                         variant='outline'
                         onClick={() => onCalculate(product)}
-                        className='flex items-center gap-1 text-xs'
+                        className='flex items-center gap-1 text-xs cursor-pointer'
                       >
                         <Calculator className='w-3 h-3' />
                         محاسبه
                       </Button>
-                      <Button
+                      {/* <Button
                         size='sm'
                         onClick={() => onOrder(product)}
                         disabled={!product.inStock}
@@ -135,7 +139,7 @@ export default function CategoryTable({
                       >
                         <Phone className='w-3 h-3' />
                         سفارش
-                      </Button>
+                      </Button> */}
                     </div>
                   </td>
                 </tr>
