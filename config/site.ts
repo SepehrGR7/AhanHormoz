@@ -1,16 +1,12 @@
-export type SiteConfig = typeof siteConfig
+export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
   name: 'آهن هرمز | قیمت روز انواع آهن آلات',
   description: 'آهن هرمز،بروز ترین مرجع اطلاع رسانی قیمت انواع آهن آلات',
   navItems: [
     {
-      label: 'وزن آهن آلات',
-      href: '/pricing',
-    },
-    {
-      label: 'اخبار بازار آهن',
-      href: '/blog',
+      label: 'کارخانه ها',
+      href: '/factories',
     },
     {
       label: 'درباره ما',
@@ -23,16 +19,17 @@ export const siteConfig = {
   ],
   navMenuItems: [
     {
-      label: 'قیمت آهن',
+      label: 'صفحه اصلی',
       href: '/',
     },
     {
-      label: 'وزن آهن آلات',
-      href: '/pricing',
+      label: 'محصولات',
+      href: '/products',
     },
+
     {
-      label: 'اخبار بازار آهن',
-      href: '/blog',
+      label: 'کارخانه ها',
+      href: '/factories',
     },
     {
       label: 'درباره ما',
@@ -161,4 +158,4 @@ export const siteConfig = {
     discord: 'https://discord.gg/9b6yyZKmH4',
     sponsor: 'https://patreon.com/jrgarciadev',
   },
-}
+};

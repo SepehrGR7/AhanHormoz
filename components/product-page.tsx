@@ -10,6 +10,7 @@ import {
 import CategoryTable from '@/components/category-table';
 import AdvancedFilters from '@/components/advanced-filters';
 import WeightCalculatorModal from '@/components/weight-calculator-modal';
+import OrderRequestModal from '@/components/order-request-modal';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -56,27 +57,59 @@ export default function ProductPage({
   applications = [],
   specifications = {},
 }: ProductPageProps) {
-  const [filters, setFilters] = useState<PriceFilter>({
-    category,
-    subcategory,
-  });
+  const [filters, setFilters] = useState<PriceFilter>({});
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+  const [selectedOrderProduct, setSelectedOrderProduct] =
+    useState<Product | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [showFilters, setShowFilters] = useState(true);
+  const [showFilters, setShowFilters] = useState(false);
 
   // فیلتر کردن محصولات بر اساس دسته و زیردسته
   const filteredProducts = useMemo(() => {
     return SAMPLE_PRODUCTS.filter((product) => {
       if (product.category.id !== category) return false;
       if (product.subcategory !== subcategory) return false;
-      
-      // فیلترهای اضافی
-      if (filters.brand && product.brand !== filters.brand) return false;
-      if (filters.size && product.size !== filters.size) return false;
+
+      // تابع کمکی برای بررسی فیلترهای چندگانه
+      const matchesFilter = (
+        filterValue: string | string[] | undefined,
+        productValue: string | undefined
+      ) => {
+        if (!filterValue) return true;
+        if (!productValue) return false;
+        if (Array.isArray(filterValue)) {
+          return filterValue.includes(productValue);
+        }
+        return filterValue === productValue;
+      };
+
+      // فیلترهای اضافی با پشتیبانی از چندین انتخاب
+      if (!matchesFilter(filters.brand, product.brand)) return false;
+      if (!matchesFilter(filters.size, product.size)) return false;
       if (filters.minPrice && product.price < filters.minPrice) return false;
       if (filters.maxPrice && product.price > filters.maxPrice) return false;
       if (filters.inStock && !product.inStock) return false;
+
+      // فیلترهای تخصصی با پشتیبانی از چندین انتخاب
+      if (!matchesFilter(filters.thickness, product.thickness)) return false;
+      if (!matchesFilter(filters.diameter, product.diameter)) return false;
+      if (!matchesFilter(filters.grade, product.grade)) return false;
+      if (!matchesFilter(filters.coating, product.coating)) return false;
+      if (!matchesFilter(filters.standard, product.standard)) return false;
+      if (!matchesFilter(filters.length, product.length)) return false;
+
+      // فیلترهای جدید
+      if (!matchesFilter(filters.subtype, product.subtype)) return false;
+      if (!matchesFilter(filters.weightType, product.weightType)) return false;
+      if (!matchesFilter(filters.sheetType, product.sheetType)) return false;
+      if (!matchesFilter(filters.pipeType, product.pipeType)) return false;
+      if (!matchesFilter(filters.wireType, product.wireType)) return false;
+      if (!matchesFilter(filters.height, product.height)) return false;
+      if (!matchesFilter(filters.meshSize, product.meshSize)) return false;
+      if (!matchesFilter(filters.packageType, product.packageType))
+        return false;
 
       // جستجوی متنی
       if (searchTerm) {
@@ -92,10 +125,11 @@ export default function ProductPage({
     });
   }, [category, subcategory, filters, searchTerm]);
 
-  const categoryInfo = PRODUCT_CATEGORIES.find(c => c.id === category);
+  const categoryInfo = PRODUCT_CATEGORIES.find((c) => c.id === category);
 
   const handleOrder = (product: Product) => {
-    alert(`سفارش ${product.name} ثبت شد. لطفاً با ما تماس بگیرید.`);
+    setSelectedOrderProduct(product);
+    setIsOrderModalOpen(true);
   };
 
   const handleCalculate = (product: Product) => {
@@ -129,6 +163,13 @@ export default function ProductPage({
               >
                 <Calculator className="w-4 h-4 ml-2" />
                 محاسبه وزن
+              </Button>
+              <Button
+                onClick={() => setIsOrderModalOpen(true)}
+                className="bg-green-600 text-white hover:bg-green-700"
+              >
+                <Package className="w-4 h-4 ml-2" />
+                ثبت سفارش
               </Button>
               <Button className="bg-white text-blue-600 hover:bg-gray-100">
                 <Phone className="w-4 h-4 ml-2" />
@@ -201,7 +242,9 @@ export default function ProductPage({
                     {Object.entries(specifications).map(([key, value]) => (
                       <div key={key} className="flex justify-between">
                         <span className="text-sm font-medium">{key}:</span>
-                        <span className="text-sm text-slate-600 dark:text-slate-400">{value}</span>
+                        <span className="text-sm text-slate-600 dark:text-slate-400">
+                          {value}
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -237,10 +280,6 @@ export default function ProductPage({
                 <Filter className="w-4 h-4" />
                 فیلترها
               </Button>
-              <Button variant="outline" className="flex items-center gap-2">
-                <Download className="w-4 h-4" />
-                دانلود لیست
-              </Button>
             </div>
           </div>
         </div>
@@ -255,7 +294,10 @@ export default function ProductPage({
                 <AdvancedFilters
                   filters={filters}
                   onFiltersChange={setFilters}
-                  onClearFilters={() => setFilters({ category, subcategory })}
+                  onClearFilters={() => setFilters({})}
+                  showCategoryFilter={false}
+                  currentCategory={category}
+                  currentSubcategory={subcategory}
                 />
               </div>
             )}
@@ -331,6 +373,20 @@ export default function ProductPage({
         isOpen={isCalculatorOpen}
         onClose={handleCloseCalculator}
         productName={selectedProduct?.name}
+      />
+
+      <OrderRequestModal
+        isOpen={isOrderModalOpen}
+        onClose={() => {
+          setIsOrderModalOpen(false);
+          setSelectedOrderProduct(null);
+        }}
+        productName={selectedOrderProduct?.name}
+        productSpecs={
+          selectedOrderProduct
+            ? `${selectedOrderProduct.name} - ${selectedOrderProduct.size} - ${selectedOrderProduct.brand}`
+            : ''
+        }
       />
     </div>
   );

@@ -1,41 +1,73 @@
 export interface Product {
-  id: string
-  name: string
-  category: ProductCategory
-  subcategory: string
-  brand: string
-  size: string
-  price: number
-  unit: 'kg' | 'ton' | 'piece'
-  weight?: number // وزن تقریبی برای هر شاخه
-  description?: string
-  image?: string
-  inStock: boolean
-  lastUpdated: string
+  id: string;
+  name: string;
+  category: ProductCategory;
+  subcategory: string;
+  brand: string;
+  size: string;
+  price: number;
+  unit: 'kg' | 'ton' | 'piece';
+  weight?: number; // وزن تقریبی برای هر شاخه
+  description?: string;
+  image?: string;
+  inStock: boolean;
+  lastUpdated: string;
+  // فیلدهای تخصصی اختیاری
+  thickness?: string; // برای ورق و نبشی
+  diameter?: string; // برای لوله و سیم
+  grade?: string; // درجه کیفیت
+  coating?: string; // نوع پوشش/جنس
+  standard?: string; // استاندارد
+  length?: string; // طول
+  // فیلدهای جدید
+  subtype?: string; // نوع زیرمجموعه
+  weightType?: string; // نوع وزن
+  sheetType?: string; // نوع ورق
+  pipeType?: string; // نوع لوله
+  wireType?: string; // نوع سیم
+  height?: string; // ارتفاع (برای تیرآهن)
+  meshSize?: string; // سایز چشمه توری
+  packageType?: string; // نوع بسته‌بندی
 }
 
 export interface ProductCategory {
-  id: string
-  name: string
-  icon: string
-  subcategories: string[]
+  id: string;
+  name: string;
+  icon: string;
+  subcategories: string[];
 }
 
 export interface PriceFilter {
-  category?: string
-  subcategory?: string
-  brand?: string
-  size?: string
-  minPrice?: number
-  maxPrice?: number
-  inStock?: boolean
+  category?: string;
+  subcategory?: string;
+  brand?: string | string[]; // پشتیبانی از چندین برند
+  size?: string | string[]; // پشتیبانی از چندین سایز
+  minPrice?: number;
+  maxPrice?: number;
+  inStock?: boolean;
+  // فیلترهای تخصصی
+  thickness?: string | string[]; // برای ورق و نبشی
+  diameter?: string | string[]; // برای لوله
+  grade?: string | string[]; // درجه کیفیت
+  coating?: string | string[]; // نوع پوشش (گالوانیزه، رنگی و...)
+  standard?: string | string[]; // استاندارد (ملی، بین‌المللی)
+  length?: string | string[]; // طول
+  // فیلترهای جدید
+  subtype?: string | string[]; // نوع زیرمجموعه (نبشی، ناودانی، سپری)
+  weightType?: string | string[]; // نوع وزن (استاندارد، هم وزن اروپا)
+  sheetType?: string | string[]; // نوع ورق (سیاه، گالوانیزه، رنگی، آجدار)
+  pipeType?: string | string[]; // نوع لوله (داربستی، مانیسمان، گازی، اسپیرال)
+  wireType?: string | string[]; // نوع سیم (سیاه، گالوانیزه، خاردار)
+  height?: string | string[]; // ارتفاع (برای تیرآهن)
+  meshSize?: string | string[]; // سایز چشمه توری
+  packageType?: string | string[]; // نوع بسته‌بندی
 }
 
 export interface WeightCalculation {
-  diameter: number
-  length: number
-  quantity: number
-  totalWeight: number
+  diameter: number;
+  length: number;
+  quantity: number;
+  totalWeight: number;
 }
 
 // دسته‌بندی محصولات
@@ -44,7 +76,15 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     id: 'rebar',
     name: 'میلگرد',
     icon: '🔩',
-    subcategories: ['آجدار', 'ساده', 'کلاف', 'حرارتی', 'بستر', 'ترانس', 'استیل'],
+    subcategories: [
+      'آجدار',
+      'ساده',
+      'کلاف',
+      'حرارتی',
+      'بستر',
+      'ترانس',
+      'استیل',
+    ],
   },
   {
     id: 'profile',
@@ -117,9 +157,43 @@ export const PRODUCT_CATEGORIES: ProductCategory[] = [
     id: 'mesh',
     name: 'توری',
     icon: '🕸️',
-    subcategories: ['توری حصاری', 'توری جوشی', 'توری گالوانیزه', 'توری پلاستیکی'],
+    subcategories: [
+      'توری حصاری',
+      'توری جوشی',
+      'توری گالوانیزه',
+      'توری پلاستیکی',
+    ],
   },
-]
+  {
+    id: 'shamsh',
+    name: 'شمش',
+    icon: '🧱',
+    subcategories: ['فولاد', 'آلیاژی'],
+  },
+  {
+    id: 'qooti',
+    name: 'قوطی',
+    icon: '📦',
+    subcategories: ['صنعتی', 'ستونی'],
+  },
+  {
+    id: 'maftoli',
+    name: 'محصولات مفتولی',
+    icon: '🔗',
+    subcategories: [
+      'سیم مفتولی سیاه',
+      'سیم مفتولی گالوانیزه',
+      'توری حصاری',
+      'مش آجدار',
+    ],
+  },
+  {
+    id: 'raw-materials',
+    name: 'مواد اولیه',
+    icon: '⚗️',
+    subcategories: ['آهن اسفنجی', 'فروآلیاژ'],
+  },
+];
 
 // مسیرهای محصولات برای routing
 export const PRODUCT_ROUTES = {
@@ -331,7 +405,65 @@ export const PRODUCT_ROUTES = {
     subcategory: 'توری پلاستیکی',
     name: 'توری پلاستیکی',
   },
-}
+
+  // شمش
+  'shamsh-folad': {
+    category: 'shamsh',
+    subcategory: 'فولاد',
+    name: 'شمش فولاد',
+  },
+  'shamsh-aliaazhi': {
+    category: 'shamsh',
+    subcategory: 'آلیاژی',
+    name: 'شمش آلیاژی',
+  },
+
+  // قوطی
+  'qooti-sanate': {
+    category: 'qooti',
+    subcategory: 'صنعتی',
+    name: 'قوطی صنعتی',
+  },
+  'qooti-sotoni': {
+    category: 'qooti',
+    subcategory: 'ستونی',
+    name: 'قوطی ستونی',
+  },
+
+  // محصولات مفتولی
+  'sim-maftooli-siah': {
+    category: 'maftoli',
+    subcategory: 'سیم مفتولی سیاه',
+    name: 'سیم مفتولی سیاه',
+  },
+  'sim-maftooli-galvanize': {
+    category: 'maftoli',
+    subcategory: 'سیم مفتولی گالوانیزه',
+    name: 'سیم مفتولی گالوانیزه',
+  },
+  'toori-hesari': {
+    category: 'maftoli',
+    subcategory: 'توری حصاری',
+    name: 'توری حصاری',
+  },
+  'mesh-ajdar': {
+    category: 'maftoli',
+    subcategory: 'مش آجدار',
+    name: 'مش آجدار',
+  },
+
+  // مواد اولیه
+  'ahan-esfonji': {
+    category: 'raw-materials',
+    subcategory: 'آهن اسفنجی',
+    name: 'آهن اسفنجی',
+  },
+  'foro-aliazh': {
+    category: 'raw-materials',
+    subcategory: 'فروآلیاژ',
+    name: 'فروآلیاژ',
+  },
+};
 
 // برندهای معروف
 export const BRANDS = [
@@ -353,7 +485,7 @@ export const BRANDS = [
   'فولاد ثامن',
   'فولاد سپهر',
   'فولاد متین',
-]
+];
 
 // سایزهای رایج میلگرد
 export const REBAR_SIZES = [
@@ -368,7 +500,7 @@ export const REBAR_SIZES = [
   '25',
   '28',
   '32',
-]
+];
 
 // سایزهای تیرآهن
 export const BEAM_SIZES = [
@@ -382,7 +514,53 @@ export const BEAM_SIZES = [
   '24',
   '27',
   '30',
-]
+];
+
+// سایزهای قوطی
+export const QOOTI_SIZES = [
+  '20×20×2',
+  '25×25×2',
+  '30×30×3',
+  '40×40×3',
+  '50×50×4',
+  '60×60×4',
+  '80×80×5',
+  '100×100×5',
+  '120×120×6',
+  '150×150×8',
+];
+
+// سایزهای سیم مفتولی
+export const WIRE_SIZES = [
+  '1mm',
+  '1.5mm',
+  '2mm',
+  '2.5mm',
+  '3mm',
+  '4mm',
+  '5mm',
+  '6mm',
+  '8mm',
+];
+
+// ابعاد شمش
+export const SHAMSH_SIZES = [
+  '50kg',
+  '100kg',
+  '150kg',
+  '200kg',
+  '250kg',
+  '300kg',
+];
+
+// ابعاد مش
+export const MESH_SIZES = [
+  '100×100×6',
+  '150×150×6',
+  '150×150×8',
+  '200×200×8',
+  '200×200×10',
+];
 
 // نمونه محصولات
 export const SAMPLE_PRODUCTS: Product[] = [
@@ -400,6 +578,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     description: 'میلگرد آجدار سایز 8 برند اصفهان - مطابق استاندارد ملی ایران',
     inStock: true,
     lastUpdated: '2025-09-15',
+    grade: 'A3',
+    length: '12',
   },
   {
     id: 'rebar-10-isfahan',
@@ -600,6 +780,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     description: 'میلگرد ساده سایز 8 برند اصفهان - مناسب برای کاربردهای عمومی',
     inStock: true,
     lastUpdated: '2025-09-15',
+    grade: 'A2',
+    length: '12',
   },
   {
     id: 'rebar-simple-10-isfahan',
@@ -614,6 +796,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     description: 'میلگرد ساده سایز 10 برند اصفهان - اقتصادی و با کیفیت',
     inStock: true,
     lastUpdated: '2025-09-15',
+    grade: 'A2',
+    length: '6',
   },
   {
     id: 'rebar-simple-12-isfahan',
@@ -854,7 +1038,8 @@ export const SAMPLE_PRODUCTS: Product[] = [
     size: '1 اینچ',
     price: 215000,
     unit: 'kg',
-    description: 'لوله گالوانیزه سایز 1 اینچ برند اهواز - مقاوم در برابر خورندگی',
+    description:
+      'لوله گالوانیزه سایز 1 اینچ برند اهواز - مقاوم در برابر خورندگی',
     inStock: true,
     lastUpdated: '2025-09-15',
   },
@@ -871,4 +1056,145 @@ export const SAMPLE_PRODUCTS: Product[] = [
     inStock: true,
     lastUpdated: '2025-09-15',
   },
-]
+
+  // شمش
+  {
+    id: 'shamsh-folad-150kg',
+    name: 'شمش فولاد 150 کیلوگرم',
+    category: PRODUCT_CATEGORIES[8],
+    subcategory: 'فولاد',
+    brand: 'اصفهان',
+    size: '150kg',
+    price: 165000,
+    unit: 'kg',
+    description: 'شمش فولاد درجه یک - مناسب برای تولید ورق و پروفیل',
+    inStock: true,
+    lastUpdated: '2025-09-30',
+  },
+  {
+    id: 'shamsh-aliaazhi-100kg',
+    name: 'شمش آلیاژی 100 کیلوگرم',
+    category: PRODUCT_CATEGORIES[8],
+    subcategory: 'آلیاژی',
+    brand: 'فولاد ثامن',
+    size: '100kg',
+    price: 285000,
+    unit: 'kg',
+    description: 'شمش آلیاژی ضد زنگ - کیفیت صادراتی',
+    inStock: true,
+    lastUpdated: '2025-09-30',
+  },
+
+  // قوطی
+  {
+    id: 'qooti-sanate-40x40x3',
+    name: 'قوطی صنعتی 40×40×3',
+    category: PRODUCT_CATEGORIES[9],
+    subcategory: 'صنعتی',
+    brand: 'فایکو',
+    size: '40×40×3',
+    price: 192000,
+    unit: 'kg',
+    weight: 4.47,
+    description: 'قوطی صنعتی مربع - مناسب برای سازه های فلزی',
+    inStock: true,
+    lastUpdated: '2025-09-30',
+  },
+  {
+    id: 'qooti-sotoni-100x100x5',
+    name: 'قوطی ستونی 100×100×5',
+    category: PRODUCT_CATEGORIES[9],
+    subcategory: 'ستونی',
+    brand: 'اصفهان',
+    size: '100×100×5',
+    price: 198000,
+    unit: 'kg',
+    weight: 15.04,
+    description: 'قوطی ستونی مقاوم - برای ستون سازی ساختمان',
+    inStock: true,
+    lastUpdated: '2025-09-30',
+  },
+
+  // محصولات مفتولی
+  {
+    id: 'sim-maftooli-siah-3mm',
+    name: 'سیم مفتولی سیاه 3 میلیمتر',
+    category: PRODUCT_CATEGORIES[10],
+    subcategory: 'سیم مفتولی سیاه',
+    brand: 'اصفهان',
+    size: '3mm',
+    price: 168000,
+    unit: 'kg',
+    description: 'سیم مفتولی سیاه کیفیت عالی - بسته بندی حلقه ای',
+    inStock: true,
+    lastUpdated: '2025-09-30',
+  },
+  {
+    id: 'sim-maftooli-galvanize-4mm',
+    name: 'سیم مفتولی گالوانیزه 4 میلیمتر',
+    category: PRODUCT_CATEGORIES[10],
+    subcategory: 'سیم مفتولی گالوانیزه',
+    brand: 'نیشابور',
+    size: '4mm',
+    price: 185000,
+    unit: 'kg',
+    description: 'سیم مفتولی گالوانیزه - مقاوم در برابر خوردگی',
+    inStock: true,
+    lastUpdated: '2025-09-30',
+  },
+  {
+    id: 'toori-hesari-50x50',
+    name: 'توری حصاری 50×50',
+    category: PRODUCT_CATEGORIES[10],
+    subcategory: 'توری حصاری',
+    brand: 'میانه',
+    size: '50×50',
+    price: 175000,
+    unit: 'kg',
+    description: 'توری حصاری گالوانیزه - ارتفاع 2 متر',
+    inStock: true,
+    lastUpdated: '2025-09-30',
+  },
+  {
+    id: 'mesh-ajdar-150x150x8',
+    name: 'مش آجدار 150×150×8',
+    category: PRODUCT_CATEGORIES[10],
+    subcategory: 'مش آجدار',
+    brand: 'اصفهان',
+    size: '150×150×8',
+    price: 172000,
+    unit: 'kg',
+    weight: 35,
+    description: 'مش آجدار تسلیح بتن - ابعاد ورق 2.15×5 متر',
+    inStock: true,
+    lastUpdated: '2025-09-30',
+  },
+
+  // مواد اولیه
+  {
+    id: 'ahan-esfonji-grade-a',
+    name: 'آهن اسفنجی درجه A',
+    category: PRODUCT_CATEGORIES[11],
+    subcategory: 'آهن اسفنجی',
+    brand: 'فولاد ثامن',
+    size: 'Grade A',
+    price: 145000,
+    unit: 'kg',
+    description: 'آهن اسفنجی درجه یک - درجه فلزی 92 درصد',
+    inStock: true,
+    lastUpdated: '2025-09-30',
+  },
+  {
+    id: 'foro-aliazh-ferromangan',
+    name: 'فروآلیاژ فرومنگنز',
+    category: PRODUCT_CATEGORIES[11],
+    subcategory: 'فروآلیاژ',
+    brand: 'زاگرس',
+    size: 'FeMn 75%',
+    price: 385000,
+    unit: 'kg',
+    description: 'فروآلیاژ فرومنگنز - خلوص 75 درصد منگنز',
+    inStock: true,
+    lastUpdated: '2025-09-30',
+  },
+];

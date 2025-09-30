@@ -10,6 +10,7 @@ import { siteConfig } from '@/config/site';
 import { IranYekan } from '@/config/fonts';
 import { Navbar } from '@/components/navbar';
 import Footer from '@/components/footer';
+import FloatingOrderButton from '@/components/floating-order-button';
 
 export const metadata: Metadata = {
   title: {
@@ -51,6 +52,7 @@ export default function RootLayout({
               {children}
             </main>
             <Footer />
+            <FloatingOrderButton />
           </div>
         </Providers>
       </body>

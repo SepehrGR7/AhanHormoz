@@ -1,20 +1,20 @@
-'use client'
+'use client';
 
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, Pagination, Autoplay } from 'swiper/modules'
-import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
-import ProductCard from '@/components/product-card'
-import { SAMPLE_PRODUCTS, Product } from '@/types/products'
-import { ChevronRight, ChevronLeft } from 'lucide-react'
+import ProductCard from '@/components/product-card';
+import { SAMPLE_PRODUCTS, Product } from '@/types/products';
+import { ChevronRight, ChevronLeft } from 'lucide-react';
 
 interface ProductSliderProps {
-  products?: Product[]
-  onOrder?: (product: Product) => void
-  onCalculate?: (product: Product) => void
-  title?: string
+  products?: Product[];
+  onOrder?: (product: Product) => void;
+  onCalculate?: (product: Product) => void;
+  title?: string;
 }
 
 export default function ProductSlider({
@@ -24,22 +24,22 @@ export default function ProductSlider({
   title = 'محصولات پیشنهادی',
 }: ProductSliderProps) {
   return (
-    <div className='w-full'>
-      <div className='flex items-center justify-between mb-6'>
-        <h2 className='text-xl font-bold text-slate-800 dark:text-slate-200'>
+    <div className="w-full">
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-xl font-bold text-slate-800 dark:text-slate-200">
           {title}
         </h2>
-        <div className='hidden gap-2 md:flex'>
-          <button className='p-2 transition-colors border rounded-md swiper-button-prev-products border-slate-300 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800'>
-            <ChevronRight className='w-4 h-4' />
+        <div className="hidden gap-2 md:flex">
+          <button className="p-2 transition-colors border rounded-md cursor-pointer swiper-button-prev-products border-slate-300 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800">
+            <ChevronRight className="w-4 h-4" />
           </button>
-          <button className='p-2 transition-colors border rounded-md swiper-button-next-products border-slate-300 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800'>
-            <ChevronLeft className='w-4 h-4' />
+          <button className="p-2 transition-colors border rounded-md cursor-pointer swiper-button-next-products border-slate-300 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800">
+            <ChevronLeft className="w-4 h-4" />
           </button>
         </div>
       </div>
 
-      <div className='relative'>
+      <div className="relative">
         <Swiper
           modules={[Navigation, Pagination, Autoplay]}
           spaceBetween={16}
@@ -71,11 +71,11 @@ export default function ProductSlider({
               spaceBetween: 24,
             },
           }}
-          className='products-swiper'
+          className="products-swiper"
         >
-          {products.map(product => (
-            <SwiperSlide key={product.id} className='h-auto'>
-              <div className='h-full py-6'>
+          {products.map((product) => (
+            <SwiperSlide key={product.id} className="h-auto">
+              <div className="h-full py-6">
                 <ProductCard
                   product={product}
                   onOrder={onOrder}
@@ -87,18 +87,18 @@ export default function ProductSlider({
         </Swiper>
 
         {/* Custom Pagination for mobile */}
-        <div className='mt-6 text-center swiper-pagination-products md:hidden'></div>
+        <div className="mt-6 text-center swiper-pagination-products md:hidden"></div>
 
         {/* Mobile navigation */}
-        <div className='flex items-center justify-center gap-3 mt-4 md:hidden'>
-          <button className='p-2 transition-colors border rounded-md swiper-button-prev-products border-slate-300 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800'>
-            <ChevronRight className='w-4 h-4' />
+        <div className="flex items-center justify-center gap-3 mt-4 md:hidden">
+          <button className="p-2 transition-colors border rounded-md cursor-pointer swiper-button-prev-products border-slate-300 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800">
+            <ChevronRight className="w-4 h-4" />
           </button>
-          <button className='p-2 transition-colors border rounded-md swiper-button-next-products border-slate-300 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800'>
-            <ChevronLeft className='w-4 h-4' />
+          <button className="p-2 transition-colors border rounded-md cursor-pointer swiper-button-next-products border-slate-300 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800">
+            <ChevronLeft className="w-4 h-4" />
           </button>
         </div>
       </div>
     </div>
-  )
+  );
 }
