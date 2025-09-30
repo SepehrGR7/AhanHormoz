@@ -274,7 +274,7 @@ export default function ProductPage({
                       wrapper: 'group-data-[selected=true]:bg-blue-600',
                     }}
                   />
-                  <span>شامل مالیات ۱۰٪</span>
+                  <span>احتساب ارزش افزوده</span>
                 </div>
               </div>
             </div>
