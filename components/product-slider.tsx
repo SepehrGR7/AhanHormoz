@@ -109,7 +109,7 @@ export default function ProductSlider({
         <div className='text-center swiper-pagination-products md:hidden'></div>
 
         {/* Mobile navigation */}
-        <div className='flex items-center justify-center gap-3 mt-4 md:hidden'>
+        <div className='flex items-center justify-center gap-3 mt-2 md:hidden'>
           <button className='p-2 transition-colors border rounded-md cursor-pointer swiper-button-prev-products border-slate-300 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800'>
             <ChevronRight className='w-4 h-4' />
           </button>
