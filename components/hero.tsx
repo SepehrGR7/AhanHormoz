@@ -41,26 +41,23 @@ export default function Hero() {
           <div className='mx-auto max-w-5xl'>
             {/* Enhanced title with gradient text and animation */}
             <h1 className='mb-6 text-4xl font-extrabold leading-tight md:text-5xl lg:text-6xl animate-fade-in-up'>
-              <span className='block mb-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 dark:from-blue-300 dark:to-blue-600'>
+              {/* <span className='block mb-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-blue-600 dark:from-blue-300 dark:to-blue-600'>
                 قیمت روز آهن‌آلات
-              </span>
-              {/* <GradientText
+              </span> */}
+              <GradientText
                 colors={['#2563eb', '#60a5fa', '#2563eb', '#60a5fa', '#2563eb']}
                 animationSpeed={7}
                 className='mb-2 font-extrabold'
               >
                 قیمت روز آهن‌آلات
-              </GradientText> */}
+              </GradientText>
               <span className='text-slate-900 dark:text-white'>
                 خرید مطمئن و سریع
               </span>
             </h1>
 
             {/* Enhanced description */}
-            <p
-              className='mx-auto mb-8 max-w-2xl text-lg leading-relaxed text-slate-600 dark:text-slate-300 animate-fade-in-up'
-              style={{ animationDelay: '0.2s' }}
-            >
+            <p className='mx-auto mb-8 max-w-2xl text-lg leading-relaxed text-slate-600 dark:text-slate-300 animate-fade-in-up'>
               قیمت لحظه‌ای میلگرد، تیرآهن، ورق، پروفیل و سایر محصولات فولادی
               به‌همراه امکان محاسبه وزن و ثبت سفارش آسان.
             </p>
