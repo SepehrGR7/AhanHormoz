@@ -30,7 +30,11 @@ export const viewport: Viewport = {
   ],
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html suppressHydrationWarning lang='en'>
       <head />
@@ -44,7 +48,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Providers themeProps={{ attribute: 'class', defaultTheme: 'dark' }}>
           <div className='relative flex flex-col'>
             <Navbar />
-            <main className='container flex-grow mx-auto max-w-7xl md:px-6'>
+            <main className='container flex-grow mx-auto max-w-8xl md:px-6'>
               {children}
             </main>
             <Footer />
