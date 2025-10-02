@@ -1,7 +1,6 @@
 import Hero from '@/components/hero'
 import Traits from '@/components/traits'
 import ProductSlider from '@/components/product-slider'
-import Link from 'next/link'
 
 export default function Home() {
   return (
