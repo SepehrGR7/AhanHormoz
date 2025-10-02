@@ -1,11 +1,11 @@
-'use client';
+'use client'
 
-import React, { useState } from 'react';
-import { Menu, Transition } from '@headlessui/react';
-import { ChevronDown, ChevronLeft } from 'lucide-react';
-import Link from 'next/link';
-import { Fragment } from 'react';
-import { PRODUCT_CATEGORIES } from '@/types/products';
+import React, { useState } from 'react'
+import { Menu, Transition } from '@headlessui/react'
+import { ChevronDown, ChevronLeft } from 'lucide-react'
+import Link from 'next/link'
+import { Fragment } from 'react'
+import { PRODUCT_CATEGORIES } from '@/types/products'
 
 // تعریف داده‌های محاسبه وزن آهن آلات
 const weightData = [
@@ -17,7 +17,7 @@ const weightData = [
   { href: '/weight/angle', label: 'وزن نبشی' },
   { href: '/weight/square-tube', label: 'وزن قوطی' },
   { href: '/weight/sheet', label: 'وزن ورق' },
-];
+]
 
 // تعریف داده‌های محصولات با دسته‌بندی کامل
 const productsData = {
@@ -108,25 +108,25 @@ const productsData = {
     { href: '/products/ahan-esfonji', label: 'آهن اسفنجی' },
     { href: '/products/foro-aliazh', label: 'فروآلیاژ' },
   ],
-};
+}
 
 // Dynamic pricing data based on product categories
 const pricingData = [
   { href: '/pricing', label: 'قیمت‌های روز', icon: '💰' },
-  ...PRODUCT_CATEGORIES.map((category) => ({
+  ...PRODUCT_CATEGORIES.map(category => ({
     href: `/pricing/${category.id}`,
     label: `قیمت ${category.name}`,
     icon: category.icon,
   })),
-];
+]
 
 // کامپوننت SubMenu برای زیرمنوها
 interface SubMenuProps {
-  title: string;
-  items: Array<{ href: string; label: string }>;
-  isOpen: boolean;
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
+  title: string
+  items: Array<{ href: string; label: string }>
+  isOpen: boolean
+  onMouseEnter: () => void
+  onMouseLeave: () => void
 }
 
 const SubMenu: React.FC<SubMenuProps> = ({
@@ -150,43 +150,43 @@ const SubMenu: React.FC<SubMenuProps> = ({
       قوطی: 'icon-Equipment',
       'محصولات مفتولی': 'icon-wire',
       'مواد اولیه': 'icon-stainless-steel',
-    };
-    return icons[categoryName] || 'icon-rebar';
-  };
+    }
+    return icons[categoryName] || 'icon-rebar'
+  }
 
   return (
     <div
-      className="relative"
+      className='relative'
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <div className="flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-lg cursor-pointer hover:bg-primary/10 hover:text-primary transition-all duration-300 group">
-        <span className="flex items-center gap-3">
-          <i className={`${getCategoryIcon(title)} text-lg`}></i>
+      <div className='flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-lg cursor-pointer hover:bg-primary/10 hover:text-primary transition-all duration-300 group'>
+        <span className='flex gap-3 items-center'>
+          <i className={`text-lg ${getCategoryIcon(title)}`}></i>
           {title}
         </span>
-        <ChevronLeft className="h-4 w-4 transition-transform duration-300" />
+        <ChevronLeft className='w-4 h-4 transition-transform duration-300' />
       </div>
 
       <Transition
         show={isOpen}
         as={Fragment}
-        enter="transition ease-out duration-100"
-        enterFrom="transform opacity-0 scale-95"
-        enterTo="transform opacity-100 scale-100"
-        leave="transition ease-in duration-75"
-        leaveFrom="transform opacity-100 scale-100"
-        leaveTo="transform opacity-0 scale-95"
+        enter='transition ease-out duration-100'
+        enterFrom='transform opacity-0 scale-95'
+        enterTo='transform opacity-100 scale-100'
+        leave='transition ease-in duration-75'
+        leaveFrom='transform opacity-100 scale-100'
+        leaveTo='transform opacity-0 scale-95'
       >
-        <div className="absolute right-full top-0 mr-1 w-64 bg-background border rounded-lg p-2 shadow-lg z-[60]">
-          <div className="py-1">
+        <div className='absolute right-full top-0 mr-1 w-64 bg-background border rounded-lg p-2 shadow-lg z-[60]'>
+          <div className='py-1'>
             {items.map((item, index) => (
               <Link
                 key={index}
                 href={item.href}
-                className="group flex items-center gap-3 px-3 py-2 text-sm rounded-lg transition-all duration-300 hover:bg-primary/10 hover:text-primary hover:translate-x-1"
+                className='flex gap-3 items-center px-3 py-2 text-sm rounded-lg transition-all duration-300 group hover:bg-primary/10 hover:text-primary hover:translate-x-1'
               >
-                <span className="w-2 h-2 rounded-full bg-current opacity-50 group-hover:opacity-100 transition-opacity duration-300"></span>
+                <span className='w-2 h-2 bg-current rounded-full opacity-50 transition-opacity duration-300 group-hover:opacity-100'></span>
                 {item.label}
               </Link>
             ))}
@@ -194,49 +194,49 @@ const SubMenu: React.FC<SubMenuProps> = ({
         </div>
       </Transition>
     </div>
-  );
-};
+  )
+}
 
 // کامپوننت اصلی منوی محصولات÷
 const ProductsMenu = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null);
+  const [isOpen, setIsOpen] = useState(false)
+  const [activeSubmenu, setActiveSubmenu] = useState<string | null>(null)
 
   return (
-    <Menu as="div" className="relative inline-block text-left">
+    <Menu as='div' className='inline-block relative text-left'>
       <div
         onMouseEnter={() => setIsOpen(true)}
         onMouseLeave={() => {
-          setIsOpen(false);
-          setActiveSubmenu(null);
+          setIsOpen(false)
+          setActiveSubmenu(null)
         }}
       >
         <Menu.Button
-          className="text-sm font-medium text-nowrap cursor-pointer hover:bg-primary/10 hover:text-primary transition-all duration-300 px-4 py-2.5 rounded-lg relative group overflow-hidden flex items-center gap-2 focus:outline-none focus:ring-0"
+          className='text-sm font-medium text-nowrap cursor-pointer hover:bg-primary/10 hover:text-primary transition-all duration-300 px-4 py-2.5 rounded-lg relative group overflow-hidden flex items-center gap-2 focus:outline-none focus:ring-0'
           tabIndex={-1}
         >
-          <span className="relative z-10 flex items-center gap-2">
+          <span className='flex relative z-10 gap-2 items-center'>
             محصولات
-            <ChevronDown className="h-4 w-4 transition-transform duration-300 group-data-[headlessui-state=open]:rotate-180" />
+            <ChevronDown className='h-4 w-4 transition-transform duration-300 group-data-[headlessui-state=open]:rotate-180' />
           </span>
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className='absolute inset-0 bg-gradient-to-r opacity-0 transition-opacity duration-300 from-primary/5 to-primary/10 group-hover:opacity-100'></div>
         </Menu.Button>
 
         <Transition
           show={isOpen}
           as={Fragment}
-          enter="transition ease-out duration-100"
-          enterFrom="transform opacity-0 scale-95"
-          enterTo="transform opacity-100 scale-100"
-          leave="transition ease-in duration-75"
-          leaveFrom="transform opacity-100 scale-100"
-          leaveTo="transform opacity-0 scale-95"
+          enter='transition ease-out duration-100'
+          enterFrom='transform opacity-0 scale-95'
+          enterTo='transform opacity-100 scale-100'
+          leave='transition ease-in duration-75'
+          leaveFrom='transform opacity-100 scale-100'
+          leaveTo='transform opacity-0 scale-95'
         >
           <Menu.Items
             static
-            className="absolute right-0 mt-2 w-72 origin-top-right bg-background border rounded-lg p-2 shadow-lg z-50"
+            className='absolute right-0 z-50 p-2 mt-2 w-72 rounded-lg border shadow-lg origin-top-right bg-background'
           >
-            <div className="py-1">
+            <div className='py-1'>
               {Object.entries(productsData).map(([category, categoryItems]) => (
                 <SubMenu
                   key={category}
@@ -249,20 +249,20 @@ const ProductsMenu = () => {
               ))}
 
               {/* جداکننده */}
-              <div className="border-t my-2 bg-gradient-to-r from-transparent via-divider to-transparent"></div>
+              <div className='my-2 bg-gradient-to-r from-transparent to-transparent border-t via-divider'></div>
 
               {/* دکمه مشاهده همه */}
               <Menu.Item>
                 {({ active }) => (
                   <Link
-                    href="/products"
+                    href='/products'
                     className={`${
                       active
                         ? 'bg-primary/20 border-primary/40'
                         : 'border-primary/20'
-                    } font-bold text-primary w-full block py-3 px-4 text-center border-2 rounded-xl bg-gradient-to-r from-primary/5 to-primary/10 hover:from-primary/10 hover:to-primary/20 transition-all duration-300  hover:shadow-lg group`}
+                    } font-bold text-primary w-full block py-3 px-4 text-center border-2 rounded-xl bg-gradient-to-r from-primary/5 to-primary/10 hover:from-primary/10 hover:to-primary/20 transition-all duration-300 group`}
                   >
-                    <span className="flex items-center justify-center gap-2">
+                    <span className='flex gap-2 justify-center items-center'>
                       مشاهده همه محصولات
                     </span>
                   </Link>
@@ -273,45 +273,45 @@ const ProductsMenu = () => {
         </Transition>
       </div>
     </Menu>
-  );
-};
+  )
+}
 
 // کامپوننت منوی وزن آهن آلات
 const WeightMenu = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <Menu as="div" className="relative inline-block text-left">
+    <Menu as='div' className='inline-block relative text-left'>
       <div
         onMouseEnter={() => setIsOpen(true)}
         onMouseLeave={() => setIsOpen(false)}
       >
         <Menu.Button
-          className="text-sm font-medium text-nowrap cursor-pointer hover:bg-primary/10 hover:text-primary transition-all duration-300 px-4 py-2.5 rounded-lg relative group overflow-hidden flex items-center gap-2 focus:outline-none focus:ring-0"
+          className='text-sm font-medium text-nowrap cursor-pointer hover:bg-primary/10 hover:text-primary transition-all duration-300 px-4 py-2.5 rounded-lg relative group overflow-hidden flex items-center gap-2 focus:outline-none focus:ring-0'
           tabIndex={-1}
         >
-          <span className="relative z-10 flex items-center gap-2">
+          <span className='flex relative z-10 gap-2 items-center'>
             وزن آهن آلات
-            <ChevronDown className="h-4 w-4 transition-transform duration-300 group-data-[headlessui-state=open]:rotate-180" />
+            <ChevronDown className='h-4 w-4 transition-transform duration-300 group-data-[headlessui-state=open]:rotate-180' />
           </span>
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div className='absolute inset-0 bg-gradient-to-r opacity-0 transition-opacity duration-300 from-primary/5 to-primary/10 group-hover:opacity-100'></div>
         </Menu.Button>
 
         <Transition
           show={isOpen}
           as={Fragment}
-          enter="transition ease-out duration-100"
-          enterFrom="transform opacity-0 scale-95"
-          enterTo="transform opacity-100 scale-100"
-          leave="transition ease-in duration-75"
-          leaveFrom="transform opacity-100 scale-100"
-          leaveTo="transform opacity-0 scale-95"
+          enter='transition ease-out duration-100'
+          enterFrom='transform opacity-0 scale-95'
+          enterTo='transform opacity-100 scale-100'
+          leave='transition ease-in duration-75'
+          leaveFrom='transform opacity-100 scale-100'
+          leaveTo='transform opacity-0 scale-95'
         >
           <Menu.Items
             static
-            className="absolute right-0 mt-2 w-80 origin-top-right bg-background border rounded-lg p-2 shadow-lg z-50 focus:outline-none focus:ring-0"
+            className='absolute right-0 z-50 p-2 mt-2 w-80 rounded-lg border shadow-lg origin-top-right bg-background focus:outline-none focus:ring-0'
           >
-            <div className="py-1">
+            <div className='py-1'>
               {weightData.map((item, index) => (
                 <Menu.Item key={index}>
                   {({ active }) => (
@@ -319,7 +319,7 @@ const WeightMenu = () => {
                       href={item.href}
                       className={`group flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-300 hover:bg-primary/10 hover:text-primary hover:translate-x-1`}
                     >
-                      <span className="w-2 h-2 rounded-full bg-current opacity-50 group-hover:opacity-100 transition-opacity duration-300"></span>
+                      <span className='w-2 h-2 bg-current rounded-full opacity-50 transition-opacity duration-300 group-hover:opacity-100'></span>
                       {item.label}
                     </Link>
                   )}
@@ -332,15 +332,15 @@ const WeightMenu = () => {
         </Transition>
       </div>
     </Menu>
-  );
-};
+  )
+}
 
 // کامپوننت اصلی - ادغام شده
 export default function NavMenu() {
   return (
-    <div className="flex items-center gap-2">
+    <div className='flex gap-2 items-center'>
       <ProductsMenu />
       <WeightMenu />
     </div>
-  );
+  )
 }
