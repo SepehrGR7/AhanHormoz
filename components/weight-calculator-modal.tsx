@@ -1,225 +1,191 @@
-'use client'
+'use client';
 
-import { useState, useEffect, useCallback } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Calculator, X, Info } from 'lucide-react'
+import { useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { X } from 'lucide-react';
+import RebarWeightCalculator from '@/components/calculators/RebarWeightCalculator';
+import SheetWeightCalculator from '@/components/calculators/SheetWeightCalculator';
+import BeamWeightCalculator from '@/components/calculators/BeamWeightCalculator';
+import PipeWeightCalculator from '@/components/calculators/PipeWeightCalculator';
+import AngleWeightCalculator from '@/components/calculators/AngleWeightCalculator';
+import StudWeightCalculator from '@/components/calculators/StudWeightCalculator';
+import BilletWeightCalculator from '@/components/calculators/BilletWeightCalculator';
+import SquareTubeWeightCalculator from '@/components/calculators/SquareTubeWeightCalculator';
 
 interface WeightCalculatorModalProps {
-  isOpen: boolean
-  onClose: () => void
-  productName?: string
-  formatPrice?: (price: number) => string
+  isOpen: boolean;
+  onClose: () => void;
+  productName?: string;
+  productCategory?: string;
+  productPrice?: number; // قیمت محصول به ازای واحد (کیلوگرم یا تن)
+  productUnit?: 'kg' | 'ton' | 'piece'; // واحد محصول
+  includeVAT?: boolean; // شامل ارزش افزوده
+  formatPrice?: (price: number) => string;
 }
 
 export default function WeightCalculatorModal({
   isOpen,
   onClose,
   productName,
+  productCategory,
+  productPrice,
+  productUnit = 'kg',
+  includeVAT = false,
   formatPrice: customFormatPrice,
 }: WeightCalculatorModalProps) {
-  const [diameter, setDiameter] = useState('')
-  const [length, setLength] = useState('')
-  const [quantity, setQuantity] = useState('1')
-  const [totalWeight, setTotalWeight] = useState(0)
-  const [totalPrice, setTotalPrice] = useState(0)
+  // تشخیص نوع ماشین حساب بر اساس دسته‌بندی محصول
+  const getCalculatorType = () => {
+    if (!productCategory && !productName) return 'rebar'; // پیش‌فرض میلگرد
 
-  const calculateWeight = () => {
-    const d = parseFloat(diameter)
-    const l = parseFloat(length)
-    const q = parseFloat(quantity)
+    const searchText =
+      `${productCategory || ''} ${productName || ''}`.toLowerCase();
 
-    if (d && l && q) {
-      // فرمول محاسبه وزن میلگرد: (قطر^2 × طول × 0.00617) × تعداد
-      const weight = d * d * l * 0.00617 * q
-      setTotalWeight(Math.round(weight * 100) / 100)
-
-      // محاسبه قیمت تقریبی (قیمت نمونه: 185000 تومان به کیلو)
-      const estimatedPrice = weight * 185000
-      setTotalPrice(Math.round(estimatedPrice))
+    if (searchText.includes('میلگرد') || searchText.includes('rebar')) {
+      return 'rebar';
+    } else if (searchText.includes('ورق') || searchText.includes('sheet')) {
+      return 'sheet';
+    } else if (
+      searchText.includes('تیرآهن') ||
+      searchText.includes('تیر') ||
+      searchText.includes('beam')
+    ) {
+      return 'beam';
+    } else if (searchText.includes('لوله') || searchText.includes('pipe')) {
+      return 'pipe';
+    } else if (searchText.includes('نبشی') || searchText.includes('angle')) {
+      return 'angle';
+    } else if (
+      searchText.includes('ناودانی') ||
+      searchText.includes('استاد') ||
+      searchText.includes('stud')
+    ) {
+      return 'stud';
+    } else if (searchText.includes('شمش') || searchText.includes('billet')) {
+      return 'billet';
+    } else if (
+      searchText.includes('قوطی') ||
+      searchText.includes('square') ||
+      searchText.includes('tube')
+    ) {
+      return 'square-tube';
+    } else {
+      return 'rebar'; // پیش‌فرض
     }
-  }
+  };
 
-  const resetCalculator = () => {
-    setDiameter('')
-    setLength('')
-    setQuantity('1')
-    setTotalWeight(0)
-    setTotalPrice(0)
-  }
+  const calculatorType = getCalculatorType();
 
-  const handleClose = useCallback(() => {
-    resetCalculator()
-    onClose()
-  }, [onClose])
+  const getCalculatorTitle = () => {
+    switch (calculatorType) {
+      case 'sheet':
+        return 'ماشین حساب وزن ورق';
+      case 'beam':
+        return 'ماشین حساب وزن تیرآهن';
+      case 'pipe':
+        return 'ماشین حساب وزن لوله';
+      case 'angle':
+        return 'ماشین حساب وزن نبشی';
+      case 'stud':
+        return 'ماشین حساب وزن ناودانی';
+      case 'billet':
+        return 'ماشین حساب وزن شمش';
+      case 'square-tube':
+        return 'ماشین حساب وزن قوطی';
+      case 'rebar':
+      default:
+        return 'ماشین حساب وزن میلگرد';
+    }
+  };
 
-  // Handle ESC key press
+  const renderCalculator = () => {
+    const calculatorProps = {
+      productPrice,
+      productUnit,
+      includeVAT,
+      formatPrice:
+        customFormatPrice || ((price: number) => price.toLocaleString('fa-IR')),
+    };
+
+    switch (calculatorType) {
+      case 'sheet':
+        return <SheetWeightCalculator {...calculatorProps} />;
+      case 'beam':
+        return <BeamWeightCalculator />;
+      case 'pipe':
+        return <PipeWeightCalculator />;
+      case 'angle':
+        return <AngleWeightCalculator />;
+      case 'stud':
+        return <StudWeightCalculator />;
+      case 'billet':
+        return <BilletWeightCalculator />;
+      case 'square-tube':
+        return <SquareTubeWeightCalculator />;
+      case 'rebar':
+      default:
+        return <RebarWeightCalculator {...calculatorProps} />;
+    }
+  };
+
   useEffect(() => {
-    const handleEscKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && isOpen) {
-        handleClose()
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
       }
-    }
+    };
 
     if (isOpen) {
-      document.addEventListener('keydown', handleEscKey)
+      document.addEventListener('keydown', handleEscape);
+      // جلوگیری از اسکرول پس‌زمینه
+      document.body.style.overflow = 'hidden';
     }
 
     return () => {
-      document.removeEventListener('keydown', handleEscKey)
-    }
-  }, [isOpen, handleClose])
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen, onClose]);
 
-  const formatPrice =
-    customFormatPrice ||
-    ((price: number) => {
-      return new Intl.NumberFormat('fa-IR').format(price)
-    })
-
-  if (!isOpen) return null
+  if (!isOpen) return null;
 
   return (
-    <div
-      className='fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50'
-      onClick={handleClose}
-    >
-      <Card className='w-full max-w-lg' onClick={e => e.stopPropagation()}>
-        <CardHeader className='flex flex-row items-center justify-between'>
-          <CardTitle className='flex items-center gap-2 text-xl'>
-            <Calculator className='w-8 h-8' />
-            محاسبه وزن و قیمت میلگرد
-          </CardTitle>
-          <Button
-            variant='ghost'
-            size='sm'
-            onClick={handleClose}
-            className='cursor-pointer'
-          >
-            <X className='w-4 h-4' />
-          </Button>
-        </CardHeader>
-
-        <CardContent className='space-y-6'>
-          {productName && (
-            <div className='p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20'>
-              <div className='text-sm text-blue-700 dark:text-blue-300'>
-                محصول انتخابی: <span className='font-semibold'>{productName}</span>
-              </div>
-            </div>
-          )}
-
-          <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+      <div className="w-full max-w-4xl max-h-[90vh] overflow-y-auto animate-in fade-in-0 zoom-in-95 duration-300">
+        <Card className="w-full">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
             <div>
-              <Label htmlFor='diameter'>قطر (میلیمتر)</Label>
-              <Input
-                id='diameter'
-                type='number'
-                value={diameter}
-                onChange={e => setDiameter(e.target.value)}
-                placeholder='مثال: 14'
-                className='mt-1'
-              />
+              <CardTitle className="text-lg">{getCalculatorTitle()}</CardTitle>
+              <p className="text-sm text-slate-600 dark:text-slate-400">
+                محاسبه دقیق وزن {productPrice ? 'و قیمت ' : ''}
+                {productName || 'محصول انتخابی'}
+              </p>
             </div>
 
-            <div>
-              <Label htmlFor='length'>طول (متر)</Label>
-              <Input
-                id='length'
-                type='number'
-                value={length}
-                onChange={e => setLength(e.target.value)}
-                placeholder='مثال: 12'
-                className='mt-1'
-              />
-            </div>
-
-            <div className='md:col-span-2'>
-              <Label htmlFor='quantity'>تعداد شاخه</Label>
-              <Input
-                id='quantity'
-                type='number'
-                value={quantity}
-                onChange={e => setQuantity(e.target.value)}
-                placeholder='مثال: 1'
-                className='mt-1'
-              />
-            </div>
-          </div>
-
-          <div className='flex gap-3'>
-            <Button onClick={calculateWeight} className='flex-1 cursor-pointer'>
-              <Calculator className='w-4 h-4 ml-2' />
-              محاسبه
-            </Button>
             <Button
-              onClick={resetCalculator}
-              variant='outline'
-              className='cursor-pointer'
+              variant="ghost"
+              size="sm"
+              onClick={onClose}
+              className="h-8 w-8 p-0 cursor-pointer"
             >
-              پاک کردن
+              <X className="w-4 h-4" />
             </Button>
-          </div>
+          </CardHeader>
 
-          {totalWeight > 0 && (
-            <div className='space-y-4'>
-              <div className='p-4 rounded-lg bg-green-50 dark:bg-green-900/20'>
-                <div className='grid grid-cols-2 gap-4'>
-                  <div className='text-center'>
-                    <div className='text-2xl font-bold text-green-600 dark:text-green-400'>
-                      {totalWeight.toLocaleString('fa-IR')}
-                    </div>
-                    <div className='text-sm text-slate-600 dark:text-slate-400'>
-                      کیلوگرم
-                    </div>
-                  </div>
-                  <div className='text-center'>
-                    <div className='text-2xl font-bold text-blue-600 dark:text-blue-400'>
-                      {formatPrice(totalPrice)}
-                    </div>
-                    <div className='text-sm text-slate-600 dark:text-slate-400'>
-                      تومان (تقریبی)
-                    </div>
-                  </div>
+          <CardContent>
+            {productName && (
+              <div className="p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 mb-6">
+                <div className="text-sm text-blue-700 dark:text-blue-300">
+                  محصول انتخابی:{' '}
+                  <span className="font-semibold">{productName}</span>
                 </div>
               </div>
+            )}
 
-              <div className='p-4 rounded-lg bg-slate-50 dark:bg-slate-800'>
-                <h4 className='mb-2 text-sm font-semibold'>جزئیات محاسبه:</h4>
-                <div className='space-y-1 text-xs text-slate-600 dark:text-slate-400'>
-                  <div>قطر: {diameter} میلیمتر</div>
-                  <div>طول: {length} متر</div>
-                  <div>تعداد: {quantity} شاخه</div>
-                  <div>
-                    وزن هر شاخه:{' '}
-                    {(
-                      (parseFloat(diameter) || 0) ** 2 *
-                      (parseFloat(length) || 0) *
-                      0.00617
-                    ).toFixed(2)}{' '}
-                    کیلوگرم
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          <div className='p-3 rounded-lg bg-amber-50 dark:bg-amber-900/20'>
-            <div className='flex items-start gap-2'>
-              <Info className='w-4 h-4 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0' />
-              <div className='text-xs text-amber-700 dark:text-amber-300'>
-                <div className='mb-1 font-semibold'>نکات مهم:</div>
-                <ul className='space-y-1'>
-                  <li>• فرمول محاسبه: (قطر² × طول × 0.00617) × تعداد</li>
-                  <li>• قیمت نمایش داده شده تقریبی است</li>
-                  <li>• برای قیمت دقیق با ما تماس بگیرید</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+            {renderCalculator()}
+          </CardContent>
+        </Card>
+      </div>
     </div>
-  )
+  );
 }

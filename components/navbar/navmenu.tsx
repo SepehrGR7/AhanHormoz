@@ -9,13 +9,14 @@ import { PRODUCT_CATEGORIES } from '@/types/products';
 
 // تعریف داده‌های محاسبه وزن آهن آلات
 const weightData = [
-  { href: '/weight/rebar', label: 'جدول اشتال میلگرد', icon: 'icon-weight-1' },
-  { href: '/weight/square-tube', label: 'جدول اشتال قوطی', icon: 'icon-calc' },
-  { href: '/weight/sheet', label: 'جدول وزن ورق', icon: 'icon-Table' },
-  { href: '/weight/stud', label: 'جدول اشتال ناودانی', icon: 'icon-jadval' },
-  { href: '/weight/angle', label: 'جدول اشتال نبشی', icon: 'icon-calculator' },
-  { href: '/weight/pipe', label: 'جدول اشتال لوله', icon: 'icon-chart' },
-  { href: '/weight/beam', label: 'جدول اشتال تیرآهن', icon: 'icon-CHART' },
+  { href: '/weight/beam', label: 'وزن تیرآهن' },
+  { href: '/weight/rebar', label: 'وزن میلگرد' },
+  { href: '/weight/billet', label: 'وزن شمش فولادی' },
+  { href: '/weight/pipe', label: 'وزن لوله فولادی' },
+  { href: '/weight/stud', label: 'وزن ناودانی' },
+  { href: '/weight/angle', label: 'وزن نبشی' },
+  { href: '/weight/square-tube', label: 'وزن قوطی' },
+  { href: '/weight/sheet', label: 'وزن ورق' },
 ];
 
 // تعریف داده‌های محصولات با دسته‌بندی کامل
@@ -316,7 +317,7 @@ const WeightMenu = () => {
                   {({ active }) => (
                     <Link
                       href={item.href}
-                      className={` group flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-300 hover:translate-x-1`}
+                      className={`group flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-300 hover:bg-primary/10 hover:text-primary hover:translate-x-1`}
                     >
                       <span className="w-2 h-2 rounded-full bg-current opacity-50 group-hover:opacity-100 transition-opacity duration-300"></span>
                       {item.label}

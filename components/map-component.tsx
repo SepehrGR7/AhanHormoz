@@ -21,11 +21,11 @@ export default function MapComponent() {
 
   useEffect(() => {
     if (mapRef.current && !mapInstanceRef.current) {
-      // مختصات مرکز تهران
-      const tehranCenter: [number, number] = [35.6892, 51.389];
+      // مختصات بندرعباس
+      const bandarAbbasCenter: [number, number] = [27.1832, 56.2666];
 
       // ایجاد نقشه
-      const map = L.map(mapRef.current).setView(tehranCenter, 12);
+      const map = L.map(mapRef.current).setView(bandarAbbasCenter, 13);
       mapInstanceRef.current = map;
 
       // اضافه کردن لایه نقشه
@@ -35,56 +35,12 @@ export default function MapComponent() {
         maxZoom: 19,
       }).addTo(map);
 
-      // اضافه کردن مارکر برای مرکز تهران
-      const marker = L.marker(tehranCenter).addTo(map);
-      marker.bindPopup('<b>تهران</b><br>مرکز شهر تهران').openPopup();
+      // اضافه کردن مارکر برای بندرعباس
+      const marker = L.marker(bandarAbbasCenter).addTo(map);
+      marker.bindPopup('<b>دفتر آهن هرمز</b><br>بندرعباس').openPopup();
 
-      // اضافه کردن چند مارکر برای مناطق مختلف تهران
-      const locations = [
-        {
-          coords: [35.7219, 51.3347] as [number, number],
-          name: 'میدان آزادی',
-          description: 'میدان آزادی تهران',
-        },
-        {
-          coords: [35.6961, 51.4231] as [number, number],
-          name: 'میدان تجریش',
-          description: 'میدان تجریش',
-        },
-        {
-          coords: [35.6892, 51.389] as [number, number],
-          name: 'میدان ولیعصر',
-          description: 'میدان ولیعصر',
-        },
-        {
-          coords: [35.7153, 51.4043] as [number, number],
-          name: 'پارک ملت',
-          description: 'پارک ملت تهران',
-        },
-      ];
-
-      locations.forEach((location) => {
-        const locationMarker = L.marker(location.coords).addTo(map);
-        locationMarker.bindPopup(
-          `<b>${location.name}</b><br>${location.description}`
-        );
-      });
-
-      // اضافه کردن دایره برای نشان دادن محدوده
-      const circle = L.circle(tehranCenter, {
-        color: 'blue',
-        fillColor: '#3388ff',
-        fillOpacity: 0.1,
-        radius: 5000, // 5 کیلومتر
-      }).addTo(map);
-
-      // تنظیم محدوده نمایش
-      const group = L.featureGroup([
-        marker,
-        ...locations.map((loc) => L.marker(loc.coords)),
-        circle,
-      ]);
-      map.fitBounds(group.getBounds().pad(0.1));
+      // تنظیم محدوده نمایش روی بندرعباس
+      map.setView(bandarAbbasCenter, 13);
     }
 
     return () => {
