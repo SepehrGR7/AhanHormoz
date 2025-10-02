@@ -284,7 +284,7 @@ export default function ProductPage({
                     color='primary'
                     className='rotate-180'
                     classNames={{
-                      wrapper: 'group-data-[selected=true]:bg-blue-600',
+                      wrapper: 'group-data-[selected=true]:bg-blue-500',
                     }}
                   />
                   <span>احتساب ارزش افزوده</span>
