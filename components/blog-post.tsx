@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Card } from './ui/card'
 import { Button } from './ui/button'
-import { CalendarDays, Clock3, ArrowRight } from 'lucide-react'
+import { CalendarDays, Clock3, ArrowRight, ArrowLeft } from 'lucide-react'
 
 export interface BlogPost {
   id: string
@@ -53,8 +53,8 @@ export function BlogPostCard({ post }: BlogPostCardProps) {
           <div className='mt-6 border-t border-muted-foreground/10 pt-4'>
             <Button asChild className='flex items-center gap-2'>
               <Link href={`/manufacturers/${post.id}`}>
-                <ArrowRight className='w-4 h-4' />
                 <span>ادامه مطلب</span>
+                <ArrowLeft className='w-4 h-4' />
               </Link>
             </Button>
           </div>
