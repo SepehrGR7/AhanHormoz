@@ -42,7 +42,7 @@ export const Navbar = () => {
       maxWidth='2xl'
       position='sticky'
       isBordered
-      className='px-2 py-2 border-b shadow-sm backdrop-blur-md sm:py-3 sm:px-4 bg-background/80 border-divider/50'
+      className='z-40 px-2 py-2 border-b shadow-sm backdrop-blur-md sm:py-3 sm:px-4 bg-background/80 border-divider/50'
     >
       <NavbarContent className='basis-1/5 sm:basis-full' justify='start'>
         <NavbarBrand as='li' className='gap-4 max-w-fit'>
@@ -101,19 +101,23 @@ export const Navbar = () => {
       <NavbarContent className='lg:hidden basis-1' justify='end'>
         <div className='flex gap-2 items-center sm:gap-3'>
           <ThemeSwitch />
-          <NavbarMenuToggle className='transition-colors text-default-600 hover:text-primary' />
+          <NavbarMenuToggle
+            className='p-2 min-w-0 rounded-lg transition-colors text-default-600 hover:text-primary focus:outline-none'
+            aria-label='منوی موبایل'
+            data-testid='mobile-menu-toggle'
+          />
         </div>
       </NavbarContent>
 
-      <NavbarMenu className='backdrop-blur-xl bg-background/95'>
-        <div className='flex flex-col gap-2 mx-4 mt-4'>
+      <NavbarMenu className='z-50 border-t backdrop-blur-xl bg-background/95 border-divider/50'>
+        <div className='flex flex-col gap-1 pb-4 mx-4 mt-4'>
           {siteConfig.navMenuItems.map((item, index) => (
-            <NavbarMenuItem key={`${item}-${index}`}>
+            <NavbarMenuItem key={`${item.label}-${index}`}>
               <Link
                 color={'foreground'}
                 href={item.href}
                 size='lg'
-                className='block px-4 py-3 rounded-xl transition-all duration-300 hover:bg-primary/10 hover:text-primary hover:translate-x-2 group'
+                className='block px-4 py-3 w-full rounded-xl transition-all duration-300 hover:bg-primary/10 hover:text-primary hover:translate-x-2 group'
               >
                 <span className='flex gap-3 items-center'>
                   <div className='w-2 h-2 rounded-full transition-colors duration-300 bg-primary/30 group-hover:bg-primary'></div>
