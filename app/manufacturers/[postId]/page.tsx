@@ -1,8 +1,10 @@
 import { Metadata } from 'next'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import { CalendarDays, Clock3, User } from 'lucide-react'
+import { ArrowRight, CalendarDays, Clock3, User } from 'lucide-react'
 import { BlogPost } from '@/components/blog-post'
+import NextLink from 'next/link'
+import { Button } from '@heroui/button'
 
 // This would typically come from a database or CMS
 const posts: BlogPost[] = [
@@ -45,14 +47,13 @@ const posts: BlogPost[] = [
   },
 ]
 
-interface Props {
-  params: {
-    postId: string
-  }
-}
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = posts.find(p => p.id === params.postId)
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ postId: string }>
+}): Promise<Metadata> {
+  const resolvedParams = await params
+  const post = posts.find(p => p.id === resolvedParams.postId)
 
   if (!post) {
     return {
@@ -66,8 +67,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default function BlogPostPage({ params }: Props) {
-  const post = posts.find(p => p.id === params.postId)
+export default async function BlogPostPage({
+  params,
+}: {
+  params: Promise<{ postId: string }>
+}) {
+  const resolvedParams = await params
+  const post = posts.find(p => p.id === resolvedParams.postId)
 
   if (!post) {
     notFound()
@@ -107,6 +113,18 @@ export default function BlogPostPage({ params }: Props) {
             {post.content.split('\n\n').map((paragraph, i) => (
               <p key={i}>{paragraph.trim()}</p>
             ))}
+          </div>
+          <div className='flex justify-start'>
+            <Button
+              as={NextLink}
+              href='/manufacturers'
+              color='primary'
+              variant='faded'
+              startContent={<ArrowRight className='w-4 h-4' />}
+              className='flex items-center gap-2'
+            >
+              بازگشت به تولیدکنندگان
+            </Button>
           </div>
         </div>
       </div>
