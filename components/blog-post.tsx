@@ -44,7 +44,7 @@ export function BlogPostCard({ post }: BlogPostCardProps) {
         <h3 className='text-xl font-bold'>{post.title}</h3>
         <p className='text-muted-foreground line-clamp-3'>{post.excerpt}</p>
         <Button asChild>
-          <Link href={`/blog/${post.id}`}>ادامه مطلب</Link>
+          <Link href={`/manufacturers/${post.id}`}>ادامه مطلب</Link>
         </Button>
       </div>
     </Card>

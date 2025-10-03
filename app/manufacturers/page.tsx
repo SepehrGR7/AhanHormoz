@@ -1,8 +1,9 @@
 import { Metadata } from 'next'
 import { BlogPostCard, BlogPost } from '@/components/blog-post'
+import { Factory } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'وبلاگ | آهن هرمز',
+  title: 'تولید کنندگان',
   description:
     'آخرین مطالب و اخبار در مورد صنعت فولاد و تولیدکنندگان فولاد ایران',
 }
@@ -26,7 +27,7 @@ const posts: BlogPost[] = [
     excerpt:
       'ذوب آهن اصفهان به عنوان اولین تولیدکننده فولاد در ایران، نقش مهمی در توسعه صنعتی کشور داشته است.',
     content: `ذوب آهن اصفهان در سال ۱۳۴۶ به عنوان اولین کارخانه تولید فولاد در ایران افتتاح شد...`,
-    image: '/images/blog/zob-ahan.jpg',
+    image: '/images/blog/zob-ahan.png',
     date: '۱۴۰۴/۰۷/۱۰',
     readTime: '۴ دقیقه',
     author: 'تیم آهن هرمز',
@@ -37,58 +38,44 @@ const posts: BlogPost[] = [
     excerpt:
       'گروه فولاد خوزستان با تولید انواع شمش فولادی و محصولات فولادی، یکی از قطب‌های مهم تولید فولاد در کشور است.',
     content: `فولاد خوزستان از سال ۱۳۶۷ فعالیت خود را آغاز کرد و امروز به یکی از بزرگترین تولیدکنندگان شمش فولادی در ایران تبدیل شده است...`,
-    image: '/images/blog/foolad-khuzestan.jpg',
+    image: '/images/blog/foolad-khuzestan.png',
     date: '۱۴۰۴/۰۷/۰۹',
     readTime: '۴ دقیقه',
     author: 'تیم آهن هرمز',
   },
 ]
 
-export default function BlogPage() {
+export default function ManufacturersPage() {
   return (
-    <div className='container max-w-7xl mx-auto py-12'>
+    <main className='relative'>
       {/* Hero Section */}
-      <div className='relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-600 to-blue-800 text-white p-8 md:p-12 mb-12'>
-        <div className='relative z-10 max-w-2xl space-y-4'>
-          <h1 className='text-4xl md:text-5xl font-bold'>وبلاگ آهن هرمز</h1>
-          <p className='text-lg md:text-xl opacity-90'>
-            آخرین اخبار و مقالات در مورد صنعت فولاد، تولیدکنندگان و بازار آهن و
-            فولاد ایران
-          </p>
-        </div>
-        {/* Abstract Background Pattern */}
-        <div className='absolute inset-0 z-0 opacity-20'>
-          <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-white/30 rounded-full blur-3xl'></div>
-          <div className='absolute right-0 bottom-0 w-[400px] h-[400px] bg-blue-400/30 rounded-full blur-2xl'></div>
+      <div className='relative bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-600 text-white overflow-hidden'>
+        <div className='absolute inset-0 bg-black/10'></div>
+        <div className='absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -translate-y-20 translate-x-20'></div>
+        <div className='absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full translate-y-20 -translate-x-20'></div>
+
+        <div className='relative max-w-7xl mx-auto px-6 py-16'>
+          <div className='text-center'>
+            <div className='inline-flex items-center justify-center w-20 h-20 bg-white/10 backdrop-blur-sm rounded-full mb-6'>
+              <Factory className='w-8 h-8 text-white' />
+            </div>
+            <h1 className='text-5xl font-bold mb-6 bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent'>
+              تولیدکنندگان فولاد ایران
+            </h1>
+            <p className='text-xl opacity-90 max-w-3xl mx-auto leading-relaxed'>
+              آشنایی با بزرگترین و معتبرترین تولیدکنندگان فولاد و محصولات فولادی
+              در ایران
+            </p>
+          </div>
         </div>
       </div>
 
       {/* Posts Grid */}
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8'>
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 py-12 px-4 md:px-12 mx-auto'>
         {posts.map(post => (
           <BlogPostCard key={post.id} post={post} />
         ))}
       </div>
-
-      {/* Newsletter Section - Optional */}
-      <div className='mt-16 p-8 bg-card rounded-2xl border shadow-sm'>
-        <div className='max-w-2xl mx-auto text-center space-y-4'>
-          <h2 className='text-2xl font-bold'>عضویت در خبرنامه</h2>
-          <p className='text-muted-foreground'>
-            برای دریافت آخرین اخبار و مقالات صنعت فولاد در خبرنامه ما عضو شوید
-          </p>
-          <div className='flex gap-2 max-w-md mx-auto'>
-            <input
-              type='email'
-              placeholder='ایمیل خود را وارد کنید'
-              className='flex-1 px-4 py-2 rounded-lg border bg-background'
-            />
-            <button className='px-6 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors'>
-              عضویت
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    </main>
   )
 }
