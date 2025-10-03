@@ -1,7 +1,13 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Menu, Transition } from '@headlessui/react'
+import {
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  Transition,
+} from '@headlessui/react'
 import { ChevronDown, ChevronLeft } from 'lucide-react'
 import Link from 'next/link'
 import { Fragment } from 'react'
@@ -127,6 +133,7 @@ interface SubMenuProps {
   isOpen: boolean
   onMouseEnter: () => void
   onMouseLeave: () => void
+  onLinkClick: () => void
 }
 
 const SubMenu: React.FC<SubMenuProps> = ({
@@ -135,6 +142,7 @@ const SubMenu: React.FC<SubMenuProps> = ({
   isOpen,
   onMouseEnter,
   onMouseLeave,
+  onLinkClick,
 }) => {
   const getCategoryIcon = (categoryName: string) => {
     const icons: Record<string, string> = {
@@ -160,12 +168,12 @@ const SubMenu: React.FC<SubMenuProps> = ({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <div className='flex items-center justify-between px-3 py-2.5 text-sm font-medium rounded-lg cursor-pointer hover:bg-primary/10 hover:text-primary transition-all duration-300 group'>
+      <div className='flex justify-between items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all duration-300 cursor-pointer hover:bg-primary/10 hover:text-primary group'>
         <span className='flex gap-3 items-center'>
           <i className={`text-lg ${getCategoryIcon(title)}`}></i>
           {title}
         </span>
-        <ChevronLeft className='w-4 h-4 transition-transform duration-300' />
+        <ChevronLeft className='w-4 h-4 transition-transform duration-300 group-hover:translate-x-1' />
       </div>
 
       <Transition
@@ -178,15 +186,16 @@ const SubMenu: React.FC<SubMenuProps> = ({
         leaveFrom='transform opacity-100 scale-100'
         leaveTo='transform opacity-0 scale-95'
       >
-        <div className='absolute right-full top-0 mr-1 w-64 bg-background border rounded-lg p-2 shadow-lg z-[60]'>
+        <div className='absolute right-full top-0 mr-2 w-72 bg-background/95 backdrop-blur-xl border border-divider/50 rounded-2xl p-3 shadow-2xl z-[60]'>
           <div className='py-1'>
             {items.map((item, index) => (
               <Link
                 key={index}
                 href={item.href}
-                className='flex gap-3 items-center px-3 py-2 text-sm rounded-lg transition-all duration-300 group hover:bg-primary/10 hover:text-primary hover:translate-x-1'
+                onClick={onLinkClick}
+                className='flex gap-3 items-center px-4 py-2.5 text-sm rounded-xl transition-all duration-300 group hover:bg-primary/10 hover:text-primary hover:translate-x-2'
               >
-                <span className='w-2 h-2 bg-current rounded-full opacity-50 transition-opacity duration-300 group-hover:opacity-100'></span>
+                <span className='w-2 h-2 rounded-full opacity-60 transition-all duration-300 bg-primary/40 group-hover:opacity-100 group-hover:bg-primary group-hover:scale-125'></span>
                 {item.label}
               </Link>
             ))}
@@ -211,16 +220,16 @@ const ProductsMenu = () => {
           setActiveSubmenu(null)
         }}
       >
-        <Menu.Button
-          className='text-sm font-medium text-nowrap cursor-pointer hover:bg-primary/10 hover:text-primary transition-all duration-300 px-4 py-2.5 rounded-lg relative group overflow-hidden flex items-center gap-2 focus:outline-none focus:ring-0'
+        <MenuButton
+          className='text-sm font-semibold text-nowrap cursor-pointer hover:bg-primary/10 hover:text-primary transition-all duration-300 px-3 xl:px-4 py-2.5 rounded-xl relative group overflow-hidden flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-primary/20'
           tabIndex={-1}
         >
           <span className='flex relative z-10 gap-2 items-center'>
             محصولات
             <ChevronDown className='h-4 w-4 transition-transform duration-300 group-data-[headlessui-state=open]:rotate-180' />
           </span>
-          <div className='absolute inset-0 bg-gradient-to-r opacity-0 transition-opacity duration-300 from-primary/5 to-primary/10 group-hover:opacity-100'></div>
-        </Menu.Button>
+          <div className='absolute inset-0 bg-gradient-to-r rounded-xl opacity-0 transition-opacity duration-300 from-primary/5 to-primary/10 group-hover:opacity-100'></div>
+        </MenuButton>
 
         <Transition
           show={isOpen}
@@ -232,9 +241,9 @@ const ProductsMenu = () => {
           leaveFrom='transform opacity-100 scale-100'
           leaveTo='transform opacity-0 scale-95'
         >
-          <Menu.Items
+          <MenuItems
             static
-            className='absolute right-0 z-50 p-2 mt-2 w-72 rounded-lg border shadow-lg origin-top-right bg-background'
+            className='absolute right-0 z-50 p-3 mt-2 w-80 rounded-2xl border shadow-2xl origin-top-right border-divider/50 bg-background/95'
           >
             <div className='py-1'>
               {Object.entries(productsData).map(([category, categoryItems]) => (
@@ -245,31 +254,35 @@ const ProductsMenu = () => {
                   isOpen={activeSubmenu === category}
                   onMouseEnter={() => setActiveSubmenu(category)}
                   onMouseLeave={() => setActiveSubmenu(null)}
+                  onLinkClick={() => {
+                    setIsOpen(false)
+                    setActiveSubmenu(null)
+                  }}
                 />
               ))}
 
-              {/* جداکننده */}
               <div className='my-2 bg-gradient-to-r from-transparent to-transparent border-t via-divider'></div>
 
-              {/* دکمه مشاهده همه */}
-              <Menu.Item>
+              <MenuItem>
                 {({ active }) => (
                   <Link
                     href='/products'
-                    className={`${
+                    onClick={() => {
+                      setIsOpen(false)
+                      setActiveSubmenu(null)
+                    }}
+                    className={`flex justify-center items-center gap-2 px-3 py-2.5 border rounded-lg transition-colors font-medium cursor-pointer w-full ${
                       active
-                        ? 'bg-primary/20 border-primary/40'
-                        : 'border-primary/20'
-                    } font-bold text-primary w-full block py-3 px-4 text-center border-2 rounded-xl bg-gradient-to-r from-primary/5 to-primary/10 hover:from-primary/10 hover:to-primary/20 transition-all duration-300 group`}
+                        ? 'bg-blue-50 border-blue-200 text-blue-700 dark:bg-blue-900/30 dark:border-blue-600 dark:text-blue-300'
+                        : 'bg-white border-slate-300 text-slate-700 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-blue-600 dark:hover:text-blue-400'
+                    }`}
                   >
-                    <span className='flex gap-2 justify-center items-center'>
-                      مشاهده همه محصولات
-                    </span>
+                    مشاهده همه محصولات
                   </Link>
                 )}
-              </Menu.Item>
+              </MenuItem>
             </div>
-          </Menu.Items>
+          </MenuItems>
         </Transition>
       </div>
     </Menu>
@@ -286,16 +299,16 @@ const WeightMenu = () => {
         onMouseEnter={() => setIsOpen(true)}
         onMouseLeave={() => setIsOpen(false)}
       >
-        <Menu.Button
-          className='text-sm font-medium text-nowrap cursor-pointer hover:bg-primary/10 hover:text-primary transition-all duration-300 px-4 py-2.5 rounded-lg relative group overflow-hidden flex items-center gap-2 focus:outline-none focus:ring-0'
+        <MenuButton
+          className='text-sm font-semibold text-nowrap cursor-pointer hover:bg-primary/10 hover:text-primary transition-all duration-300 px-3 xl:px-4 py-2.5 rounded-xl relative group overflow-hidden flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-primary/20'
           tabIndex={-1}
         >
           <span className='flex relative z-10 gap-2 items-center'>
             وزن آهن آلات
             <ChevronDown className='h-4 w-4 transition-transform duration-300 group-data-[headlessui-state=open]:rotate-180' />
           </span>
-          <div className='absolute inset-0 bg-gradient-to-r opacity-0 transition-opacity duration-300 from-primary/5 to-primary/10 group-hover:opacity-100'></div>
-        </Menu.Button>
+          <div className='absolute inset-0 bg-gradient-to-r rounded-xl opacity-0 transition-opacity duration-300 from-primary/5 to-primary/10 group-hover:opacity-100'></div>
+        </MenuButton>
 
         <Transition
           show={isOpen}
@@ -307,28 +320,27 @@ const WeightMenu = () => {
           leaveFrom='transform opacity-100 scale-100'
           leaveTo='transform opacity-0 scale-95'
         >
-          <Menu.Items
+          <MenuItems
             static
-            className='absolute right-0 z-50 p-2 mt-2 w-80 rounded-lg border shadow-lg origin-top-right bg-background focus:outline-none focus:ring-0'
+            className='absolute right-0 z-50 p-3 mt-2 w-80 rounded-2xl border shadow-2xl backdrop-blur-xl origin-top-right border-divider/50 bg-background/95 focus:outline-none focus:ring-0'
           >
             <div className='py-1'>
               {weightData.map((item, index) => (
-                <Menu.Item key={index}>
+                <MenuItem key={index}>
                   {({ active }) => (
                     <Link
                       href={item.href}
-                      className={`group flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-300 hover:bg-primary/10 hover:text-primary hover:translate-x-1`}
+                      onClick={() => setIsOpen(false)}
+                      className={`group flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-xl transition-all duration-300 hover:bg-primary/10 hover:text-primary hover:translate-x-2`}
                     >
-                      <span className='w-2 h-2 bg-current rounded-full opacity-50 transition-opacity duration-300 group-hover:opacity-100'></span>
+                      <span className='w-2 h-2 rounded-full opacity-60 transition-all duration-300 bg-primary/40 group-hover:opacity-100 group-hover:bg-primary group-hover:scale-125'></span>
                       {item.label}
                     </Link>
                   )}
-                </Menu.Item>
+                </MenuItem>
               ))}
-
-              {/* دکمه مشاهده همه */}
             </div>
-          </Menu.Items>
+          </MenuItems>
         </Transition>
       </div>
     </Menu>
@@ -338,7 +350,7 @@ const WeightMenu = () => {
 // کامپوننت اصلی - ادغام شده
 export default function NavMenu() {
   return (
-    <div className='flex gap-2 items-center'>
+    <div className='flex gap-1 items-center xl:gap-2'>
       <ProductsMenu />
       <WeightMenu />
     </div>
