@@ -1,4 +1,4 @@
-export type SiteConfig = typeof siteConfig;
+export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
   name: 'آهن هرمز | قیمت روز انواع آهن آلات',
@@ -6,7 +6,7 @@ export const siteConfig = {
   navItems: [
     {
       label: 'کارخانه ها',
-      href: '/factories',
+      href: '/manufacturers',
     },
     {
       label: 'درباره ما',
@@ -29,7 +29,7 @@ export const siteConfig = {
 
     {
       label: 'کارخانه ها',
-      href: '/factories',
+      href: '/manufacturers',
     },
     {
       label: 'درباره ما',
@@ -158,4 +158,4 @@ export const siteConfig = {
     discord: 'https://discord.gg/9b6yyZKmH4',
     sponsor: 'https://patreon.com/jrgarciadev',
   },
-};
+}
