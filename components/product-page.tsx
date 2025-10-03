@@ -140,6 +140,24 @@ export default function ProductPage({
 
   const categoryInfo = PRODUCT_CATEGORIES.find(c => c.id === category)
 
+  // Function to get the appropriate icon for each product category
+  const getCategoryIcon = (categoryId: string) => {
+    const iconMap: Record<string, string> = {
+      rebar: 'icon-rebar',
+      profile: 'icon-profil',
+      sheet: 'icon-varagh',
+      angle: 'icon-nabshi',
+      beam: 'icon-tirahan',
+      pipe: 'icon-lole',
+      wire: 'icon-wire',
+      mesh: 'icon-Wire-products',
+      billet: 'icon-bullion',
+      tube: 'icon-Equipment',
+      'raw-materials': 'icon-stainless-steel',
+    }
+    return iconMap[categoryId] || 'icon-rebar'
+  }
+
   const handleOrder = (product: Product) => {
     setSelectedOrderProduct(product)
     setIsOrderModalOpen(true)
@@ -171,7 +189,9 @@ export default function ProductPage({
       <div className='text-white bg-gradient-to-r from-blue-600 to-blue-800'>
         <div className='px-6 py-12 mx-auto max-w-7xl'>
           <div className='text-center'>
-            <div className='mb-4 text-6xl'>{categoryInfo?.icon}</div>
+            <div className='flex items-center justify-center mx-auto mb-4 w-[100px] h-[100px] text-7xl rounded-full backdrop-blur-sm bg-white/10'>
+              <i className={getCategoryIcon(category)}></i>
+            </div>
             <h1 className='mb-4 text-4xl font-bold'>{title}</h1>
             {description && (
               <p className='mx-auto max-w-3xl text-xl opacity-90'>
@@ -204,7 +224,7 @@ export default function ProductPage({
       </div>
 
       {/* Features Section */}
-      <div className='bg-white border-t dark:bg-slate-800 border-slate-200 dark:border-slate-700'>
+      <div className='hidden bg-white border-t dark:bg-slate-800 border-slate-200 dark:border-slate-700 lg:block'>
         <div className='px-6 py-12 mx-auto max-w-7xl'>
           <div className='grid grid-cols-1 gap-6 md:grid-cols-3'>
             <div className='flex gap-3 items-center p-4 bg-green-50 rounded-lg dark:bg-green-900/20'>
@@ -245,7 +265,7 @@ export default function ProductPage({
       </div>
 
       {/* Search and Filter Bar */}
-      <div className='bg-white border-b dark:bg-slate-800 border-slate-200 dark:border-slate-700'>
+      <div className='sticky top-20 z-10 bg-white border-b dark:bg-slate-800 border-slate-200 dark:border-slate-700'>
         <div className='px-6 py-4 mx-auto'>
           <div className='flex flex-col gap-4 lg:flex-row'>
             <div className='flex-1'>
