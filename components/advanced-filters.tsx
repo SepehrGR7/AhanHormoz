@@ -97,8 +97,8 @@ export default function AdvancedFilters({
         return (
           <>
             {/* درجه کیفیت میلگرد */}
-            <div>
-              <Label className="text-sm font-semibold mb-3 block">
+            {/* <div>
+              <Label className="block mb-3 text-sm font-semibold">
                 درجه کیفیت
               </Label>
               <div className="grid grid-cols-2 gap-2">
@@ -116,11 +116,11 @@ export default function AdvancedFilters({
                   </Button>
                 ))}
               </div>
-            </div>
+            </div> */}
 
             {/* طول میلگرد */}
             <div>
-              <Label className="text-sm font-semibold mb-3 block">
+              <Label className="block mb-3 text-sm font-semibold">
                 طول (متر)
               </Label>
               <div className="grid grid-cols-3 gap-2">
@@ -147,7 +147,7 @@ export default function AdvancedFilters({
           <>
             {/* نوع نبشی/ناودانی */}
             <div>
-              <Label className="text-sm font-semibold mb-3 block">نوع</Label>
+              <Label className="block mb-3 text-sm font-semibold">نوع</Label>
               <div className="grid grid-cols-1 gap-2">
                 {['نبشی', 'ناودانی', 'سپری'].map((type) => (
                   <Button
@@ -167,7 +167,7 @@ export default function AdvancedFilters({
 
             {/* ضخامت نبشی */}
             <div>
-              <Label className="text-sm font-semibold mb-3 block">
+              <Label className="block mb-3 text-sm font-semibold">
                 ضخامت (میلی‌متر)
               </Label>
               <div className="grid grid-cols-4 gap-2">
@@ -195,7 +195,7 @@ export default function AdvancedFilters({
 
             {/* طول شاخه */}
             <div>
-              <Label className="text-sm font-semibold mb-3 block">
+              <Label className="block mb-3 text-sm font-semibold">
                 طول شاخه (متر)
               </Label>
               <div className="grid grid-cols-2 gap-2">
@@ -217,7 +217,7 @@ export default function AdvancedFilters({
 
             {/* نوع وزن */}
             <div>
-              <Label className="text-sm font-semibold mb-3 block">
+              <Label className="block mb-3 text-sm font-semibold">
                 نوع وزن
               </Label>
               <div className="grid grid-cols-1 gap-2">
@@ -248,7 +248,7 @@ export default function AdvancedFilters({
           <>
             {/* نوع ورق */}
             <div>
-              <Label className="text-sm font-semibold mb-3 block">
+              <Label className="block mb-3 text-sm font-semibold">
                 نوع ورق
               </Label>
               <div className="grid grid-cols-1 gap-2">
@@ -279,7 +279,7 @@ export default function AdvancedFilters({
 
             {/* ضخامت ورق */}
             <div>
-              <Label className="text-sm font-semibold mb-3 block">
+              <Label className="block mb-3 text-sm font-semibold">
                 ضخامت (میلی‌متر)
               </Label>
               <div className="grid grid-cols-4 gap-2">
@@ -319,7 +319,7 @@ export default function AdvancedFilters({
 
             {/* درجه کیفیت */}
             <div>
-              <Label className="text-sm font-semibold mb-3 block">
+              <Label className="block mb-3 text-sm font-semibold">
                 درجه کیفیت
               </Label>
               <div className="grid grid-cols-2 gap-2">
@@ -346,7 +346,7 @@ export default function AdvancedFilters({
           <>
             {/* نوع لوله */}
             <div>
-              <Label className="text-sm font-semibold mb-3 block">
+              <Label className="block mb-3 text-sm font-semibold">
                 نوع لوله
               </Label>
               <div className="grid grid-cols-1 gap-2">
@@ -374,7 +374,7 @@ export default function AdvancedFilters({
 
             {/* قطر لوله */}
             <div>
-              <Label className="text-sm font-semibold mb-3 block">
+              <Label className="block mb-3 text-sm font-semibold">
                 قطر (اینچ)
               </Label>
               <div className="grid grid-cols-4 gap-2">
@@ -413,7 +413,7 @@ export default function AdvancedFilters({
 
             {/* رده فشار */}
             <div>
-              <Label className="text-sm font-semibold mb-3 block">
+              <Label className="block mb-3 text-sm font-semibold">
                 رده فشار
               </Label>
               <div className="grid grid-cols-3 gap-2">
@@ -435,7 +435,7 @@ export default function AdvancedFilters({
 
             {/* جنس */}
             <div>
-              <Label className="text-sm font-semibold mb-3 block">جنس</Label>
+              <Label className="block mb-3 text-sm font-semibold">جنس</Label>
               <div className="grid grid-cols-2 gap-2">
                 {['گالوانیزه', 'سیاه', 'استیل'].map((material) => (
                   <Button
@@ -462,7 +462,7 @@ export default function AdvancedFilters({
           <>
             {/* نوع پروفیل */}
             <div>
-              <Label className="text-sm font-semibold mb-3 block">
+              <Label className="block mb-3 text-sm font-semibold">
                 نوع پروفیل
               </Label>
               <div className="grid grid-cols-1 gap-2">
@@ -486,7 +486,7 @@ export default function AdvancedFilters({
 
             {/* استاندارد پروفیل */}
             <div>
-              <Label className="text-sm font-semibold mb-3 block">
+              <Label className="block mb-3 text-sm font-semibold">
                 استاندارد
               </Label>
               <div className="grid grid-cols-2 gap-2">
@@ -512,7 +512,7 @@ export default function AdvancedFilters({
 
             {/* جنس */}
             <div>
-              <Label className="text-sm font-semibold mb-3 block">جنس</Label>
+              <Label className="block mb-3 text-sm font-semibold">جنس</Label>
               <div className="grid grid-cols-2 gap-2">
                 {['گالوانیزه', 'سبک', 'استیل', 'آلومینیوم'].map((material) => (
                   <Button
@@ -539,7 +539,7 @@ export default function AdvancedFilters({
           <>
             {/* نوع قوطی */}
             <div>
-              <Label className="text-sm font-semibold mb-3 block">
+              <Label className="block mb-3 text-sm font-semibold">
                 نوع قوطی
               </Label>
               <div className="grid grid-cols-1 gap-2">
@@ -561,7 +561,7 @@ export default function AdvancedFilters({
 
             {/* ابعاد */}
             <div>
-              <Label className="text-sm font-semibold mb-3 block">
+              <Label className="block mb-3 text-sm font-semibold">
                 ابعاد (میلی‌متر)
               </Label>
               <div className="grid grid-cols-2 gap-2">
@@ -592,7 +592,7 @@ export default function AdvancedFilters({
 
             {/* ضخامت */}
             <div>
-              <Label className="text-sm font-semibold mb-3 block">
+              <Label className="block mb-3 text-sm font-semibold">
                 ضخامت (میلی‌متر)
               </Label>
               <div className="grid grid-cols-4 gap-2">
@@ -623,7 +623,7 @@ export default function AdvancedFilters({
           <>
             {/* نوع تیرآهن */}
             <div>
-              <Label className="text-sm font-semibold mb-3 block">
+              <Label className="block mb-3 text-sm font-semibold">
                 نوع تیرآهن
               </Label>
               <div className="grid grid-cols-1 gap-2">
@@ -647,7 +647,7 @@ export default function AdvancedFilters({
 
             {/* استاندارد */}
             <div>
-              <Label className="text-sm font-semibold mb-3 block">
+              <Label className="block mb-3 text-sm font-semibold">
                 استاندارد
               </Label>
               <div className="grid grid-cols-2 gap-2">
@@ -673,7 +673,7 @@ export default function AdvancedFilters({
 
             {/* ارتفاع */}
             <div>
-              <Label className="text-sm font-semibold mb-3 block">
+              <Label className="block mb-3 text-sm font-semibold">
                 ارتفاع (میلی‌متر)
               </Label>
               <div className="grid grid-cols-3 gap-2">
@@ -712,7 +712,7 @@ export default function AdvancedFilters({
           <>
             {/* نوع سیم */}
             <div>
-              <Label className="text-sm font-semibold mb-3 block">
+              <Label className="block mb-3 text-sm font-semibold">
                 نوع سیم
               </Label>
               <div className="grid grid-cols-1 gap-2">
@@ -736,7 +736,7 @@ export default function AdvancedFilters({
 
             {/* قطر سیم */}
             <div>
-              <Label className="text-sm font-semibold mb-3 block">
+              <Label className="block mb-3 text-sm font-semibold">
                 قطر (میلی‌متر)
               </Label>
               <div className="grid grid-cols-4 gap-2">
@@ -764,7 +764,7 @@ export default function AdvancedFilters({
 
             {/* نوع بسته‌بندی */}
             <div>
-              <Label className="text-sm font-semibold mb-3 block">
+              <Label className="block mb-3 text-sm font-semibold">
                 بسته‌بندی
               </Label>
               <div className="grid grid-cols-2 gap-2">
@@ -795,7 +795,7 @@ export default function AdvancedFilters({
           <>
             {/* نوع توری */}
             <div>
-              <Label className="text-sm font-semibold mb-3 block">
+              <Label className="block mb-3 text-sm font-semibold">
                 نوع توری
               </Label>
               <div className="grid grid-cols-1 gap-2">
@@ -823,7 +823,7 @@ export default function AdvancedFilters({
 
             {/* سایز چشمه */}
             <div>
-              <Label className="text-sm font-semibold mb-3 block">
+              <Label className="block mb-3 text-sm font-semibold">
                 سایز چشمه (میلی‌متر)
               </Label>
               <div className="grid grid-cols-3 gap-2">
@@ -857,10 +857,10 @@ export default function AdvancedFilters({
   };
 
   return (
-    <div className="space-y-4">
+    <div className="sticky space-y-4 top-40">
       <Card>
         <CardHeader className="pb-3">
-          <CardTitle className="text-lg flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2 text-lg">
             <Filter className="w-5 h-5" />
             فیلترهای پیشرفته
           </CardTitle>
@@ -869,7 +869,7 @@ export default function AdvancedFilters({
               variant="ghost"
               size="sm"
               onClick={onClearFilters}
-              className="text-red-500 hover:text-red-700 flex items-center gap-1"
+              className="flex items-center gap-1 text-red-500 hover:text-red-700"
             >
               <RefreshCw className="w-4 h-4" />
               پاک کردن همه
@@ -881,7 +881,7 @@ export default function AdvancedFilters({
           {/* دسته‌بندی - فقط در صفحه اصلی محصولات نمایش داده شود */}
           {showCategoryFilter && (
             <div>
-              <Label className="text-sm font-semibold mb-3 block">
+              <Label className="block mb-3 text-sm font-semibold">
                 دسته‌بندی
               </Label>
               <div className="grid grid-cols-1 gap-2">
@@ -913,7 +913,7 @@ export default function AdvancedFilters({
           {/* زیردسته - فقط در صفحه اصلی محصولات یا در صورت انتخاب دسته نمایش داده شود */}
           {showCategoryFilter && filters.category && (
             <div>
-              <Label className="text-sm font-semibold mb-3 block">
+              <Label className="block mb-3 text-sm font-semibold">
                 زیردسته
               </Label>
               <div className="grid grid-cols-1 gap-2">
@@ -947,8 +947,8 @@ export default function AdvancedFilters({
 
           {/* برند */}
           <div>
-            <Label className="text-sm font-semibold mb-3 block">برند</Label>
-            <div className="grid grid-cols-1 gap-2 max-h-48 overflow-y-auto">
+            <Label className="block mb-3 text-sm font-semibold">برند</Label>
+            <div className="grid grid-cols-1 gap-2 overflow-y-auto max-h-48">
               {BRANDS.map((brand) => (
                 <Button
                   key={brand}
@@ -967,7 +967,7 @@ export default function AdvancedFilters({
 
           {/* سایز */}
           <div>
-            <Label className="text-sm font-semibold mb-3 block">سایز</Label>
+            <Label className="block mb-3 text-sm font-semibold">سایز</Label>
             <div className="grid grid-cols-3 gap-2">
               {getAvailableSizes().map((size) => (
                 <Button
@@ -988,7 +988,7 @@ export default function AdvancedFilters({
 
           {/* محدوده قیمت */}
           <div>
-            <Label className="text-sm font-semibold mb-3 block">
+            <Label className="block mb-3 text-sm font-semibold">
               محدوده قیمت (تومان)
             </Label>
             <div className="space-y-3">

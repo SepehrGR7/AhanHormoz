@@ -1,20 +1,20 @@
-'use client'
+'use client';
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo } from 'react';
 import {
   Product,
   PriceFilter,
   SAMPLE_PRODUCTS,
   PRODUCT_CATEGORIES,
-} from '@/types/products'
-import CategoryTable from '@/components/category-table'
-import AdvancedFilters from '@/components/advanced-filters'
-import WeightCalculatorModal from '@/components/weight-calculator-modal'
-import OrderRequestModal from '@/components/order-request-modal'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { Switch } from '@heroui/switch'
+} from '@/types/products';
+import CategoryTable from '@/components/category-table';
+import AdvancedFilters from '@/components/advanced-filters';
+import WeightCalculatorModal from '@/components/weight-calculator-modal';
+import OrderRequestModal from '@/components/order-request-modal';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Switch } from '@heroui/switch';
 import {
   Phone,
   Calculator,
@@ -37,16 +37,16 @@ import {
   Info,
   Zap,
   Target,
-} from 'lucide-react'
+} from 'lucide-react';
 
 interface ProductPageProps {
-  category: string
-  subcategory: string
-  title: string
-  description?: string
-  features?: string[]
-  applications?: string[]
-  specifications?: { [key: string]: string }
+  category: string;
+  subcategory: string;
+  title: string;
+  description?: string;
+  features?: string[];
+  applications?: string[];
+  specifications?: { [key: string]: string };
 }
 
 export default function ProductPage({
@@ -58,87 +58,88 @@ export default function ProductPage({
   applications = [],
   specifications = {},
 }: ProductPageProps) {
-  const [filters, setFilters] = useState<PriceFilter>({})
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
-  const [isCalculatorOpen, setIsCalculatorOpen] = useState(false)
-  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false)
+  const [filters, setFilters] = useState<PriceFilter>({});
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   const [selectedOrderProduct, setSelectedOrderProduct] =
-    useState<Product | null>(null)
-  const [searchTerm, setSearchTerm] = useState('')
-  const [showFilters, setShowFilters] = useState(false)
-  const [includeVAT, setIncludeVAT] = useState(false)
+    useState<Product | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [showFilters, setShowFilters] = useState(false);
+  const [includeVAT, setIncludeVAT] = useState(false);
 
   // محاسبه قیمت با/بدون مالیات
   const calculatePrice = (basePrice: number) => {
-    return includeVAT ? basePrice * 1.1 : basePrice
-  }
+    return includeVAT ? basePrice * 1.1 : basePrice;
+  };
 
   // فرمت کردن قیمت
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('fa-IR').format(
-      Math.round(calculatePrice(price)),
-    )
-  }
+      Math.round(calculatePrice(price))
+    );
+  };
 
   // فیلتر کردن محصولات بر اساس دسته و زیردسته
   const filteredProducts = useMemo(() => {
-    return SAMPLE_PRODUCTS.filter(product => {
-      if (product.category.id !== category) return false
-      if (product.subcategory !== subcategory) return false
+    return SAMPLE_PRODUCTS.filter((product) => {
+      if (product.category.id !== category) return false;
+      if (product.subcategory !== subcategory) return false;
 
       // تابع کمکی برای بررسی فیلترهای چندگانه
       const matchesFilter = (
         filterValue: string | string[] | undefined,
-        productValue: string | undefined,
+        productValue: string | undefined
       ) => {
-        if (!filterValue) return true
-        if (!productValue) return false
+        if (!filterValue) return true;
+        if (!productValue) return false;
         if (Array.isArray(filterValue)) {
-          return filterValue.includes(productValue)
+          return filterValue.includes(productValue);
         }
-        return filterValue === productValue
-      }
+        return filterValue === productValue;
+      };
 
       // فیلترهای اضافی با پشتیبانی از چندین انتخاب
-      if (!matchesFilter(filters.brand, product.brand)) return false
-      if (!matchesFilter(filters.size, product.size)) return false
-      if (filters.minPrice && product.price < filters.minPrice) return false
-      if (filters.maxPrice && product.price > filters.maxPrice) return false
-      if (filters.inStock && !product.inStock) return false
+      if (!matchesFilter(filters.brand, product.brand)) return false;
+      if (!matchesFilter(filters.size, product.size)) return false;
+      if (filters.minPrice && product.price < filters.minPrice) return false;
+      if (filters.maxPrice && product.price > filters.maxPrice) return false;
+      if (filters.inStock && !product.inStock) return false;
 
       // فیلترهای تخصصی با پشتیبانی از چندین انتخاب
-      if (!matchesFilter(filters.thickness, product.thickness)) return false
-      if (!matchesFilter(filters.diameter, product.diameter)) return false
-      if (!matchesFilter(filters.grade, product.grade)) return false
-      if (!matchesFilter(filters.coating, product.coating)) return false
-      if (!matchesFilter(filters.standard, product.standard)) return false
-      if (!matchesFilter(filters.length, product.length)) return false
+      if (!matchesFilter(filters.thickness, product.thickness)) return false;
+      if (!matchesFilter(filters.diameter, product.diameter)) return false;
+      if (!matchesFilter(filters.grade, product.grade)) return false;
+      if (!matchesFilter(filters.coating, product.coating)) return false;
+      if (!matchesFilter(filters.standard, product.standard)) return false;
+      if (!matchesFilter(filters.length, product.length)) return false;
 
       // فیلترهای جدید
-      if (!matchesFilter(filters.subtype, product.subtype)) return false
-      if (!matchesFilter(filters.weightType, product.weightType)) return false
-      if (!matchesFilter(filters.sheetType, product.sheetType)) return false
-      if (!matchesFilter(filters.pipeType, product.pipeType)) return false
-      if (!matchesFilter(filters.wireType, product.wireType)) return false
-      if (!matchesFilter(filters.height, product.height)) return false
-      if (!matchesFilter(filters.meshSize, product.meshSize)) return false
-      if (!matchesFilter(filters.packageType, product.packageType)) return false
+      if (!matchesFilter(filters.subtype, product.subtype)) return false;
+      if (!matchesFilter(filters.weightType, product.weightType)) return false;
+      if (!matchesFilter(filters.sheetType, product.sheetType)) return false;
+      if (!matchesFilter(filters.pipeType, product.pipeType)) return false;
+      if (!matchesFilter(filters.wireType, product.wireType)) return false;
+      if (!matchesFilter(filters.height, product.height)) return false;
+      if (!matchesFilter(filters.meshSize, product.meshSize)) return false;
+      if (!matchesFilter(filters.packageType, product.packageType))
+        return false;
 
       // جستجوی متنی
       if (searchTerm) {
-        const searchLower = searchTerm.toLowerCase()
+        const searchLower = searchTerm.toLowerCase();
         const matchesSearch =
           product.name.toLowerCase().includes(searchLower) ||
           product.brand.toLowerCase().includes(searchLower) ||
-          product.size.toLowerCase().includes(searchLower)
-        if (!matchesSearch) return false
+          product.size.toLowerCase().includes(searchLower);
+        if (!matchesSearch) return false;
       }
 
-      return true
-    })
-  }, [category, subcategory, filters, searchTerm])
+      return true;
+    });
+  }, [category, subcategory, filters, searchTerm]);
 
-  const categoryInfo = PRODUCT_CATEGORIES.find(c => c.id === category)
+  const categoryInfo = PRODUCT_CATEGORIES.find((c) => c.id === category);
 
   // Function to get the appropriate icon for each product category
   const getCategoryIcon = (categoryId: string) => {
@@ -154,108 +155,97 @@ export default function ProductPage({
       billet: 'icon-bullion',
       tube: 'icon-Equipment',
       'raw-materials': 'icon-stainless-steel',
-    }
-    return iconMap[categoryId] || 'icon-rebar'
-  }
+    };
+    return iconMap[categoryId] || 'icon-rebar';
+  };
 
   const handleOrder = (product: Product) => {
-    setSelectedOrderProduct(product)
-    setIsOrderModalOpen(true)
-  }
+    setSelectedOrderProduct(product);
+    setIsOrderModalOpen(true);
+  };
 
   const handleCalculate = (product: Product) => {
-    setSelectedProduct(product)
-    setIsCalculatorOpen(true)
-  }
+    setSelectedProduct(product);
+    setIsCalculatorOpen(true);
+  };
 
   const handleCloseCalculator = () => {
-    setIsCalculatorOpen(false)
-    setSelectedProduct(null)
-  }
+    setIsCalculatorOpen(false);
+    setSelectedProduct(null);
+  };
 
   // گروه‌بندی محصولات بر اساس برند
   const productsByBrand = useMemo(() => {
-    const grouped: { [brand: string]: Product[] } = {}
-    filteredProducts.forEach(product => {
-      if (!grouped[product.brand]) grouped[product.brand] = []
-      grouped[product.brand].push(product)
-    })
-    return grouped
-  }, [filteredProducts])
+    const grouped: { [brand: string]: Product[] } = {};
+    filteredProducts.forEach((product) => {
+      if (!grouped[product.brand]) grouped[product.brand] = [];
+      grouped[product.brand].push(product);
+    });
+    return grouped;
+  }, [filteredProducts]);
 
   return (
-    <div className='w-full'>
+    <div className="w-full">
       {/* Header Section */}
-      <div className='text-white bg-gradient-to-r from-blue-600 to-blue-800'>
-        <div className='px-6 py-12 mx-auto max-w-7xl'>
-          <div className='text-center'>
-            <div className='flex items-center justify-center mx-auto mb-4 w-[100px] h-[100px] text-7xl rounded-full backdrop-blur-sm bg-white/10'>
-              <i className={getCategoryIcon(category)}></i>
+      <div className="relative overflow-hidden text-white bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-600">
+        <div className="absolute inset-0 bg-black/10"></div>
+        <div className="absolute top-0 right-0 translate-x-20 -translate-y-20 rounded-full w-96 h-96 bg-white/5"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 -translate-x-20 translate-y-20 rounded-full bg-white/5"></div>
+        <div className="relative px-6 py-16 mx-auto max-w-7xl">
+          <div className="text-center">
+            <div className="inline-flex items-center justify-center w-24 h-24 mx-auto mb-6 border-2 rounded-full shadow-2xl bg-white/20 backdrop-blur-md border-white/30">
+              <i
+                className={
+                  getCategoryIcon(category) +
+                  ' text-5xl text-white drop-shadow-lg'
+                }
+              ></i>
             </div>
-            <h1 className='mb-4 text-4xl font-bold'>{title}</h1>
+            <h1 className="mb-6 text-5xl font-bold text-white drop-shadow-2xl">
+              {title}
+            </h1>
             {description && (
-              <p className='mx-auto max-w-3xl text-xl opacity-90'>
+              <p className="max-w-3xl mx-auto text-xl font-medium leading-relaxed text-white/95 drop-shadow-lg">
                 {description}
               </p>
             )}
-            {/* <div className='flex gap-4 justify-center mt-8'>
-              <Button
-                onClick={() => setIsCalculatorOpen(true)}
-                variant='outline'
-                className='text-white bg-white/10 border-white/20 hover:bg-white/20'
-              >
-                <Calculator className='ml-2 w-4 h-4' />
-                محاسبه وزن
-              </Button>
-              <Button
-                onClick={() => setIsOrderModalOpen(true)}
-                className='text-white bg-green-600 hover:bg-green-700'
-              >
-                <Package className='ml-2 w-4 h-4' />
-                ثبت سفارش
-              </Button>
-              <Button className='text-blue-600 bg-white hover:bg-gray-100'>
-                <Phone className='ml-2 w-4 h-4' />
-                تماس: 021-54712
-              </Button>
-            </div> */}
           </div>
         </div>
       </div>
 
       {/* Features Section */}
-      <div className='hidden bg-white border-t dark:bg-slate-800 border-slate-200 dark:border-slate-700 lg:block'>
-        <div className='px-6 py-12 mx-auto max-w-7xl'>
-          <div className='grid grid-cols-1 gap-6 md:grid-cols-3'>
-            <div className='flex gap-3 items-center p-4 bg-green-50 rounded-lg dark:bg-green-900/20'>
-              <CheckCircle className='w-8 h-8 text-green-600 dark:text-green-400' />
+      <div className="hidden bg-white border-t dark:bg-slate-800 border-slate-200 dark:border-slate-700 lg:block">
+        <div className="px-6 py-12 mx-auto max-w-7xl">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            <div className="flex items-center gap-3 p-4 rounded-lg bg-green-50 dark:bg-green-900/20">
+              <CheckCircle className="w-8 h-8 text-green-600 dark:text-green-400" />
               <div>
-                <h3 className='font-semibold text-slate-800 dark:text-slate-200'>
+                <h3 className="font-semibold text-slate-800 dark:text-slate-200">
                   کیفیت تضمینی
                 </h3>
-                <p className='text-sm text-slate-600 dark:text-slate-400'>
+                <p className="text-sm text-slate-600 dark:text-slate-400">
                   تمام محصولات دارای گواهینامه استاندارد
                 </p>
               </div>
             </div>
-            <div className='flex gap-3 items-center p-4 bg-blue-50 rounded-lg dark:bg-blue-900/20'>
-              <Shield className='w-8 h-8 text-blue-600 dark:text-blue-400' />
+            <div className="flex items-center gap-3 p-4 rounded-lg bg-blue-50 dark:bg-blue-900/20">
+              <Shield className="w-8 h-8 text-blue-600 dark:text-blue-400" />
               <div>
-                <h3 className='font-semibold text-slate-800 dark:text-slate-200'>
+                <h3 className="font-semibold text-slate-800 dark:text-slate-200">
                   ضمانت اصالت
                 </h3>
-                <p className='text-sm text-slate-600 dark:text-slate-400'>
+                <p className="text-sm text-slate-600 dark:text-slate-400">
                   ۱۰۰٪ اصل و مستقیم از کارخانه
                 </p>
               </div>
             </div>
-            <div className='flex gap-3 items-center p-4 bg-orange-50 rounded-lg dark:bg-orange-900/20'>
-              <Clock className='w-8 h-8 text-orange-600 dark:text-orange-400' />
+            <div className="flex items-center gap-3 p-4 rounded-lg bg-orange-50 dark:bg-orange-900/20">
+              <Clock className="w-8 h-8 text-orange-600 dark:text-orange-400" />
               <div>
-                <h3 className='font-semibold text-slate-800 dark:text-slate-200'>
+                <h3 className="font-semibold text-slate-800 dark:text-slate-200">
                   تحویل سریع
                 </h3>
-                <p className='text-sm text-slate-600 dark:text-slate-400'>
+                <p className="text-sm text-slate-600 dark:text-slate-400">
                   ارسال در کمترین زمان ممکن
                 </p>
               </div>
@@ -265,22 +255,22 @@ export default function ProductPage({
       </div>
 
       {/* Search and Filter Bar */}
-      <div className='sticky top-20 z-10 bg-white border-b dark:bg-slate-800 border-slate-200 dark:border-slate-700'>
-        <div className='px-6 py-4 mx-auto'>
-          <div className='flex flex-col gap-4 lg:flex-row'>
-            <div className='flex-1'>
-              <div className='relative'>
-                <Search className='absolute right-3 top-1/2 w-4 h-4 transform -translate-y-1/2 text-slate-400' />
+      <div className="sticky z-10 bg-white border-b top-20 dark:bg-slate-800 border-slate-200 dark:border-slate-700">
+        <div className="px-6 py-4 mx-auto">
+          <div className="flex flex-col gap-4 lg:flex-row">
+            <div className="flex-1">
+              <div className="relative">
+                <Search className="absolute w-4 h-4 transform -translate-y-1/2 right-3 top-1/2 text-slate-400" />
                 <input
-                  type='text'
-                  placeholder='جستجو در محصولات...'
+                  type="text"
+                  placeholder="جستجو در محصولات..."
                   value={searchTerm}
-                  onChange={e => setSearchTerm(e.target.value)}
-                  className='px-3 py-2 pr-10 pl-4 w-full rounded-lg border border-slate-300 dark:border-slate-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 dark:text-white'
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full px-3 py-2 pl-4 pr-10 border rounded-lg border-slate-300 dark:border-slate-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 dark:text-white"
                 />
               </div>
             </div>
-            <div className='flex gap-2 items-center'>
+            <div className="flex items-center gap-2">
               <button
                 onClick={() => setShowFilters(!showFilters)}
                 className={`flex items-center gap-2 px-3 py-2.5 border rounded-lg transition-colors text-sm font-medium cursor-pointer ${
@@ -289,20 +279,20 @@ export default function ProductPage({
                     : 'bg-white border-slate-300 text-slate-700 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-blue-600 dark:hover:text-blue-400'
                 }`}
               >
-                <Filter className='w-4 h-4' />
+                <Filter className="w-4 h-4" />
                 <span>فیلترها</span>
               </button>
               <div
-                className='flex gap-2 items-center px-3 py-2 bg-white rounded-lg border transition-colors cursor-pointer dark:bg-slate-800 border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-blue-600 dark:hover:text-blue-400'
+                className="flex items-center gap-2 px-3 py-2 transition-colors bg-white border rounded-lg cursor-pointer dark:bg-slate-800 border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700 hover:text-blue-600 dark:hover:text-blue-400"
                 onClick={() => setIncludeVAT(!includeVAT)}
               >
-                <div className='flex gap-2 items-center text-sm font-medium text-slate-700 dark:text-slate-300'>
+                <div className="flex items-center gap-2 text-sm font-medium text-slate-700 dark:text-slate-300">
                   <Switch
                     isSelected={includeVAT}
                     onValueChange={setIncludeVAT}
-                    size='sm'
-                    color='primary'
-                    className='rotate-180'
+                    size="sm"
+                    color="primary"
+                    className="rotate-180"
                     classNames={{
                       wrapper: 'group-data-[selected=true]:bg-blue-500',
                     }}
@@ -316,11 +306,11 @@ export default function ProductPage({
       </div>
 
       {/* Products Section */}
-      <div className='bg-gray-50 dark:bg-slate-900'>
-        <div className='px-6 py-6 mx-auto'>
-          <div className='grid grid-cols-1 gap-6 lg:grid-cols-4'>
+      <div className="bg-gray-50 dark:bg-slate-900">
+        <div className="px-6 py-6 mx-auto">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
             {showFilters && (
-              <div className='lg:col-span-1'>
+              <div className="lg:col-span-1">
                 <AdvancedFilters
                   filters={filters}
                   onFiltersChange={setFilters}
@@ -335,30 +325,30 @@ export default function ProductPage({
             <div className={showFilters ? 'lg:col-span-3' : 'lg:col-span-4'}>
               {filteredProducts.length === 0 ? (
                 <Card>
-                  <CardContent className='py-12 text-center'>
-                    <Package className='mx-auto mb-4 w-12 h-12 text-slate-400' />
-                    <h3 className='mb-2 text-lg font-semibold text-slate-600 dark:text-slate-400'>
+                  <CardContent className="py-12 text-center">
+                    <Package className="w-12 h-12 mx-auto mb-4 text-slate-400" />
+                    <h3 className="mb-2 text-lg font-semibold text-slate-600 dark:text-slate-400">
                       محصولی یافت نشد
                     </h3>
-                    <p className='text-slate-500 dark:text-slate-500'>
+                    <p className="text-slate-500 dark:text-slate-500">
                       لطفاً فیلترهای جستجو را تغییر دهید
                     </p>
                   </CardContent>
                 </Card>
               ) : (
-                <div className='space-y-10'>
+                <div className="space-y-10">
                   {Object.entries(productsByBrand).map(([brand, products]) => {
                     // فرض بر این است که همه محصولات یک برند در این گروه، دسته و زیردسته یکسان دارند
-                    const firstProduct = products[0]
-                    const categoryLabel = firstProduct?.category?.name || ''
-                    const subcategoryLabel = firstProduct?.subcategory || ''
+                    const firstProduct = products[0];
+                    const categoryLabel = firstProduct?.category?.name || '';
+                    const subcategoryLabel = firstProduct?.subcategory || '';
                     return (
                       <div key={brand}>
-                        <div className='flex gap-2 items-center mb-4'>
-                          <span className='text-xl font-bold text-blue-700 dark:text-blue-300'>
+                        <div className="flex items-center gap-2 mb-4">
+                          <span className="text-xl font-bold text-blue-700 dark:text-blue-300">
                             {categoryLabel} {subcategoryLabel} {brand}
                           </span>
-                          <Badge variant='success'>
+                          <Badge variant="success">
                             {products.length} محصول
                           </Badge>
                         </div>
@@ -370,7 +360,7 @@ export default function ProductPage({
                           formatPrice={formatPrice}
                         />
                       </div>
-                    )
+                    );
                   })}
                 </div>
               )}
@@ -380,24 +370,24 @@ export default function ProductPage({
       </div>
 
       {/* Product Info Section */}
-      <div className='bg-white dark:bg-slate-800'>
-        <div className='px-6 py-12 mx-auto'>
-          <div className='grid grid-cols-1 gap-8 lg:grid-cols-3'>
+      <div className="bg-white dark:bg-slate-800">
+        <div className="px-6 py-12 mx-auto">
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
             {/* ویژگی‌ها */}
             {features.length > 0 && (
               <Card>
                 <CardHeader>
-                  <CardTitle className='flex gap-2 items-center'>
-                    <Star className='w-5 h-5 text-yellow-600' />
+                  <CardTitle className="flex items-center gap-2">
+                    <Star className="w-5 h-5 text-yellow-600" />
                     ویژگی‌های کلیدی
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <ul className='space-y-2'>
+                  <ul className="space-y-2">
                     {features.map((feature, index) => (
-                      <li key={index} className='flex gap-2 items-start'>
-                        <CheckCircle className='w-4 h-4 text-green-600 mt-0.5 flex-shrink-0' />
-                        <span className='text-sm'>{feature}</span>
+                      <li key={index} className="flex items-start gap-2">
+                        <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                        <span className="text-sm">{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -409,17 +399,17 @@ export default function ProductPage({
             {applications.length > 0 && (
               <Card>
                 <CardHeader>
-                  <CardTitle className='flex gap-2 items-center'>
-                    <Target className='w-5 h-5 text-blue-600' />
+                  <CardTitle className="flex items-center gap-2">
+                    <Target className="w-5 h-5 text-blue-600" />
                     کاربردها
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <ul className='space-y-2'>
+                  <ul className="space-y-2">
                     {applications.map((application, index) => (
-                      <li key={index} className='flex gap-2 items-start'>
-                        <Zap className='w-4 h-4 text-orange-600 mt-0.5 flex-shrink-0' />
-                        <span className='text-sm'>{application}</span>
+                      <li key={index} className="flex items-start gap-2">
+                        <Zap className="w-4 h-4 text-orange-600 mt-0.5 flex-shrink-0" />
+                        <span className="text-sm">{application}</span>
                       </li>
                     ))}
                   </ul>
@@ -431,17 +421,17 @@ export default function ProductPage({
             {Object.keys(specifications).length > 0 && (
               <Card>
                 <CardHeader>
-                  <CardTitle className='flex gap-2 items-center'>
-                    <Info className='w-5 h-5 text-purple-600' />
+                  <CardTitle className="flex items-center gap-2">
+                    <Info className="w-5 h-5 text-purple-600" />
                     مشخصات فنی
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className='space-y-2'>
+                  <div className="space-y-2">
                     {Object.entries(specifications).map(([key, value]) => (
-                      <div key={key} className='flex justify-between'>
-                        <span className='text-sm font-medium'>{key}:</span>
-                        <span className='text-sm text-slate-600 dark:text-slate-400'>
+                      <div key={key} className="flex justify-between">
+                        <span className="text-sm font-medium">{key}:</span>
+                        <span className="text-sm text-slate-600 dark:text-slate-400">
                           {value}
                         </span>
                       </div>
@@ -468,8 +458,8 @@ export default function ProductPage({
       <OrderRequestModal
         isOpen={isOrderModalOpen}
         onClose={() => {
-          setIsOrderModalOpen(false)
-          setSelectedOrderProduct(null)
+          setIsOrderModalOpen(false);
+          setSelectedOrderProduct(null);
         }}
         productName={selectedOrderProduct?.name}
         productSpecs={
@@ -479,5 +469,5 @@ export default function ProductPage({
         }
       />
     </div>
-  )
+  );
 }

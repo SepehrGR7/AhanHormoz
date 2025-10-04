@@ -151,9 +151,9 @@ export default function WeightCalculatorModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-      <div className="w-full max-w-4xl max-h-[90vh] overflow-y-auto animate-in fade-in-0 zoom-in-95 duration-300">
+      <div className="max-h-[90vh] overflow-y-auto animate-in fade-in-0 zoom-in-95 duration-300">
         <Card className="w-full">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+          <CardHeader className="flex flex-row items-center justify-between pb-4 space-y-0">
             <div>
               <CardTitle className="text-lg">{getCalculatorTitle()}</CardTitle>
               <p className="text-sm text-slate-600 dark:text-slate-400">
@@ -166,7 +166,7 @@ export default function WeightCalculatorModal({
               variant="ghost"
               size="sm"
               onClick={onClose}
-              className="h-8 w-8 p-0 cursor-pointer"
+              className="w-8 h-8 p-0 cursor-pointer"
             >
               <X className="w-4 h-4" />
             </Button>
@@ -174,7 +174,7 @@ export default function WeightCalculatorModal({
 
           <CardContent>
             {productName && (
-              <div className="p-3 rounded-lg bg-blue-50 dark:bg-blue-900/20 mb-6">
+              <div className="p-3 mb-6 rounded-lg bg-blue-50 dark:bg-blue-900/20">
                 <div className="text-sm text-blue-700 dark:text-blue-300">
                   محصول انتخابی:{' '}
                   <span className="font-semibold">{productName}</span>

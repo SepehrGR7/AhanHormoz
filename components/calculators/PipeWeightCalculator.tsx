@@ -37,14 +37,14 @@ export default function PipeWeightCalculator() {
   };
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
+    <Card className="w-full max-w-2xl mx-auto bg-transparent border-none shadow-none">
       <CardHeader>
-        <CardTitle className="text-center text-2xl font-bold text-gray-900 dark:text-white">
+        <CardTitle className="text-2xl font-bold text-center text-gray-900 mb-7 dark:text-white">
           محاسبه وزن لوله فولادی
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div>
             <Label htmlFor="outerDiameter">قطر بیرونی (میلیمتر)</Label>
             <Input
@@ -105,7 +105,7 @@ export default function PipeWeightCalculator() {
           </div>
         </div>
 
-        <div className="flex gap-3">
+        <div className="flex flex-col gap-3 md:flex-row">
           <Button
             onClick={calculateWeight}
             variant="outline"
@@ -119,17 +119,17 @@ export default function PipeWeightCalculator() {
         </div>
 
         {result !== null && (
-          <div className="bg-green-50 dark:bg-green-900/40 border border-green-200 dark:border-green-700 rounded-lg p-4">
+          <div className="p-4 border border-green-200 rounded-lg bg-green-50 dark:bg-green-900/40 dark:border-green-700">
             <div className="text-center">
-              <div className="text-2xl font-bold text-green-600 mb-2">
+              <div className="mb-2 text-2xl font-bold text-green-600">
                 {result.toLocaleString('fa-IR')} کیلوگرم
               </div>
               <div className="text-sm text-green-700">وزن دقیق لوله فولادی</div>
-              <div className="text-xs text-gray-600 mt-2">
+              <div className="mt-2 text-xs text-gray-600 dark:text-gray-200">
                 قطر بیرونی: {outerDiameter}mm × ضخامت: {thickness}mm × طول:{' '}
                 {length}m
               </div>
-              <div className="text-xs text-gray-600">
+              <div className="text-xs text-gray-600 dark:text-gray-200">
                 قطر داخلی:{' '}
                 {outerDiameter && thickness
                   ? (
@@ -143,14 +143,14 @@ export default function PipeWeightCalculator() {
           </div>
         )}
 
-        <div className="bg-blue-50 dark:bg-neutral-900 border border-blue-200 dark:border-neutral-700 rounded-lg p-4">
-          <h4 className="font-semibold text-blue-800 dark:text-neutral-100 mb-2">
-            فرمول محاسبه:
+        <div className="p-4 border border-blue-200 rounded-lg bg-blue-50 dark:bg-blue-900/40 dark:border-blue-700">
+          <h4 className="mb-2 font-semibold text-blue-800 dark:text-blue-200">
+            فرمول محاسبه وزن لوله:
           </h4>
-          <code className="text-blue-700 dark:text-neutral-100 text-sm">
+          <code className="block mb-2 text-sm text-blue-700 dark:text-blue-200">
             وزن = π × (قطر بیرونی - ضخامت) × ضخامت × طول × چگالی ÷ 1000
           </code>
-          <div className="mt-2 text-xs text-blue-600 dark:text-neutral-100">
+          <div className="mt-2 text-xs text-blue-600 dark:text-blue-200">
             <p>
               • انواع لوله: درزدار، بدون درز، گالوانیزه، استیل، مس، آلومینیوم
             </p>

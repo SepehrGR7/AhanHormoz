@@ -37,7 +37,7 @@ export default function ProductFilters({
     <Card className="w-full">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-lg flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2 text-lg">
             <Filter className="w-5 h-5" />
             فیلتر محصولات
           </CardTitle>
@@ -101,7 +101,7 @@ export default function ProductFilters({
           <div>
             <Label htmlFor="search">جستجو در محصولات</Label>
             <div className="relative">
-              <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
+              <Search className="absolute w-4 h-4 transform -translate-y-1/2 right-3 top-1/2 text-slate-400" />
               <Input
                 id="search"
                 placeholder="نام محصول، برند یا سایز..."
@@ -139,7 +139,7 @@ export default function ProductFilters({
           {/* برند */}
           <div>
             <Label>برند</Label>
-            <div className="grid grid-cols-2 gap-2 mt-2 max-h-32 overflow-y-auto">
+            <div className="grid grid-cols-2 gap-2 mt-2 overflow-y-auto max-h-32">
               {BRANDS.map((brand) => (
                 <Button
                   key={brand}

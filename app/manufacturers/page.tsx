@@ -1,12 +1,12 @@
-import { Metadata } from 'next'
-import { BlogPostCard, BlogPost } from '@/components/blog-post'
-import { Factory } from 'lucide-react'
+import { Metadata } from 'next';
+import { BlogPostCard, BlogPost } from '@/components/blog-post';
+import { Factory } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'تولید کنندگان',
   description:
     'آخرین مطالب و اخبار در مورد صنعت فولاد و تولیدکنندگان فولاد ایران',
-}
+};
 
 // This would typically come from a CMS or database
 const posts: BlogPost[] = [
@@ -43,26 +43,81 @@ const posts: BlogPost[] = [
     readTime: '۴ دقیقه',
     author: 'تیم آهن هرمز',
   },
-]
+  {
+    id: 'hormozgan-steel',
+    title: 'فولاد هرمزگان؛ قطب صادرات فولاد جنوب ایران',
+    excerpt:
+      'شرکت فولاد هرمزگان با ظرفیت تولید 1.5 میلیون تن تختال، نقش کلیدی در صادرات فولاد ایران ایفا می‌کند.',
+    content: `فولاد هرمزگان در سال ۱۳۹۰ به بهره‌برداری رسید و با دسترسی به آب‌های آزاد و نزدیکی به بنادر، سهم بالایی در صادرات فولاد کشور دارد...`,
+    image: '/images/blog/foolad-mobarakeh.png',
+    date: '۱۴۰۴/۰۷/۰۸',
+    readTime: '۳ دقیقه',
+    author: 'تحریریه آهن هرمز',
+  },
+  {
+    id: 'green-steel-mobarakeh',
+    title: 'فولاد مبارکه و پروژه‌های توسعه سبز',
+    excerpt:
+      'فولاد مبارکه با سرمایه‌گذاری در انرژی‌های تجدیدپذیر و کاهش آلایندگی، پیشگام توسعه پایدار در صنعت فولاد ایران است.',
+    content: `این شرکت با اجرای پروژه‌های نیروگاه خورشیدی و تصفیه پساب صنعتی، گام‌های مهمی در راستای مسئولیت اجتماعی و محیط زیست برداشته است...`,
+    image: '/images/blog/foolad-mobarakeh.png',
+    date: '۱۴۰۴/۰۷/۰۷',
+    readTime: '۲ دقیقه',
+    author: 'تحریریه آهن هرمز',
+  },
+  {
+    id: 'iran-railway-steel',
+    title: 'نقش فولاد در پروژه‌های ملی راه‌آهن ایران',
+    excerpt:
+      'توسعه خطوط ریلی کشور بدون تولید ریل ملی توسط ذوب آهن اصفهان ممکن نبود.',
+    content: `ریل ملی ایران با استانداردهای جهانی توسط ذوب آهن اصفهان تولید و در پروژه‌های راه‌آهن سراسری استفاده می‌شود...`,
+    image: '/images/blog/zob-ahan.png',
+    date: '۱۴۰۴/۰۷/۰۶',
+    readTime: '۳ دقیقه',
+    author: 'تحریریه آهن هرمز',
+  },
+  {
+    id: 'khorasan-rebar',
+    title: 'فولاد خراسان؛ پیشگام در تولید میلگرد',
+    excerpt:
+      'مجتمع فولاد خراسان با ظرفیت تولید سالانه بیش از یک میلیون تن میلگرد، یکی از بزرگترین تولیدکنندگان شرق کشور است.',
+    content: `این مجتمع با بهره‌گیری از فناوری‌های روز دنیا و خطوط تولید پیشرفته، محصولات متنوعی را به بازار عرضه می‌کند...`,
+    image: '/images/blog/foolad-khuzestan.png',
+    date: '۱۴۰۴/۰۷/۰۵',
+    readTime: '۲ دقیقه',
+    author: 'تحریریه آهن هرمز',
+  },
+  {
+    id: 'jahan-ara-arvand',
+    title: 'فولاد جهان آرا اروند؛ توسعه صادراتی در منطقه آزاد',
+    excerpt:
+      'این شرکت با موقعیت جغرافیایی ویژه در منطقه آزاد اروند، نقش مهمی در صادرات فولاد ایران به کشورهای همسایه دارد.',
+    content: `فولاد جهان آرا اروند با ظرفیت تولید قابل توجه و دسترسی به آب‌های آزاد، صادرات فولاد را تسهیل کرده است...`,
+    image: '/images/blog/foolad-mobarakeh.png',
+    date: '۱۴۰۴/۰۷/۰۴',
+    readTime: '۲ دقیقه',
+    author: 'تحریریه آهن هرمز',
+  },
+];
 
 export default function ManufacturersPage() {
   return (
-    <main className='relative'>
+    <main className="relative">
       {/* Hero Section */}
-      <div className='relative bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-600 text-white overflow-hidden'>
-        <div className='absolute inset-0 bg-black/10'></div>
-        <div className='absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -translate-y-20 translate-x-20'></div>
-        <div className='absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full translate-y-20 -translate-x-20'></div>
+      <div className="relative overflow-hidden text-white bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-600">
+        <div className="absolute inset-0 bg-black/10"></div>
+        <div className="absolute top-0 right-0 translate-x-20 -translate-y-20 rounded-full w-96 h-96 bg-white/5"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 -translate-x-20 translate-y-20 rounded-full bg-white/5"></div>
 
-        <div className='relative max-w-7xl mx-auto px-6 py-16'>
-          <div className='text-center'>
-            <div className='inline-flex items-center justify-center w-20 h-20 bg-white/10 backdrop-blur-sm rounded-full mb-6'>
-              <Factory className='w-8 h-8 text-white' />
+        <div className="relative px-6 py-16 mx-auto max-w-7xl">
+          <div className="text-center">
+            <div className="inline-flex items-center justify-center w-20 h-20 mb-6 border-2 rounded-full shadow-2xl bg-white/20 backdrop-blur-md border-white/30 mx-auto">
+              <Factory className="w-8 h-8 text-white drop-shadow-lg" />
             </div>
-            <h1 className='text-5xl font-bold mb-6 bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent'>
+            <h1 className="mb-6 text-5xl font-bold text-white drop-shadow-2xl">
               تولیدکنندگان فولاد ایران
             </h1>
-            <p className='text-xl opacity-90 max-w-3xl mx-auto leading-relaxed'>
+            <p className="max-w-3xl mx-auto text-xl font-medium leading-relaxed text-white/95 drop-shadow-lg">
               آشنایی با بزرگترین و معتبرترین تولیدکنندگان فولاد و محصولات فولادی
               در ایران
             </p>
@@ -71,11 +126,15 @@ export default function ManufacturersPage() {
       </div>
 
       {/* Posts Grid */}
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 py-12 px-4 md:px-12 mx-auto'>
-        {posts.map(post => (
-          <BlogPostCard key={post.id} post={post} />
-        ))}
+      <div className="container px-6 py-16 mx-auto">
+        <div className="relative z-20 -mt-24">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {posts.map((post) => (
+              <BlogPostCard key={post.id} post={post} />
+            ))}
+          </div>
+        </div>
       </div>
     </main>
-  )
+  );
 }
