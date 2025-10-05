@@ -496,45 +496,6 @@ export default function CategoryPage({ params }: PageProps) {
             </Link>
           ))}
         </div>
-
-        {/* CTA Section */}
-        <div className="mt-16 text-center">
-          <div className="relative p-12 overflow-hidden border shadow-2xl bg-white/80 dark:bg-slate-900/80 border-gray-200/60 dark:border-gray-700/50 rounded-3xl backdrop-blur-md">
-            <div className="absolute top-0 right-0 w-48 h-48 translate-x-12 -translate-y-12 rounded-full bg-blue-400/10"></div>
-            <div className="absolute bottom-0 left-0 w-32 h-32 -translate-x-8 translate-y-8 rounded-full bg-cyan-400/10"></div>
-
-            <div className="relative">
-              <div className="inline-flex items-center justify-center w-16 h-16 mb-6 border-2 border-blue-200 rounded-full shadow-lg bg-white/60 dark:bg-slate-800/60 dark:border-blue-700">
-                <i
-                  className={`text-2xl text-blue-600 dark:text-blue-400 ${categoryData.icon}`}
-                ></i>
-              </div>
-
-              <h2 className="mb-4 text-3xl font-bold text-gray-900 dark:text-white">
-                نیاز به مشاوره دارید؟
-              </h2>
-              <p className="max-w-2xl mx-auto mb-8 text-lg leading-relaxed text-gray-600 dark:text-gray-300">
-                تیم متخصص ما آماده ارائه مشاوره و راهنمایی در انتخاب بهترین
-                محصولات {categoryData.title} برای پروژه شما است.
-              </p>
-
-              <div className="flex flex-col justify-center gap-4 sm:flex-row">
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center justify-center px-8 py-4 font-semibold text-white transition-all bg-blue-600 rounded-xl hover:bg-blue-700 hover:shadow-lg"
-                >
-                  تماس با ما
-                </Link>
-                <Link
-                  href="/products"
-                  className="inline-flex items-center justify-center px-8 py-4 font-semibold text-blue-600 transition-all border-2 border-blue-200 rounded-xl dark:border-blue-700 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30"
-                >
-                  مشاهده سایر محصولات
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </main>
   );
