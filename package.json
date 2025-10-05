@@ -35,6 +35,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "11.18.2",
+    "googleapis": "^161.0.0",
     "intl-messageformat": "10.7.16",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.539.0",
