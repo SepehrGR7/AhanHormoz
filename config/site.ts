@@ -1,4 +1,4 @@
-export type SiteConfig = typeof siteConfig
+export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
   name: 'آهن هرمز | قیمت روز انواع آهن آلات',
@@ -45,6 +45,7 @@ export const siteConfig = {
       name: 'rebar',
       icon: 'icon-rebar',
       label: 'میلگرد',
+      href: '/products/category/rebar',
       items: [
         { label: 'میلگرد آجدار', href: '/products/milgerd-ajdar' },
         { label: 'میلگرد ساده', href: '/products/milgerd-sade' },
@@ -59,6 +60,7 @@ export const siteConfig = {
       name: 'profile',
       icon: 'icon-profile',
       label: 'پروفیل',
+      href: '/products/category/profile',
       items: [
         { label: 'پروفیل ساختمانی', href: '/products/profile-sakhtmani' },
         { label: 'پروفیل کنگره', href: '/products/profile-kongre' },
@@ -158,4 +160,4 @@ export const siteConfig = {
     discord: 'https://discord.gg/9b6yyZKmH4',
     sponsor: 'https://patreon.com/jrgarciadev',
   },
-}
+};

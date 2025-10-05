@@ -92,20 +92,20 @@ export default async function WeightCalculatorPage({
             <p className="max-w-2xl mx-auto text-xl font-medium leading-relaxed text-white/95 drop-shadow-lg">
               {calculatorInfo.description}
             </p>
-            <div className="flex items-center justify-center gap-6 mt-8 text-sm">
-              <div className="flex items-center gap-2 px-3 py-2 border rounded-full bg-white/10 backdrop-blur-sm border-white/20">
+            <div className="flex flex-col items-center justify-center gap-4 mt-8 text-sm sm:flex-row sm:gap-6">
+              <div className="flex items-center gap-2 px-4 py-2 border rounded-full bg-white/10 backdrop-blur-sm border-white/20">
                 <Shield className="w-4 h-4 text-white drop-shadow-md" />
                 <span className="font-medium text-white drop-shadow-sm">
                   دقت بالا و تضمین صحت فرمول
                 </span>
               </div>
-              <div className="flex items-center gap-2 px-3 py-2 border rounded-full bg-white/10 backdrop-blur-sm border-white/20">
+              <div className="flex items-center gap-2 px-4 py-2 border rounded-full bg-white/10 backdrop-blur-sm border-white/20">
                 <Users2 className="w-4 h-4 text-white drop-shadow-md" />
                 <span className="font-medium text-white drop-shadow-sm">
                   مناسب مهندسین و خریداران
                 </span>
               </div>
-              <div className="flex items-center gap-2 px-3 py-2 border rounded-full bg-white/10 backdrop-blur-sm border-white/20">
+              <div className="flex items-center gap-2 px-4 py-2 border rounded-full bg-white/10 backdrop-blur-sm border-white/20">
                 <Ruler className="w-4 h-4 text-white drop-shadow-md" />
                 <span className="font-medium text-white drop-shadow-sm">
                   پشتیبانی از ابعاد و چگالی مختلف

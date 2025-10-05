@@ -162,19 +162,44 @@ const SubMenu: React.FC<SubMenuProps> = ({
     return icons[categoryName] || 'icon-rebar';
   };
 
+  const getCategorySlug = (categoryName: string) => {
+    const slugs: Record<string, string> = {
+      میلگرد: 'rebar',
+      پروفیل: 'profile',
+      ورق: 'sheet',
+      'نبشی و ناودانی': 'angle',
+      تیرآهن: 'beam',
+      لوله: 'pipe',
+      سیم: 'wire',
+      توری: 'mesh',
+      شمش: 'shamsh',
+      قوطی: 'qooti',
+      'محصولات مفتولی': 'maftoli',
+      'مواد اولیه': 'raw-materials',
+    };
+    return slugs[categoryName] || 'other';
+  };
+
   return (
     <div
       className="relative"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <div className="flex items-center justify-between px-4 py-3 text-sm font-semibold transition-all duration-300 cursor-pointer rounded-xl hover:bg-primary/10 hover:text-primary group">
+      <Link
+        href={`/products/category/${getCategorySlug(title)}`}
+        onClick={(e) => {
+          e.stopPropagation();
+          onLinkClick();
+        }}
+        className="flex items-center justify-between px-4 py-3 text-sm font-semibold transition-all duration-300 cursor-pointer rounded-xl hover:bg-primary/10 hover:text-primary group"
+      >
         <span className="flex items-center gap-3">
           <i className={`text-lg ${getCategoryIcon(title)}`}></i>
           {title}
         </span>
         <ChevronLeft className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-      </div>
+      </Link>
 
       <Transition
         show={isOpen}
@@ -186,7 +211,7 @@ const SubMenu: React.FC<SubMenuProps> = ({
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <div className="absolute right-full top-0 mr-2 w-72 bg-background/95 backdrop-blur-xl border border-divider/50 rounded-2xl p-3 shadow-2xl z-[60]">
+        <div className="absolute right-full top-0 mr-2 w-72 max-w-[90vw] bg-background/95 backdrop-blur-xl border border-divider/50 rounded-2xl p-3 shadow-2xl z-[60] lg:right-full lg:left-auto left-0 lg:mr-2 lg:ml-0 ml-2">
           <div className="py-1">
             {items.map((item, index) => (
               <Link
@@ -221,7 +246,7 @@ const ProductsMenu = () => {
         }}
       >
         <MenuButton
-          className="text-sm font-semibold text-nowrap cursor-pointer hover:bg-primary/10 hover:text-primary transition-all duration-300 px-3 xl:px-4 py-2.5 rounded-xl relative group overflow-hidden flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-primary/20"
+          className="text-sm font-semibold text-nowrap cursor-pointer hover:bg-primary/10 hover:text-primary transition-all duration-300 px-3 xl:px-4 py-2.5 rounded-xl relative group overflow-hidden flex items-center gap-2 focus:outline-none"
           tabIndex={-1}
         >
           <span className="relative z-10 flex items-center gap-2">
@@ -300,7 +325,7 @@ const WeightMenu = () => {
         onMouseLeave={() => setIsOpen(false)}
       >
         <MenuButton
-          className="text-sm font-semibold text-nowrap cursor-pointer hover:bg-primary/10 hover:text-primary transition-all duration-300 px-3 xl:px-4 py-2.5 rounded-xl relative group overflow-hidden flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-primary/20"
+          className="text-sm font-semibold text-nowrap cursor-pointer hover:bg-primary/10 hover:text-primary transition-all duration-300 px-3 xl:px-4 py-2.5 rounded-xl relative group overflow-hidden flex items-center gap-2 focus:outline-none"
           tabIndex={-1}
         >
           <span className="relative z-10 flex items-center gap-2">
