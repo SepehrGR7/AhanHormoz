@@ -47,6 +47,8 @@ interface ProductPageProps {
   features?: string[];
   applications?: string[];
   specifications?: { [key: string]: string };
+  productId?: string;
+  enableSheetsToggle?: boolean;
 }
 
 export default function ProductPage({

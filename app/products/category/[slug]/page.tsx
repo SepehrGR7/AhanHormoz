@@ -1,16 +1,25 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
 import CategoryProducts from '@/components/category-products';
+import CategorySheetsProducts from '@/components/category-sheets-products';
+import DataSourceToggle from '@/components/data-source-toggle';
 import { PRODUCT_CATEGORIES, SAMPLE_PRODUCTS } from '@/types/products';
 
 interface PageProps {
   params: Promise<{
     slug: string;
   }>;
+  searchParams: Promise<{
+    source?: 'sheets' | 'static';
+  }>;
 }
 
-export default async function CategoryPage({ params }: PageProps) {
+export default async function CategoryPage({
+  params,
+  searchParams,
+}: PageProps) {
   const { slug } = await params;
+  const { source } = await searchParams;
 
   // پیدا کردن دسته‌بندی بر اساس slug
   const category = PRODUCT_CATEGORIES.find((cat) => cat.id === slug);
@@ -65,19 +74,35 @@ export default async function CategoryPage({ params }: PageProps) {
               مشاهده تمامی محصولات دسته‌بندی {category.name} - تفکیک شده بر اساس
               برند و نوع
             </p>
+            {source === 'sheets' && (
+              <div className="mt-6">
+                <div className="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-600 bg-white rounded-full shadow-lg">
+                  <div className="w-2 h-2 mr-2 bg-green-500 rounded-full animate-pulse"></div>
+                  داده‌ها Real-time از Google Sheets
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
 
       {/* Features Section */}
       <div className="hidden bg-white border-t dark:bg-slate-800 border-slate-200 dark:border-slate-700 lg:block">
-        <div className="mx-auto  max-w-7xl"></div>
+        <div className="mx-auto max-w-7xl"></div>
       </div>
 
       {/* Products Section */}
       <div className="bg-gray-50 dark:bg-slate-900">
         <div className="px-6 py-6 mx-auto">
-          <CategoryProducts category={category} products={categoryProducts} />
+          {/* Data Source Toggle */}
+          <DataSourceToggle slug={slug} />
+
+          {/* Render appropriate component based on source */}
+          {source === 'sheets' ? (
+            <CategorySheetsProducts category={category} />
+          ) : (
+            <CategoryProducts category={category} products={categoryProducts} />
+          )}
         </div>
       </div>
     </div>

@@ -1,30 +1,30 @@
-import { notFound } from 'next/navigation'
-import ProductPage from '@/components/product-page'
-import { PRODUCT_ROUTES } from '@/types/products'
+import { notFound } from 'next/navigation';
+import UnifiedProductPage from '@/components/unified-product-page';
+import { PRODUCT_ROUTES } from '@/types/products';
 
 interface ProductPageProps {
   params: Promise<{
-    productId: string
-  }>
+    productId: string;
+  }>;
 }
 
 // Generate static params for all products
 export async function generateStaticParams() {
-  return Object.keys(PRODUCT_ROUTES).map(productId => ({
+  return Object.keys(PRODUCT_ROUTES).map((productId) => ({
     productId,
-  }))
+  }));
 }
 
 // Generate metadata for each product
 export async function generateMetadata({ params }: ProductPageProps) {
-  const resolvedParams = await params
+  const resolvedParams = await params;
   const productData =
-    PRODUCT_ROUTES[resolvedParams.productId as keyof typeof PRODUCT_ROUTES]
+    PRODUCT_ROUTES[resolvedParams.productId as keyof typeof PRODUCT_ROUTES];
 
   if (!productData) {
     return {
       title: 'محصول یافت نشد',
-    }
+    };
   }
 
   return {
@@ -34,16 +34,16 @@ export async function generateMetadata({ params }: ProductPageProps) {
       title: `${productData.name} | آهن هرمز`,
       description: `اطلاعات کامل قیمت و مشخصات ${productData.name} در آهن هرمز`,
     },
-  }
+  };
 }
 
 export default async function DynamicProductPage({ params }: ProductPageProps) {
-  const resolvedParams = await params
+  const resolvedParams = await params;
   const productData =
-    PRODUCT_ROUTES[resolvedParams.productId as keyof typeof PRODUCT_ROUTES]
+    PRODUCT_ROUTES[resolvedParams.productId as keyof typeof PRODUCT_ROUTES];
 
   if (!productData) {
-    notFound()
+    notFound();
   }
 
   // Product-specific configurations
@@ -165,7 +165,7 @@ export default async function DynamicProductPage({ params }: ProductPageProps) {
           'کیفیت سطح': 'صاف',
         },
       },
-    }
+    };
 
     return (
       configs[productId] || {
@@ -187,13 +187,13 @@ export default async function DynamicProductPage({ params }: ProductPageProps) {
           موجودی: 'در انبار',
         },
       }
-    )
-  }
+    );
+  };
 
-  const config = getProductConfig(resolvedParams.productId)
+  const config = getProductConfig(resolvedParams.productId);
 
   return (
-    <ProductPage
+    <UnifiedProductPage
       category={productData.category}
       subcategory={productData.subcategory}
       title={productData.name}
@@ -201,6 +201,7 @@ export default async function DynamicProductPage({ params }: ProductPageProps) {
       features={config.features}
       applications={config.applications}
       specifications={config.specifications}
+      productId={resolvedParams.productId}
     />
-  )
+  );
 }

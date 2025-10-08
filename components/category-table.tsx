@@ -39,14 +39,21 @@ export default function CategoryTable({
     <Card>
       <CardContent>
         <div className="overflow-x-auto">
-          <table className="w-full">
+          {/* Desktop table layout */}
+          <table className="hidden w-full table-fixed lg:table">
+            <colgroup>
+              <col style={{ width: '40%' }} />
+              <col style={{ width: '15%' }} />
+              <col style={{ width: '20%' }} />
+              <col style={{ width: '15%' }} />
+              <col style={{ width: '10%' }} />
+            </colgroup>
             <thead>
               <tr className="border-b border-slate-200 dark:border-slate-700">
                 <th className="px-2 py-3 font-semibold text-right text-slate-700 dark:text-slate-300">
                   محصول
                 </th>
-
-                <th className="hidden px-2 py-3 font-semibold text-center align-middle text-slate-700 dark:text-slate-300 lg:table-cell">
+                <th className="px-2 py-3 font-semibold text-center align-middle text-slate-700 dark:text-slate-300">
                   سایز
                 </th>
                 <th className="px-2 py-3 font-semibold text-center text-slate-700 dark:text-slate-300">
@@ -67,19 +74,18 @@ export default function CategoryTable({
                   className="border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50"
                 >
                   <td className="px-2 py-4">
-                    <div>
-                      <div className="text-sm font-medium text-slate-900 dark:text-slate-100 lg:text-lg">
+                    <div className="overflow-hidden">
+                      <div className="text-lg font-medium truncate text-slate-900 dark:text-slate-100">
                         {product.name}
                       </div>
                       {product.description && (
-                        <div className="hidden text-sm text-slate-500 dark:text-slate-400 lg:block">
+                        <div className="text-sm truncate text-slate-500 dark:text-slate-400">
                           {product.description}
                         </div>
                       )}
                     </div>
                   </td>
-
-                  <td className="hidden px-2 py-4 text-center align-middle lg:table-cell">
+                  <td className="px-2 py-4 text-center align-middle">
                     <div className="flex items-center justify-center h-full">
                       <Badge variant="outline" className="font-medium">
                         {product.size}
@@ -121,16 +127,86 @@ export default function CategoryTable({
                         <Calculator className="w-3 h-3" />
                         محاسبه
                       </Button>
-                      {/* <Button
-                        size='sm'
-                        onClick={() => onOrder(product)}
-                        disabled={!product.inStock}
-                        className='flex items-center gap-1 text-xs bg-green-600 hover:bg-green-700'
-                      >
-                        <Phone className='w-3 h-3' />
-                        سفارش
-                      </Button> */}
                     </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          {/* Mobile table layout */}
+          <table className="w-full table-fixed lg:hidden">
+            <colgroup>
+              <col style={{ width: '45%' }} />
+              <col style={{ width: '25%' }} />
+              <col style={{ width: '15%' }} />
+              <col style={{ width: '15%' }} />
+            </colgroup>
+            <thead>
+              <tr className="border-b border-slate-200 dark:border-slate-700">
+                <th className="px-2 py-3 font-semibold text-right text-slate-700 dark:text-slate-300">
+                  محصول
+                </th>
+                <th className="px-2 py-3 font-semibold text-center text-slate-700 dark:text-slate-300">
+                  قیمت
+                </th>
+                <th className="px-2 py-3 font-semibold text-center text-slate-700 dark:text-slate-300">
+                  وضعیت
+                </th>
+                <th className="px-2 py-3 font-semibold text-center text-slate-700 dark:text-slate-300">
+                  عملیات
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {products.map((product) => (
+                <tr
+                  key={`mobile-${product.id}`}
+                  className="border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50"
+                >
+                  <td className="px-2 py-4">
+                    <div className="overflow-hidden">
+                      <div className="text-sm font-medium truncate text-slate-900 dark:text-slate-100">
+                        {product.name}
+                      </div>
+                      <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+                        سایز: {product.size}
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-2 py-4 text-center">
+                    <div className="text-sm font-semibold text-green-600 dark:text-green-400">
+                      {formatPrice(product.price)}
+                    </div>
+                    <div className="text-xs text-slate-500 dark:text-slate-400">
+                      {product.unit === 'kg'
+                        ? 'کیلوگرم'
+                        : product.unit === 'ton'
+                          ? 'تن'
+                          : 'عدد'}
+                    </div>
+                  </td>
+                  <td className="px-2 py-4 text-center">
+                    <Badge
+                      variant={product.inStock ? 'default' : 'destructive'}
+                      className={
+                        product.inStock
+                          ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 text-xs'
+                          : 'text-xs'
+                      }
+                    >
+                      {product.inStock ? 'موجود' : 'ناموجود'}
+                    </Badge>
+                  </td>
+                  <td className="px-1 py-4 text-center">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => onCalculate(product)}
+                      className="flex items-center gap-1 px-2 text-xs cursor-pointer"
+                    >
+                      <Calculator className="w-3 h-3" />
+                    </Button>
                   </td>
                 </tr>
               ))}
