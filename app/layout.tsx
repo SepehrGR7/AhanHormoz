@@ -8,9 +8,7 @@ import { Providers } from './providers'
 
 import { siteConfig } from '@/config/site'
 import { IranYekan } from '@/config/fonts'
-import { Navbar } from '@/components/navbar'
-import Footer from '@/components/footer'
-import FloatingOrderButton from '@/components/floating-order-button'
+import { ConditionalLayout } from '../components/conditional-layout'
 
 export const metadata: Metadata = {
   title: {
@@ -46,14 +44,7 @@ export default function RootLayout({
         )}
       >
         <Providers themeProps={{ attribute: 'class', defaultTheme: 'dark' }}>
-          <div className='relative flex flex-col'>
-            <Navbar />
-            <main className='container flex-grow mx-auto max-w-8xl md:px-6'>
-              {children}
-            </main>
-            <Footer />
-            {/* <FloatingOrderButton /> */}
-          </div>
+          <ConditionalLayout>{children}</ConditionalLayout>
         </Providers>
       </body>
     </html>
