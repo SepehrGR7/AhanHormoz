@@ -32,6 +32,10 @@ model Product {
   brand       String
   size        String
   price       Float
+  previousPrice Float? // قیمت قبلی برای محاسبه نوسانات
+  changeType    String? @default("stable") // "increase", "decrease", "stable"
+  changeAmount  Float? // مقدار تغییر قیمت
+  lastPriceChange DateTime? // آخرین زمان تغییر قیمت
   unit        String   @default("kg") // kg, ton, piece
   weight      Float?
   inStock     Boolean  @default(true)
@@ -138,16 +142,20 @@ model OrderItem {
 }
 
 model PriceHistory {
-  id        String   @id @default(cuid())
-  productId String
-  price     Float
-  date      DateTime @default(now())
-  notes     String?
+  id           String   @id @default(cuid())
+  productId    String
+  oldPrice     Float
+  newPrice     Float
+  changeType   String // "افزایش" | "کاهش" | "ثابت"
+  changeAmount Float // مقدار تغییر
+  changedAt    DateTime @default(now())
+  notes        String?
 
   createdAt DateTime @default(now())
 
   @@index([productId])
-  @@index([date])
+  @@index([changedAt])
+  @@index([changeType])
   @@map("price_history")
 }
 
