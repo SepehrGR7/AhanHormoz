@@ -28,91 +28,94 @@ const weightData = [
 // تعریف داده‌های محصولات با دسته‌بندی کامل
 const productsData = {
   میلگرد: [
-    { href: '/products/milgerd-ajdar', label: 'میلگرد آجدار' },
-    { href: '/products/milgerd-sade', label: 'میلگرد ساده' },
-    { href: '/products/milgerd-kolaf', label: 'میلگرد کلاف' },
-    { href: '/products/milgerd-harati', label: 'میلگرد حرارتی' },
-    { href: '/products/milgerd-bastar', label: 'میلگرد بستر' },
-    { href: '/products/milgerd-trans', label: 'میلگرد ترانس' },
-    { href: '/products/milgerd-steel', label: 'میلگرد استیل' },
+    { href: '/products/rebar/milgerd-ajdar', label: 'میلگرد آجدار' },
+    { href: '/products/rebar/milgerd-sade', label: 'میلگرد ساده' },
+    { href: '/products/rebar/milgerd-kolaf', label: 'میلگرد کلاف' },
+    { href: '/products/rebar/milgerd-harati', label: 'میلگرد حرارتی' },
+    { href: '/products/rebar/milgerd-bastar', label: 'میلگرد بستر' },
+    { href: '/products/rebar/milgerd-trans', label: 'میلگرد ترانس' },
+    { href: '/products/rebar/milgerd-steel', label: 'میلگرد استیل' },
   ],
   پروفیل: [
-    { href: '/products/profile-sakhtmani', label: 'پروفیل ساختمانی' },
-    { href: '/products/profile-kongre', label: 'پروفیل کنگره' },
-    { href: '/products/profile-sanati', label: 'پروفیل صنعتی' },
-    { href: '/products/profile-z', label: 'پروفیل Z' },
-    { href: '/products/profile-galvanize', label: 'پروفیل گالوانیزه' },
-    { href: '/products/profile-sabk', label: 'پروفیل سبک' },
-    { href: '/products/profile-steel', label: 'پروفیل استیل' },
-    { href: '/products/profile-aluminum', label: 'پروفیل آلومینیوم' },
-    { href: '/products/profile-upe', label: 'پروفیل UPE' },
-    { href: '/products/profile-ipe', label: 'پروفیل IPE' },
-    { href: '/products/profile-hea', label: 'پروفیل HEA' },
-    { href: '/products/profile-heb', label: 'پروفیل HEB' },
+    { href: '/products/profile/profile-sakhtmani', label: 'پروفیل ساختمانی' },
+    { href: '/products/profile/profile-kongre', label: 'پروفیل کنگره' },
+    { href: '/products/profile/profile-sanati', label: 'پروفیل صنعتی' },
+    { href: '/products/profile/profile-z', label: 'پروفیل Z' },
+    { href: '/products/profile/profile-galvanize', label: 'پروفیل گالوانیزه' },
+    { href: '/products/profile/profile-sabk', label: 'پروفیل سبک' },
+    { href: '/products/profile/profile-steel', label: 'پروفیل استیل' },
+    { href: '/products/profile/profile-aluminum', label: 'پروفیل آلومینیوم' },
+    { href: '/products/profile/profile-upe', label: 'پروفیل UPE' },
+    { href: '/products/profile/profile-ipe', label: 'پروفیل IPE' },
+    { href: '/products/profile/profile-hea', label: 'پروفیل HEA' },
+    { href: '/products/profile/profile-heb', label: 'پروفیل HEB' },
   ],
   ورق: [
-    { href: '/products/varagh-garm', label: 'ورق گرم' },
-    { href: '/products/varagh-siah', label: 'ورق سیاه' },
-    { href: '/products/varagh-sard', label: 'ورق سرد' },
-    { href: '/products/varagh-galvanize', label: 'ورق گالوانیزه' },
-    { href: '/products/varagh-rangi', label: 'ورق رنگی' },
-    { href: '/products/varagh-steel', label: 'ورق استیل' },
-    { href: '/products/varagh-aluminum', label: 'ورق آلومینیوم' },
-    { href: '/products/varagh-mes', label: 'ورق مس' },
+    { href: '/products/sheet/varagh-garm', label: 'ورق گرم' },
+    { href: '/products/sheet/varagh-siah', label: 'ورق سیاه' },
+    { href: '/products/sheet/varagh-sard', label: 'ورق سرد' },
+    { href: '/products/sheet/varagh-galvanize', label: 'ورق گالوانیزه' },
+    { href: '/products/sheet/varagh-rangi', label: 'ورق رنگی' },
+    { href: '/products/sheet/varagh-steel', label: 'ورق استیل' },
+    { href: '/products/sheet/varagh-aluminum', label: 'ورق آلومینیوم' },
+    { href: '/products/sheet/varagh-mes', label: 'ورق مس' },
   ],
   'نبشی و ناودانی': [
-    { href: '/products/nabshi', label: 'نبشی' },
-    { href: '/products/navodani', label: 'ناودانی' },
-    { href: '/products/separi', label: 'سپری' },
-    { href: '/products/nabshi-galvanize', label: 'نبشی گالوانیزه' },
+    { href: '/products/angle/nabshi', label: 'نبشی' },
+    { href: '/products/angle/navodani', label: 'ناودانی' },
+    { href: '/products/angle/separi', label: 'سپری' },
+    { href: '/products/angle/nabshi-galvanize', label: 'نبشی گالوانیزه' },
   ],
   تیرآهن: [
-    { href: '/products/tirahan', label: 'تیرآهن' },
-    { href: '/products/hash', label: 'هاش' },
-    { href: '/products/lane-zanbori', label: 'لانه زنبوری' },
-    { href: '/products/rail', label: 'ریل' },
-    { href: '/products/tirahan-sangin', label: 'تیرآهن سنگین' },
-    { href: '/products/tirahan-sabk', label: 'تیرآهن سبک' },
+    { href: '/products/beam/tirahan', label: 'تیرآهن' },
+    { href: '/products/beam/hash', label: 'هاش' },
+    { href: '/products/beam/lane-zanbori', label: 'لانه زنبوری' },
+    { href: '/products/beam/rail', label: 'ریل' },
+    { href: '/products/beam/tirahan-sangin', label: 'تیرآهن سنگین' },
+    { href: '/products/beam/tirahan-sabk', label: 'تیرآهن سبک' },
   ],
   لوله: [
-    { href: '/products/lole-darzdar', label: 'لوله درزدار' },
-    { href: '/products/lole-bedone-darz', label: 'لوله بدون درز' },
-    { href: '/products/lole-galvanize', label: 'لوله گالوانیزه' },
-    { href: '/products/lole-steel', label: 'لوله استیل' },
-    { href: '/products/lole-mes', label: 'لوله مس' },
-    { href: '/products/lole-aluminum', label: 'لوله آلومینیوم' },
-    { href: '/products/lole-polyethylene', label: 'لوله پلی‌اتیلن' },
-    { href: '/products/lole-pvc', label: 'لوله PVC' },
+    { href: '/products/pipe/lole-darzdar', label: 'لوله درزدار' },
+    { href: '/products/pipe/lole-bedone-darz', label: 'لوله بدون درز' },
+    { href: '/products/pipe/lole-galvanize', label: 'لوله گالوانیزه' },
+    { href: '/products/pipe/lole-steel', label: 'لوله استیل' },
+    { href: '/products/pipe/lole-mes', label: 'لوله مس' },
+    { href: '/products/pipe/lole-aluminum', label: 'لوله آلومینیوم' },
+    { href: '/products/pipe/lole-polyethylene', label: 'لوله پلی‌اتیلن' },
+    { href: '/products/pipe/lole-pvc', label: 'لوله PVC' },
   ],
   سیم: [
-    { href: '/products/sim-siah', label: 'سیم سیاه' },
-    { href: '/products/sim-galvanize', label: 'سیم گالوانیزه' },
-    { href: '/products/sim-khardar', label: 'سیم خاردار' },
-    { href: '/products/kabel', label: 'کابل' },
+    { href: '/products/wire/sim-siah', label: 'سیم سیاه' },
+    { href: '/products/wire/sim-galvanize', label: 'سیم گالوانیزه' },
+    { href: '/products/wire/sim-khardar', label: 'سیم خاردار' },
+    { href: '/products/wire/kabel', label: 'کابل' },
   ],
   توری: [
-    { href: '/products/tori-hesari', label: 'توری حصاری' },
-    { href: '/products/tori-joshi', label: 'توری جوشی' },
-    { href: '/products/tori-galvanize', label: 'توری گالوانیزه' },
-    { href: '/products/tori-plastic', label: 'توری پلاستیکی' },
+    { href: '/products/mesh/tori-hesari', label: 'توری حصاری' },
+    { href: '/products/mesh/tori-joshi', label: 'توری جوشی' },
+    { href: '/products/mesh/tori-galvanize', label: 'توری گالوانیزه' },
+    { href: '/products/mesh/tori-plastic', label: 'توری پلاستیکی' },
   ],
   شمش: [
-    { href: '/products/shamsh-folad', label: 'شمش فولاد' },
-    { href: '/products/shamsh-aliaazhi', label: 'شمش آلیاژی' },
+    { href: '/products/shamsh/shamsh-folad', label: 'شمش فولاد' },
+    { href: '/products/shamsh/shamsh-aliaazhi', label: 'شمش آلیاژی' },
   ],
   قوطی: [
-    { href: '/products/qooti-sanate', label: 'قوطی صنعتی' },
-    { href: '/products/qooti-sotoni', label: 'قوطی ستونی' },
+    { href: '/products/profile/qooti-sanate', label: 'قوطی صنعتی' },
+    { href: '/products/profile/qooti-sotoni', label: 'قوطی ستونی' },
   ],
   'محصولات مفتولی': [
-    { href: '/products/sim-maftooli-siah', label: 'سیم مفتولی سیاه' },
-    { href: '/products/sim-maftooli-galvanize', label: 'سیم مفتولی گالوانیزه' },
-    { href: '/products/toori-hesari', label: 'توری حصاری' },
-    { href: '/products/mesh-ajdar', label: 'مش آجدار' },
+    { href: '/products/maftoli/sim-maftooli-siah', label: 'سیم مفتولی سیاه' },
+    {
+      href: '/products/maftoli/sim-maftooli-galvanize',
+      label: 'سیم مفتولی گالوانیزه',
+    },
+    { href: '/products/maftoli/toori-hesari', label: 'توری حصاری' },
+    { href: '/products/maftoli/mesh-ajdar', label: 'مش آجدار' },
   ],
   'مواد اولیه': [
-    { href: '/products/ahan-esfonji', label: 'آهن اسفنجی' },
-    { href: '/products/foro-aliazh', label: 'فروآلیاژ' },
+    { href: '/products/raw-materials/ahan-esfonji', label: 'آهن اسفنجی' },
+    { href: '/products/raw-materials/foro-aliazh', label: 'فروآلیاژ' },
   ],
 };
 
@@ -187,7 +190,7 @@ const SubMenu: React.FC<SubMenuProps> = ({
       onMouseLeave={onMouseLeave}
     >
       <Link
-        href={`/products/category/${getCategorySlug(title)}`}
+        href={`/products/${getCategorySlug(title)}`}
         onClick={(e) => {
           e.stopPropagation();
           onLinkClick();
@@ -211,7 +214,7 @@ const SubMenu: React.FC<SubMenuProps> = ({
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <div className="absolute right-full top-0 mr-2 w-72 max-w-[90vw] bg-background/95 backdrop-blur-xl border border-divider/50 rounded-2xl p-3 shadow-2xl z-[60] lg:right-full lg:left-auto left-0 lg:mr-2 lg:ml-0 ml-2">
+        <div className="absolute right-full top-0 mr-2 w-72 max-w-[90vw] bg-background backdrop-blur-xl border border-divider/50 rounded-2xl p-3 shadow-2xl z-[60] lg:right-full lg:left-auto left-0 lg:mr-2 lg:ml-0 ml-2">
           <div className="py-1">
             {items.map((item, index) => (
               <Link
@@ -268,7 +271,7 @@ const ProductsMenu = () => {
         >
           <MenuItems
             static
-            className="absolute right-0 z-50 p-3 mt-2 origin-top-right border shadow-2xl w-80 rounded-2xl border-divider/50 bg-background/95"
+            className="absolute right-0 z-50 p-3 mt-2 origin-top-right border shadow-2xl w-80 rounded-2xl border-divider/50 bg-background backdrop-blur-xl"
           >
             <div className="py-1">
               {Object.entries(productsData).map(([category, categoryItems]) => (
@@ -347,7 +350,7 @@ const WeightMenu = () => {
         >
           <MenuItems
             static
-            className="absolute right-0 z-50 p-3 mt-2 origin-top-right border shadow-2xl w-80 rounded-2xl backdrop-blur-xl border-divider/50 bg-background/95 focus:outline-none focus:ring-0"
+            className="absolute right-0 z-50 p-3 mt-2 origin-top-right border shadow-2xl w-80 rounded-2xl backdrop-blur-xl border-divider/50 bg-background focus:outline-none focus:ring-0"
           >
             <div className="py-1">
               {weightData.map((item, index) => (

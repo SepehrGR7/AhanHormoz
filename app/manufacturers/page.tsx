@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { BlogPostCard, BlogPost } from '@/components/blog-post';
 import { Factory } from 'lucide-react';
+import { prisma } from '@/lib/prisma';
 
 export const metadata: Metadata = {
   title: 'تولید کنندگان',
@@ -8,99 +9,32 @@ export const metadata: Metadata = {
     'آخرین مطالب و اخبار در مورد صنعت فولاد و تولیدکنندگان فولاد ایران',
 };
 
-// This would typically come from a CMS or database
-const posts: BlogPost[] = [
-  {
-    id: 'foolad-mobarakeh',
-    title: 'فولاد مبارکه؛ بزرگترین تولیدکننده فولاد ایران',
-    excerpt:
-      'شرکت فولاد مبارکه اصفهان، بزرگترین مجتمع تولید فولاد تخت در خاورمیانه و شمال آفریقا با ظرفیت تولید سالانه ۷.۲ میلیون تن.',
-    content: `شرکت فولاد مبارکه اصفهان در سال ۱۳۷۱ افتتاح شد و امروز به عنوان بزرگترین تولیدکننده ورق های فولادی تخت در خاورمیانه و شمال آفریقا شناخته می‌شود...`,
-    image: '/images/blog/foolad-mobarakeh.png',
-    date: '۱۴۰۴/۰۷/۱۱',
-    readTime: '۵ دقیقه',
-    author: 'تیم آهن هرمز',
-  },
-  {
-    id: 'zob-ahan',
-    title: 'ذوب آهن اصفهان؛ پیشگام صنعت فولاد ایران',
-    excerpt:
-      'ذوب آهن اصفهان به عنوان اولین تولیدکننده فولاد در ایران، نقش مهمی در توسعه صنعتی کشور داشته است.',
-    content: `ذوب آهن اصفهان در سال ۱۳۴۶ به عنوان اولین کارخانه تولید فولاد در ایران افتتاح شد...`,
-    image: '/images/blog/zob-ahan.png',
-    date: '۱۴۰۴/۰۷/۱۰',
-    readTime: '۴ دقیقه',
-    author: 'تیم آهن هرمز',
-  },
-  {
-    id: 'foolad-khuzestan',
-    title: 'فولاد خوزستان و نقش آن در صنعت فولاد کشور',
-    excerpt:
-      'گروه فولاد خوزستان با تولید انواع شمش فولادی و محصولات فولادی، یکی از قطب‌های مهم تولید فولاد در کشور است.',
-    content: `فولاد خوزستان از سال ۱۳۶۷ فعالیت خود را آغاز کرد و امروز به یکی از بزرگترین تولیدکنندگان شمش فولادی در ایران تبدیل شده است...`,
-    image: '/images/blog/foolad-khuzestan.png',
-    date: '۱۴۰۴/۰۷/۰۹',
-    readTime: '۴ دقیقه',
-    author: 'تیم آهن هرمز',
-  },
-  {
-    id: 'hormozgan-steel',
-    title: 'فولاد هرمزگان؛ قطب صادرات فولاد جنوب ایران',
-    excerpt:
-      'شرکت فولاد هرمزگان با ظرفیت تولید 1.5 میلیون تن تختال، نقش کلیدی در صادرات فولاد ایران ایفا می‌کند.',
-    content: `فولاد هرمزگان در سال ۱۳۹۰ به بهره‌برداری رسید و با دسترسی به آب‌های آزاد و نزدیکی به بنادر، سهم بالایی در صادرات فولاد کشور دارد...`,
-    image: '/images/blog/foolad-mobarakeh.png',
-    date: '۱۴۰۴/۰۷/۰۸',
-    readTime: '۳ دقیقه',
-    author: 'تحریریه آهن هرمز',
-  },
-  {
-    id: 'green-steel-mobarakeh',
-    title: 'فولاد مبارکه و پروژه‌های توسعه سبز',
-    excerpt:
-      'فولاد مبارکه با سرمایه‌گذاری در انرژی‌های تجدیدپذیر و کاهش آلایندگی، پیشگام توسعه پایدار در صنعت فولاد ایران است.',
-    content: `این شرکت با اجرای پروژه‌های نیروگاه خورشیدی و تصفیه پساب صنعتی، گام‌های مهمی در راستای مسئولیت اجتماعی و محیط زیست برداشته است...`,
-    image: '/images/blog/foolad-mobarakeh.png',
-    date: '۱۴۰۴/۰۷/۰۷',
-    readTime: '۲ دقیقه',
-    author: 'تحریریه آهن هرمز',
-  },
-  {
-    id: 'iran-railway-steel',
-    title: 'نقش فولاد در پروژه‌های ملی راه‌آهن ایران',
-    excerpt:
-      'توسعه خطوط ریلی کشور بدون تولید ریل ملی توسط ذوب آهن اصفهان ممکن نبود.',
-    content: `ریل ملی ایران با استانداردهای جهانی توسط ذوب آهن اصفهان تولید و در پروژه‌های راه‌آهن سراسری استفاده می‌شود...`,
-    image: '/images/blog/zob-ahan.png',
-    date: '۱۴۰۴/۰۷/۰۶',
-    readTime: '۳ دقیقه',
-    author: 'تحریریه آهن هرمز',
-  },
-  {
-    id: 'khorasan-rebar',
-    title: 'فولاد خراسان؛ پیشگام در تولید میلگرد',
-    excerpt:
-      'مجتمع فولاد خراسان با ظرفیت تولید سالانه بیش از یک میلیون تن میلگرد، یکی از بزرگترین تولیدکنندگان شرق کشور است.',
-    content: `این مجتمع با بهره‌گیری از فناوری‌های روز دنیا و خطوط تولید پیشرفته، محصولات متنوعی را به بازار عرضه می‌کند...`,
-    image: '/images/blog/foolad-khuzestan.png',
-    date: '۱۴۰۴/۰۷/۰۵',
-    readTime: '۲ دقیقه',
-    author: 'تحریریه آهن هرمز',
-  },
-  {
-    id: 'jahan-ara-arvand',
-    title: 'فولاد جهان آرا اروند؛ توسعه صادراتی در منطقه آزاد',
-    excerpt:
-      'این شرکت با موقعیت جغرافیایی ویژه در منطقه آزاد اروند، نقش مهمی در صادرات فولاد ایران به کشورهای همسایه دارد.',
-    content: `فولاد جهان آرا اروند با ظرفیت تولید قابل توجه و دسترسی به آب‌های آزاد، صادرات فولاد را تسهیل کرده است...`,
-    image: '/images/blog/foolad-mobarakeh.png',
-    date: '۱۴۰۴/۰۷/۰۴',
-    readTime: '۲ دقیقه',
-    author: 'تحریریه آهن هرمز',
-  },
-];
+async function getManufacturers() {
+  try {
+    const manufacturers = await prisma.manufacturer.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
 
-export default function ManufacturersPage() {
+    return manufacturers.map((manufacturer) => ({
+      id: manufacturer.slug,
+      title: manufacturer.name,
+      excerpt: manufacturer.description?.substring(0, 150) + '...' || '',
+      content: manufacturer.description || '',
+      image: manufacturer.logo || '/images/blog/foolad-mobarakeh.png',
+      date: new Date(manufacturer.createdAt).toLocaleDateString('fa-IR'),
+      readTime: '۵ دقیقه',
+      author: 'تیم آهن هرمز',
+    }));
+  } catch (error) {
+    console.error('Error fetching manufacturers:', error);
+    return [];
+  }
+}
+
+export default async function ManufacturersPage() {
+  const posts: BlogPost[] = await getManufacturers();
   return (
     <main className="relative">
       {/* Hero Section */}

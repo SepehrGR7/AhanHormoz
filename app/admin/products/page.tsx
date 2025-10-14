@@ -38,6 +38,7 @@ import {
   Filter,
   RefreshCw,
   Layers,
+  X,
 } from 'lucide-react';
 import { useProducts, useCategories } from '@/hooks/useApi';
 import * as XLSX from 'xlsx';
@@ -77,6 +78,7 @@ export default function AdminProducts() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [searchQuery, setSearchQuery] = useState(''); // برای API
   const [categoryFilter, setCategoryFilter] = useState('');
   const [stockFilter, setStockFilter] = useState('');
   const [bulkUpdateData, setBulkUpdateData] = useState<BulkUpdateData>({});
@@ -149,7 +151,7 @@ export default function AdminProducts() {
     isLoading,
     mutate: mutateProducts,
   } = useProducts({
-    search: searchTerm,
+    search: searchQuery,
     category: categoryFilter,
     inStock:
       stockFilter === 'true'
@@ -978,22 +980,52 @@ export default function AdminProducts() {
       {/* Filters */}
       <Card>
         <CardBody className="py-3">
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-4">
-            <div>
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-5">
+            <div className="md:col-span-2">
               <label className="block mb-2 text-sm font-medium text-right text-gray-700 dark:text-gray-300">
                 جستجو
               </label>
-              <Input
-                placeholder="جستجو بر اساس نام یا برند..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                startContent={<Search className="w-4 h-4 text-gray-400" />}
-                variant="bordered"
-                classNames={{
-                  input: 'text-right',
-                  inputWrapper: 'border-gray-300 hover:border-primary h-10',
-                }}
-              />
+              <div className="flex gap-2">
+                <Input
+                  placeholder="جستجو بر اساس نام یا برند..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter') {
+                      setSearchQuery(searchTerm);
+                    }
+                  }}
+                  startContent={<Search className="w-4 h-4 text-gray-400" />}
+                  variant="bordered"
+                  classNames={{
+                    input: 'text-right',
+                    inputWrapper: 'border-gray-300 hover:border-primary h-10',
+                  }}
+                />
+                <Button
+                  isIconOnly
+                  color="primary"
+                  variant="flat"
+                  onPress={() => setSearchQuery(searchTerm)}
+                  className="h-10"
+                >
+                  <Search className="w-4 h-4" />
+                </Button>
+                {searchTerm && (
+                  <Button
+                    isIconOnly
+                    color="default"
+                    variant="flat"
+                    onPress={() => {
+                      setSearchTerm('');
+                      setSearchQuery('');
+                    }}
+                    className="h-10"
+                  >
+                    <X className="w-4 h-4" />
+                  </Button>
+                )}
+              </div>
             </div>
             <div>
               <label className="block mb-2 text-sm font-medium text-right text-gray-700 dark:text-gray-300">
@@ -1088,6 +1120,7 @@ export default function AdminProducts() {
                   startContent={<RefreshCw className="w-4 h-4" />}
                   onClick={() => {
                     setSearchTerm('');
+                    setSearchQuery('');
                     setCategoryFilter('');
                     setStockFilter('');
                   }}

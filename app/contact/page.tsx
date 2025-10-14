@@ -1,7 +1,76 @@
+'use client';
+
+import { useState } from 'react';
 import { Clock, MapPin, Mail, Phone } from 'lucide-react';
 import Map from '@/components/map';
 
 export default function ContactPage() {
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    email: '',
+    message: '',
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: 'success' | 'error' | null;
+    message: string;
+  }>({ type: null, message: '' });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: '' });
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSubmitStatus({
+          type: 'success',
+          message: data.message,
+        });
+        // Reset form
+        setFormData({
+          name: '',
+          phone: '',
+          email: '',
+          message: '',
+        });
+      } else {
+        setSubmitStatus({
+          type: 'error',
+          message: data.error || 'خطا در ارسال پیام',
+        });
+      }
+    } catch (error) {
+      setSubmitStatus({
+        type: 'error',
+        message: 'خطا در ارسال پیام. لطفاً دوباره تلاش کنید.',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   return (
     <main className="relative">
       {/* Hero Section */}
@@ -142,22 +211,43 @@ export default function ContactPage() {
                 </span>
               </div>
             </div>
-            {/* <h2 className="relative mb-6 text-2xl font-bold text-center text-gray-900 dark:text-gray-100">
-              ارسال پیام
-            </h2> */}
-            <form className="space-y-6">
+
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label
                   htmlFor="name"
                   className="block mb-2 text-sm font-medium text-slate-600 dark:text-slate-400"
                 >
-                  نام و نام خانوادگی
+                  نام و نام خانوادگی *
                 </label>
                 <input
                   type="text"
                   id="name"
                   name="name"
-                  className="w-full px-4 py-2 border rounded-lg border-slate-300 dark:border-slate-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 dark:text-white"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
+                  disabled={isSubmitting}
+                  className="w-full px-4 py-2 border rounded-lg border-slate-300 dark:border-slate-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="phone"
+                  className="block mb-2 text-sm font-medium text-slate-600 dark:text-slate-400"
+                >
+                  شماره تماس *
+                </label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  required
+                  disabled={isSubmitting}
+                  className="w-full px-4 py-2 border rounded-lg border-slate-300 dark:border-slate-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                  dir="ltr"
                 />
               </div>
               <div>
@@ -165,13 +255,16 @@ export default function ContactPage() {
                   htmlFor="email"
                   className="block mb-2 text-sm font-medium text-slate-600 dark:text-slate-400"
                 >
-                  ایمیل
+                  ایمیل (اختیاری)
                 </label>
                 <input
                   type="email"
                   id="email"
                   name="email"
-                  className="w-full px-4 py-2 border rounded-lg border-slate-300 dark:border-slate-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 dark:text-white"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  disabled={isSubmitting}
+                  className="w-full px-4 py-2 border rounded-lg border-slate-300 dark:border-slate-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed"
                 />
               </div>
               <div>
@@ -179,21 +272,121 @@ export default function ContactPage() {
                   htmlFor="message"
                   className="block mb-2 text-sm font-medium text-slate-600 dark:text-slate-400"
                 >
-                  پیام شما
+                  پیام شما *
                 </label>
                 <textarea
                   id="message"
                   name="message"
                   rows={4}
-                  className="w-full px-4 py-2 border rounded-lg border-slate-300 dark:border-slate-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 dark:text-white"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  required
+                  disabled={isSubmitting}
+                  className="w-full px-4 py-2 border rounded-lg border-slate-300 dark:border-slate-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-slate-700 dark:text-white disabled:opacity-50 disabled:cursor-not-allowed"
                 ></textarea>
               </div>
               <button
                 type="submit"
-                className="w-full px-6 py-3 font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700"
+                disabled={isSubmitting}
+                className="flex items-center justify-center w-full gap-2 px-6 py-3 font-medium text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                ارسال پیام
+                {isSubmitting ? (
+                  <>
+                    <svg
+                      className="w-5 h-5 animate-spin"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                    در حال ارسال...
+                  </>
+                ) : (
+                  'ارسال پیام'
+                )}
               </button>
+
+              {/* Success/Error Messages - Below Form */}
+              {submitStatus.type && (
+                <div
+                  className={`p-5 rounded-xl border-2 ${
+                    submitStatus.type === 'success'
+                      ? 'bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border-green-300 dark:border-green-700'
+                      : 'bg-gradient-to-br from-red-50 to-rose-50 dark:from-red-900/20 dark:to-rose-900/20 border-red-300 dark:border-red-700'
+                  } transition-all duration-300 animate-in fade-in slide-in-from-bottom-4`}
+                >
+                  <div className="flex items-start gap-3">
+                    {submitStatus.type === 'success' ? (
+                      <div className="flex items-center justify-center w-8 h-8 bg-green-500 rounded-full dark:bg-green-600 shrink-0">
+                        <svg
+                          className="w-5 h-5 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-center w-8 h-8 bg-red-500 rounded-full dark:bg-red-600 shrink-0">
+                        <svg
+                          className="w-5 h-5 text-white"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M6 18L18 6M6 6l12 12"
+                          />
+                        </svg>
+                      </div>
+                    )}
+                    <div className="flex-1">
+                      <p
+                        className={`font-semibold mb-1 ${
+                          submitStatus.type === 'success'
+                            ? 'text-green-800 dark:text-green-200'
+                            : 'text-red-800 dark:text-red-200'
+                        }`}
+                      >
+                        {submitStatus.type === 'success'
+                          ? 'موفقیت‌آمیز!'
+                          : 'خطا!'}
+                      </p>
+                      <p
+                        className={`text-sm ${
+                          submitStatus.type === 'success'
+                            ? 'text-green-700 dark:text-green-300'
+                            : 'text-red-700 dark:text-red-300'
+                        }`}
+                      >
+                        {submitStatus.message}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
             </form>
           </div>
         </div>

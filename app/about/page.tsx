@@ -202,9 +202,9 @@ export default function AboutPage() {
                 </Link>
                 <Link
                   href="/pricing"
-                  className="relative px-8 py-3 font-semibold text-white transition-all duration-300 border group bg-white/5 backdrop-blur-sm border-white/10 rounded-xl hover:bg-white/20 hover:scale-105 hover:shadow-lg hover:shadow-white/20"
+                  className="relative px-8 py-3 font-semibold text-white transition-all duration-300 border group bg-white/10 backdrop-blur-sm border-white/20 rounded-xl hover:bg-white hover:scale-105 hover:shadow-lg hover:shadow-white/20"
                 >
-                  <span className="relative z-10 transition-colors duration-300">
+                  <span className="relative z-10 transition-colors duration-300 group-hover:text-blue-600">
                     لیست قیمت
                   </span>
                 </Link>

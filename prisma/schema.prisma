@@ -273,3 +273,64 @@ model AdminLog {
   @@index([createdAt])
   @@map("admin_logs")
 }
+
+model ContactForm {
+  id        String            @id @default(cuid())
+  name      String
+  phone     String
+  email     String?
+  message   String            @db.Text
+  status    ContactFormStatus @default(NEW)
+  reply     String?           @db.Text
+  repliedAt DateTime?
+  repliedBy String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+  @@map("contact_forms")
+}
+
+model QuickOrder {
+  id               String           @id @default(cuid())
+  customerName     String
+  companyName      String?
+  phoneNumber      String
+  city             String
+  productSpecs     String           @db.Text
+  quantity         String
+  deliveryDate     DateTime?
+  deliveryMethod   DeliveryMethod   @default(PICKUP)
+  additionalNotes  String?          @db.Text
+  status           QuickOrderStatus @default(PENDING)
+  productName      String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+  @@index([phoneNumber])
+  @@map("quick_orders")
+}
+
+enum ContactFormStatus {
+  NEW
+  READ
+  REPLIED
+}
+
+enum QuickOrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  COMPLETED
+  CANCELLED
+}
+
+enum DeliveryMethod {
+  PICKUP
+  DELIVERY
+}

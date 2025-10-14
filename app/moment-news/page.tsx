@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Card, CardBody } from '@heroui/card';
 import { Chip } from '@heroui/chip';
 import { Spinner } from '@heroui/spinner';
-import { Calendar, TrendingUp } from 'lucide-react';
+import { Calendar, TrendingUp, ArrowUp, ArrowDown, Minus } from 'lucide-react';
 import moment from 'moment-jalaali';
 
 moment.loadPersian({ usePersianDigits: true, dialect: 'persian-modern' });
@@ -68,9 +68,34 @@ export default function MomentNewsPage() {
   }, []);
 
   const getChangeIcon = (changeType: string) => {
-    if (changeType === 'افزایش') return '🔺';
-    if (changeType === 'کاهش') return '🔻';
-    return '➖';
+    if (changeType === 'افزایش')
+      return (
+        <span className="inline-flex items-center justify-center w-8 h-8 text-red-700 rounded-full bg-red-50">
+          <ArrowUp className="w-4 h-4" />
+        </span>
+      );
+
+    if (changeType === 'کاهش')
+      return (
+        <span className="inline-flex items-center justify-center w-8 h-8 text-green-700 rounded-full bg-green-50">
+          <ArrowDown className="w-4 h-4" />
+        </span>
+      );
+
+    return (
+      <span className="inline-flex items-center justify-center w-8 h-8 text-gray-700 bg-gray-100 rounded-full">
+        <Minus className="w-4 h-4" />
+      </span>
+    );
+  };
+
+  // compact icons for table chips (smaller, no padded circle)
+  const getCompactChangeIcon = (changeType: string) => {
+    if (changeType === 'افزایش')
+      return <ArrowUp className="w-4 h-4 text-red-600" />;
+    if (changeType === 'کاهش')
+      return <ArrowDown className="w-4 h-4 text-green-600" />;
+    return <Minus className="w-4 h-4 text-gray-600" />;
   };
 
   const getChangeColor = (changeType: string) => {
@@ -152,7 +177,7 @@ export default function MomentNewsPage() {
               <div className="relative p-8 overflow-hidden border shadow-xl bg-white/80 dark:bg-slate-900/80 border-gray-200/60 dark:border-gray-700/50 rounded-3xl backdrop-blur-md">
                 <div className="relative text-center">
                   <div className="inline-flex items-center gap-3 px-4 py-2 mb-4 border rounded-full bg-white/60 dark:bg-slate-800/60 border-gray-200/50 dark:border-gray-700/50">
-                    <span className="text-lg">🔺</span>
+                    {getChangeIcon('افزایش')}
                     <span className="text-sm font-medium text-red-800 dark:text-red-200">
                       افزایش
                     </span>
@@ -169,7 +194,7 @@ export default function MomentNewsPage() {
               <div className="relative p-8 overflow-hidden border shadow-xl bg-white/80 dark:bg-slate-900/80 border-gray-200/60 dark:border-gray-700/50 rounded-3xl backdrop-blur-md">
                 <div className="relative text-center">
                   <div className="inline-flex items-center gap-3 px-4 py-2 mb-4 border rounded-full bg-white/60 dark:bg-slate-800/60 border-gray-200/50 dark:border-gray-700/50">
-                    <span className="text-lg">🔻</span>
+                    {getChangeIcon('کاهش')}
                     <span className="text-sm font-medium text-green-800 dark:text-green-200">
                       کاهش
                     </span>
@@ -186,7 +211,7 @@ export default function MomentNewsPage() {
               <div className="relative p-8 overflow-hidden border shadow-xl bg-white/80 dark:bg-slate-900/80 border-gray-200/60 dark:border-gray-700/50 rounded-3xl backdrop-blur-md">
                 <div className="relative text-center">
                   <div className="inline-flex items-center gap-3 px-4 py-2 mb-4 border rounded-full bg-white/60 dark:bg-slate-800/60 border-gray-200/50 dark:border-gray-700/50">
-                    <span className="text-lg">➖</span>
+                    {getChangeIcon('ثابت')}
                     <span className="text-sm font-medium text-gray-800 dark:text-gray-200">
                       ثابت
                     </span>
@@ -282,11 +307,9 @@ export default function MomentNewsPage() {
                             color={getChangeColor(change.changeType)}
                             variant="flat"
                             size="sm"
-                            startContent={
-                              <span className="text-base">
-                                {getChangeIcon(change.changeType)}
-                              </span>
-                            }
+                            startContent={getCompactChangeIcon(
+                              change.changeType
+                            )}
                           >
                             {change.changeAmount.toLocaleString('fa-IR')} تومان{' '}
                             {change.changeType}

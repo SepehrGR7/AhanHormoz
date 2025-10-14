@@ -1,37 +1,52 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
 import CategoryProducts from '@/components/category-products';
-import CategorySheetsProducts from '@/components/category-sheets-products';
-import DataSourceToggle from '@/components/data-source-toggle';
-import { PRODUCT_CATEGORIES, SAMPLE_PRODUCTS } from '@/types/products';
+import ProductsSidebar from '@/components/products-sidebar';
+import { PRODUCT_CATEGORIES } from '@/types/products';
 
 interface PageProps {
   params: Promise<{
-    slug: string;
-  }>;
-  searchParams: Promise<{
-    source?: 'sheets' | 'static';
+    categorySlug: string;
   }>;
 }
 
-export default async function CategoryPage({
-  params,
-  searchParams,
-}: PageProps) {
-  const { slug } = await params;
-  const { source } = await searchParams;
+// Generate static params for all categories
+export async function generateStaticParams() {
+  return PRODUCT_CATEGORIES.map((category) => ({
+    categorySlug: category.id,
+  }));
+}
 
-  // پیدا کردن دسته‌بندی بر اساس slug
-  const category = PRODUCT_CATEGORIES.find((cat) => cat.id === slug);
+// Generate metadata for each category
+export async function generateMetadata({ params }: PageProps) {
+  const { categorySlug } = await params;
+  const category = PRODUCT_CATEGORIES.find((cat) => cat.id === categorySlug);
+
+  if (!category) {
+    return {
+      title: 'دسته‌بندی یافت نشد',
+    };
+  }
+
+  return {
+    title: `${category.name} | آهن هرمز`,
+    description: `مشاهده تمامی محصولات ${category.name} با بهترین قیمت و کیفیت در آهن هرمز`,
+    openGraph: {
+      title: `${category.name} | آهن هرمز`,
+      description: `مشاهده تمامی محصولات ${category.name} با بهترین قیمت و کیفیت در آهن هرمز`,
+    },
+  };
+}
+
+export default async function CategoryPage({ params }: PageProps) {
+  const { categorySlug } = await params;
+
+  // پیدا کردن دسته‌بندی بر اساس categorySlug
+  const category = PRODUCT_CATEGORIES.find((cat) => cat.id === categorySlug);
 
   if (!category) {
     notFound();
   }
-
-  // فیلتر کردن محصولات بر اساس دسته‌بندی
-  const categoryProducts = SAMPLE_PRODUCTS.filter(
-    (product) => product.category.id === slug
-  );
 
   // Function to get the appropriate icon for each product category
   const getCategoryIcon = (categoryId: string) => {
@@ -74,14 +89,6 @@ export default async function CategoryPage({
               مشاهده تمامی محصولات دسته‌بندی {category.name} - تفکیک شده بر اساس
               برند و نوع
             </p>
-            {source === 'sheets' && (
-              <div className="mt-6">
-                <div className="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-600 bg-white rounded-full shadow-lg">
-                  <div className="w-2 h-2 mr-2 bg-green-500 rounded-full animate-pulse"></div>
-                  داده‌ها Real-time از Google Sheets
-                </div>
-              </div>
-            )}
           </div>
         </div>
       </div>
@@ -91,18 +98,20 @@ export default async function CategoryPage({
         <div className="mx-auto max-w-7xl"></div>
       </div>
 
-      {/* Products Section */}
+      {/* Products Section with Sidebar */}
       <div className="bg-gray-50 dark:bg-slate-900">
-        <div className="px-6 py-6 mx-auto">
-          {/* Data Source Toggle */}
-          <DataSourceToggle slug={slug} />
+        <div className="container px-4 py-8 mx-auto sm:px-6 lg:px-8">
+          <div dir="ltr" className="grid grid-cols-1 gap-8 lg:grid-cols-12">
+            {/* Main Content - Products */}
+            <div dir="rtl" className="lg:col-span-9">
+              <CategoryProducts category={category} />
+            </div>
 
-          {/* Render appropriate component based on source */}
-          {source === 'sheets' ? (
-            <CategorySheetsProducts category={category} />
-          ) : (
-            <CategoryProducts category={category} products={categoryProducts} />
-          )}
+            {/* Sidebar */}
+            <div dir="rtl" className="lg:col-span-3">
+              <ProductsSidebar current={category.id} />
+            </div>
+          </div>
         </div>
       </div>
     </div>

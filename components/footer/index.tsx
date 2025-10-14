@@ -103,7 +103,7 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <Link
-                  href="/products/category/rebar"
+                  href="/products/rebar"
                   className="text-sm text-muted-foreground hover:text-primary"
                 >
                   میلگرد
@@ -111,7 +111,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/sheets"
+                  href="/products/sheet"
                   className="text-sm text-muted-foreground hover:text-primary"
                 >
                   ورق
@@ -119,7 +119,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/profiles"
+                  href="/products/profile"
                   className="text-sm text-muted-foreground hover:text-primary"
                 >
                   پروفیل
@@ -127,7 +127,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/beams"
+                  href="/products/beam"
                   className="text-sm text-muted-foreground hover:text-primary"
                 >
                   تیرآهن

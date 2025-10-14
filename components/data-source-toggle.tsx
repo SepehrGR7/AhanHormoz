@@ -16,7 +16,7 @@ export default function DataSourceToggle({ slug }: DataSourceToggleProps) {
     <div className="mb-6 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
       <div className="flex gap-2">
         <Link
-          href={`/products/category/${slug}`}
+          href={`/products/${slug}`}
           className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
             source !== 'sheets'
               ? 'bg-blue-600 text-white shadow-md hover:bg-blue-700'
@@ -26,7 +26,7 @@ export default function DataSourceToggle({ slug }: DataSourceToggleProps) {
           📊 داده‌های استاتیک
         </Link>
         <Link
-          href={`/products/category/${slug}?source=sheets`}
+          href={`/products/${slug}?source=sheets`}
           className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
             source === 'sheets'
               ? 'bg-green-600 text-white shadow-md hover:bg-green-700'

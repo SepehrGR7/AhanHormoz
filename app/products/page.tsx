@@ -69,36 +69,52 @@ export default function ProductsPage() {
       {/* Quick Categories Section */}
       <div className="container px-6 py-16 mx-auto">
         {/* Category Cards Grid */}
-        <div className="grid grid-cols-1 gap-8 mb-16 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 mb-16 md:grid-cols-2 lg:grid-cols-3">
           {PRODUCT_CATEGORIES.map((category) => (
             <Link
               key={category.id}
-              href={`/products/category/${category.id}`}
+              href={`/products/${category.id}`}
               className="block group"
             >
-              <div className="relative p-8 overflow-hidden transition-all duration-300 border shadow-2xl bg-white/80 dark:bg-slate-900/80 border-gray-200/60 dark:border-gray-700/50 rounded-3xl backdrop-blur-md hover:shadow-xl hover:border-blue-200 dark:hover:border-blue-700 hover:-translate-y-2">
-                <div className="relative">
-                  <div className="flex items-center justify-center w-16 h-16 mb-4 transition-all duration-300 bg-white border-2 border-gray-300 rounded-full shadow-lg dark:bg-slate-900 group-hover:border-blue-400 group-hover:shadow-2xl">
-                    <i
-                      className={`text-2xl text-blue-600 dark:text-blue-400 ${getCategoryIcon(category.id)}`}
-                    ></i>
+              <div className="relative h-64 overflow-hidden transition-all duration-500 border shadow-lg bg-gradient-to-br from-white via-gray-50 to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-blue-950 border-gray-200/50 dark:border-gray-700/50 rounded-3xl backdrop-blur-sm hover:shadow-2xl hover:border-blue-300 dark:hover:border-blue-600 hover:scale-[1.01] ">
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 transition-opacity duration-500 opacity-0 bg-gradient-to-br from-blue-600/10 via-blue-500/10 to-blue-400/10 group-hover:opacity-100"></div>
+
+                {/* Content */}
+                <div className="relative z-10 flex flex-col justify-between h-full p-6">
+                  {/* Top Section with Icon */}
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center justify-center w-20 h-20 transition-all duration-500 border-2 shadow-xl bg-gradient-to-br from-blue-500 to-cyan-500 dark:from-blue-600 dark:to-cyan-600 rounded-2xl border-white/50 dark:border-gray-700/50 group-hover:scale-102 group-hover:shadow-2xl">
+                      <i
+                        className={`text-4xl text-white drop-shadow-lg ${getCategoryIcon(category.id)}`}
+                      ></i>
+                    </div>
+
+                    {/* Badge */}
+                    <div className="px-3 py-1.5 text-xs font-bold text-blue-700 bg-blue-100 dark:bg-blue-900/30 dark:text-blue-300 rounded-full border border-blue-200 dark:border-blue-700/50 shadow-sm">
+                      {category.subcategories.length} زیرمجموعه
+                    </div>
                   </div>
 
-                  <h3 className="mb-3 text-xl font-bold text-gray-900 transition-colors dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">
-                    {category.name}
-                  </h3>
+                  {/* Bottom Section with Title and Action */}
+                  <div className="space-y-3">
+                    <h3 className="text-2xl font-bold text-gray-900 transition-all duration-300 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                      {category.name}
+                    </h3>
 
-                  <p className="mb-4 leading-relaxed text-gray-600 dark:text-gray-300">
-                    {category.subcategories.length} زیرمجموعه موجود
-                  </p>
-
-                  <div className="flex items-center justify-between pt-4 border-t border-gray-200/50 dark:border-gray-700/50">
-                    <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
-                      مشاهده جزئیات
-                    </span>
-                    <ArrowLeft className="w-5 h-5 text-blue-600 transition-all dark:text-blue-400 group-hover:translate-x-1" />
+                    <div className="flex items-center justify-between pt-3 border-t border-gray-200/50 dark:border-gray-700/50">
+                      <span className="text-sm font-semibold text-blue-600 transition-all duration-300 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300">
+                        مشاهده محصولات
+                      </span>
+                      <div className="flex items-center justify-center w-10 h-10 transition-all duration-300 bg-blue-100 dark:bg-blue-900/30 rounded-xl group-hover:bg-blue-600 dark:group-hover:bg-blue-500 group-hover:translate-x-1">
+                        <ArrowLeft className="w-5 h-5 text-blue-600 transition-all duration-300 dark:text-blue-400 group-hover:text-white" />
+                      </div>
+                    </div>
                   </div>
                 </div>
+
+                {/* Hover Effect Border */}
+                <div className="absolute inset-0 transition-all duration-500 opacity-0 rounded-3xl group-hover:opacity-100 bg-gradient-to-r from-blue-600/20 via-blue-500/20 to-blue-400/20 blur-xl -z-10"></div>
               </div>
             </Link>
           ))}

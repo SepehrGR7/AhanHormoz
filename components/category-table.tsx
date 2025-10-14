@@ -1,9 +1,12 @@
 'use client';
 
+import React, { useState } from 'react';
+import Link from 'next/link';
 import { Product, ProductCategory } from '@/types/products';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import OrderRequestModal from '@/components/order-request-modal';
 import {
   Calculator,
   Phone,
@@ -29,6 +32,19 @@ export default function CategoryTable({
   onCalculate,
   formatPrice: customFormatPrice,
 }: CategoryTableProps) {
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+  const [selectedProductForOrder, setSelectedProductForOrder] = useState<{
+    name?: string;
+    specs?: string;
+  } | null>(null);
+
+  const openOrderModal = (product: Product) => {
+    setSelectedProductForOrder({
+      name: product.name,
+      specs: product.description || '',
+    });
+    setIsOrderModalOpen(true);
+  };
   const formatPrice =
     customFormatPrice ||
     ((price: number) => {
@@ -87,9 +103,9 @@ export default function CategoryTable({
                   </td>
                   <td className="px-2 py-4 text-center align-middle">
                     <div className="flex items-center justify-center h-full">
-                      <Badge variant="outline" className="font-medium">
+                      <span className="inline-flex items-center justify-center px-3 py-1 text-sm font-medium border rounded-full shadow-sm bg-white/80 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100">
                         {product.size}
-                      </Badge>
+                      </span>
                     </div>
                   </td>
                   <td className="px-2 py-4 text-center">
@@ -118,15 +134,22 @@ export default function CategoryTable({
                   </td>
                   <td className="px-2 py-4 text-center">
                     <div className="flex items-center justify-center gap-2">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => onCalculate(product)}
-                        className="flex items-center gap-1 text-xs cursor-pointer"
-                      >
-                        <Calculator className="w-3 h-3" />
-                        محاسبه
-                      </Button>
+                      <>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => openOrderModal(product)}
+                          className="flex items-center gap-1 text-xs cursor-pointer"
+                        >
+                          ثبت سفارش
+                        </Button>
+                        <OrderRequestModal
+                          isOpen={isOrderModalOpen}
+                          onClose={() => setIsOrderModalOpen(false)}
+                          productName={selectedProductForOrder?.name}
+                          productSpecs={selectedProductForOrder?.specs}
+                        />
+                      </>
                     </div>
                   </td>
                 </tr>
@@ -169,8 +192,11 @@ export default function CategoryTable({
                       <div className="text-sm font-medium truncate text-slate-900 dark:text-slate-100">
                         {product.name}
                       </div>
-                      <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-                        سایز: {product.size}
+                      <div className="flex items-center gap-2 mt-1 text-xs text-slate-500 dark:text-slate-400">
+                        <span className="whitespace-nowrap">سایز:</span>
+                        <span className="inline-flex items-center justify-center px-2 py-0.5 text-xs font-medium rounded-full bg-white/80 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-100">
+                          {product.size}
+                        </span>
                       </div>
                     </div>
                   </td>
@@ -199,14 +225,24 @@ export default function CategoryTable({
                     </Badge>
                   </td>
                   <td className="px-1 py-4 text-center">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => onCalculate(product)}
-                      className="flex items-center gap-1 px-2 text-xs cursor-pointer"
-                    >
-                      <Calculator className="w-3 h-3" />
-                    </Button>
+                    <div className="flex items-center justify-center gap-2">
+                      <>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => openOrderModal(product)}
+                          className="flex items-center gap-1 px-2 text-xs cursor-pointer"
+                        >
+                          <Package className="w-3 h-3" />
+                        </Button>
+                        <OrderRequestModal
+                          isOpen={isOrderModalOpen}
+                          onClose={() => setIsOrderModalOpen(false)}
+                          productName={selectedProductForOrder?.name}
+                          productSpecs={selectedProductForOrder?.specs}
+                        />
+                      </>
+                    </div>
                   </td>
                 </tr>
               ))}

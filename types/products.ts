@@ -28,11 +28,18 @@ export interface Product {
   height?: string; // ارتفاع (برای تیرآهن)
   meshSize?: string; // سایز چشمه توری
   packageType?: string; // نوع بسته‌بندی
+  // تاریخچه قیمت
+  priceHistory?: {
+    changeType: string;
+    changeAmount: number;
+    changedAt: string;
+  };
 }
 
 export interface ProductCategory {
   id: string;
   name: string;
+  slug?: string; // برای مقایسه با API response
   icon: string;
   subcategories: string[];
 }

@@ -1,27 +1,37 @@
 import { notFound } from 'next/navigation';
 import UnifiedProductPage from '@/components/unified-product-page';
-import { PRODUCT_ROUTES } from '@/types/products';
+import { PRODUCT_ROUTES, PRODUCT_CATEGORIES } from '@/types/products';
 
 interface ProductPageProps {
   params: Promise<{
+    categorySlug: string;
     productId: string;
   }>;
 }
 
-// Generate static params for all products
+// Generate static params for all products within their categories
 export async function generateStaticParams() {
-  return Object.keys(PRODUCT_ROUTES).map((productId) => ({
-    productId,
-  }));
+  const params: { categorySlug: string; productId: string }[] = [];
+
+  // برای هر محصول در PRODUCT_ROUTES، یک param تولید کن
+  Object.entries(PRODUCT_ROUTES).forEach(([productId, productData]) => {
+    params.push({
+      categorySlug: productData.category,
+      productId: productId,
+    });
+  });
+
+  return params;
 }
 
 // Generate metadata for each product
 export async function generateMetadata({ params }: ProductPageProps) {
-  const resolvedParams = await params;
-  const productData =
-    PRODUCT_ROUTES[resolvedParams.productId as keyof typeof PRODUCT_ROUTES];
+  const { categorySlug, productId } = await params;
 
-  if (!productData) {
+  const productData = PRODUCT_ROUTES[productId as keyof typeof PRODUCT_ROUTES];
+
+  // Validate that product exists and belongs to the category
+  if (!productData || productData.category !== categorySlug) {
     return {
       title: 'محصول یافت نشد',
     };
@@ -38,11 +48,12 @@ export async function generateMetadata({ params }: ProductPageProps) {
 }
 
 export default async function DynamicProductPage({ params }: ProductPageProps) {
-  const resolvedParams = await params;
-  const productData =
-    PRODUCT_ROUTES[resolvedParams.productId as keyof typeof PRODUCT_ROUTES];
+  const { categorySlug, productId } = await params;
 
-  if (!productData) {
+  const productData = PRODUCT_ROUTES[productId as keyof typeof PRODUCT_ROUTES];
+
+  // Validate that product exists and belongs to the correct category
+  if (!productData || productData.category !== categorySlug) {
     notFound();
   }
 
@@ -190,7 +201,7 @@ export default async function DynamicProductPage({ params }: ProductPageProps) {
     );
   };
 
-  const config = getProductConfig(resolvedParams.productId);
+  const config = getProductConfig(productId);
 
   return (
     <UnifiedProductPage
@@ -201,7 +212,7 @@ export default async function DynamicProductPage({ params }: ProductPageProps) {
       features={config.features}
       applications={config.applications}
       specifications={config.specifications}
-      productId={resolvedParams.productId}
+      productId={productId}
     />
   );
 }
