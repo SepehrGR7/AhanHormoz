@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { signIn, getSession } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '@heroui/button'
@@ -8,7 +8,7 @@ import { Input } from '@heroui/input'
 import { Card, CardBody, CardHeader } from '@heroui/card'
 import { EyeOff, Eye, Lock, AlertCircle } from 'lucide-react'
 
-export default function AdminLogin() {
+function AdminLoginForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isVisible, setIsVisible] = useState(false)
@@ -149,5 +149,19 @@ export default function AdminLogin() {
         </CardBody>
       </Card>
     </div>
+  )
+}
+
+export default function AdminLogin() {
+  return (
+    <Suspense fallback={
+      <div className='min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-slate-100 dark:from-slate-900 dark:to-slate-800'>
+        <div className='text-center'>
+          <div className='w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto' />
+        </div>
+      </div>
+    }>
+      <AdminLoginForm />
+    </Suspense>
   )
 }
