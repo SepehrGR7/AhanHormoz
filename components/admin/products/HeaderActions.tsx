@@ -29,8 +29,8 @@ export default function HeaderActions({
       <Button
         startContent={<Upload className="w-4 h-4" />}
         variant="bordered"
-        className="border-primary text-primary"
         onClick={onImportClick}
+        className="hover:bg-default-50 dark:hover:bg-default-900"
       >
         وارد کردن Excel
       </Button>

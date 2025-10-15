@@ -1,81 +1,81 @@
-'use client';
+'use client'
 
-import { useState, useEffect } from 'react';
-import { useRouter, useParams } from 'next/navigation';
-import { Button } from '@heroui/button';
-import { Input } from '@heroui/input';
-import { Card, CardBody, CardHeader } from '@heroui/card';
-import { Spinner } from '@heroui/spinner';
-import { Chip } from '@heroui/chip';
-import { addToast } from '@heroui/toast';
-import { FolderTree, ArrowLeft, Save, Plus, X, Smile } from 'lucide-react';
+import { useState, useEffect } from 'react'
+import { useRouter, useParams } from 'next/navigation'
+import { Button } from '@heroui/button'
+import { Input } from '@heroui/input'
+import { Card, CardBody, CardHeader } from '@heroui/card'
+import { Spinner } from '@heroui/spinner'
+import { Chip } from '@heroui/chip'
+import { addToast } from '@heroui/toast'
+import { FolderTree, ArrowLeft, Save, Plus, X, Smile } from 'lucide-react'
 
 interface CategoryFormData {
-  name: string;
-  description: string;
-  icon: string;
-  subcategories: string[];
+  name: string
+  description: string
+  icon: string
+  subcategories: string[]
 }
 
 export default function CategoryEditPage() {
-  const router = useRouter();
-  const params = useParams();
-  const isNew = params.id === 'new';
+  const router = useRouter()
+  const params = useParams()
+  const isNew = params.id === 'new'
 
-  const [loading, setLoading] = useState(!isNew);
-  const [saving, setSaving] = useState(false);
-  const [newSubcategory, setNewSubcategory] = useState('');
+  const [loading, setLoading] = useState(!isNew)
+  const [saving, setSaving] = useState(false)
+  const [newSubcategory, setNewSubcategory] = useState('')
   const [formData, setFormData] = useState<CategoryFormData>({
     name: '',
     description: '',
     icon: '',
     subcategories: [],
-  });
+  })
 
   // Fetch category data if editing
   useEffect(() => {
     if (!isNew) {
-      fetchCategory();
+      fetchCategory()
     }
-  }, [params.id]);
+  }, [params.id])
 
   const fetchCategory = async () => {
     try {
-      setLoading(true);
-      const response = await fetch(`/api/categories/${params.id}`);
-      const result = await response.json();
+      setLoading(true)
+      const response = await fetch(`/api/categories/${params.id}`)
+      const result = await response.json()
 
       if (result.success) {
-        const category = result.data;
+        const category = result.data
         setFormData({
           name: category.name || '',
           description: category.description || '',
           icon: category.icon || '',
           subcategories: category.subcategories || [],
-        });
+        })
       } else {
         addToast({
           title: 'خطا',
           description: 'خطا در دریافت اطلاعات دسته‌بندی',
           color: 'danger',
-        });
-        router.push('/admin/categories');
+        })
+        router.push('/admin/categories')
       }
     } catch (error) {
-      console.error('Error fetching category:', error);
+      console.error('Error fetching category:', error)
       addToast({
         title: 'خطا',
         description: 'خطا در برقراری ارتباط با سرور',
         color: 'danger',
-      });
-      router.push('/admin/categories');
+      })
+      router.push('/admin/categories')
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
 
     // Validation
     if (!formData.name.trim()) {
@@ -83,15 +83,15 @@ export default function CategoryEditPage() {
         title: 'خطا',
         description: 'نام دسته‌بندی الزامی است',
         color: 'warning',
-      });
-      return;
+      })
+      return
     }
 
     try {
-      setSaving(true);
+      setSaving(true)
 
-      const url = isNew ? '/api/categories' : `/api/categories/${params.id}`;
-      const method = isNew ? 'POST' : 'PUT';
+      const url = isNew ? '/api/categories' : `/api/categories/${params.id}`
+      const method = isNew ? 'POST' : 'PUT'
 
       const response = await fetch(url, {
         method,
@@ -99,9 +99,9 @@ export default function CategoryEditPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
-      });
+      })
 
-      const result = await response.json();
+      const result = await response.json()
 
       if (result.success) {
         addToast({
@@ -110,66 +110,66 @@ export default function CategoryEditPage() {
             ? 'دسته‌بندی با موفقیت ایجاد شد'
             : 'دسته‌بندی با موفقیت بروزرسانی شد',
           color: 'success',
-        });
-        router.push('/admin/categories');
+        })
+        router.push('/admin/categories')
       } else {
         addToast({
           title: 'خطا',
           description: result.error || 'خطا در ذخیره اطلاعات',
           color: 'danger',
-        });
+        })
       }
     } catch (error) {
-      console.error('Error saving category:', error);
+      console.error('Error saving category:', error)
       addToast({
         title: 'خطا',
         description: 'خطا در ذخیره اطلاعات',
         color: 'danger',
-      });
+      })
     } finally {
-      setSaving(false);
+      setSaving(false)
     }
-  };
+  }
 
   const handleInputChange = (field: keyof CategoryFormData, value: string) => {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
-    }));
-  };
+    }))
+  }
 
   const handleAddSubcategory = () => {
-    if (!newSubcategory.trim()) return;
+    if (!newSubcategory.trim()) return
 
     if (formData.subcategories.includes(newSubcategory.trim())) {
       addToast({
         title: 'خطا',
         description: 'این زیردسته قبلاً اضافه شده است',
         color: 'warning',
-      });
-      return;
+      })
+      return
     }
 
     setFormData((prev) => ({
       ...prev,
       subcategories: [...prev.subcategories, newSubcategory.trim()],
-    }));
-    setNewSubcategory('');
-  };
+    }))
+    setNewSubcategory('')
+  }
 
   const handleRemoveSubcategory = (index: number) => {
     setFormData((prev) => ({
       ...prev,
       subcategories: prev.subcategories.filter((_, i) => i !== index),
-    }));
-  };
+    }))
+  }
 
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
         <Spinner size="lg" />
       </div>
-    );
+    )
   }
 
   return (
@@ -273,8 +273,8 @@ export default function CategoryEditPage() {
                     }
                     onKeyPress={(e: React.KeyboardEvent<HTMLInputElement>) => {
                       if (e.key === 'Enter') {
-                        e.preventDefault();
-                        handleAddSubcategory();
+                        e.preventDefault()
+                        handleAddSubcategory()
                       }
                     }}
                     variant="bordered"
@@ -302,7 +302,7 @@ export default function CategoryEditPage() {
                     </p>
                   </div>
                 ) : (
-                  <div className="space-y-2 max-h-96 overflow-y-auto">
+                  <div className="space-y-2 overflow-y-auto max-h-96">
                     {formData.subcategories.map((sub, index) => (
                       <div
                         key={index}
@@ -348,5 +348,5 @@ export default function CategoryEditPage() {
         </div>
       </form>
     </div>
-  );
+  )
 }

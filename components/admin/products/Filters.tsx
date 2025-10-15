@@ -8,7 +8,6 @@ import { PRODUCT_CATEGORIES } from '@/types/products'
 interface Props {
   searchTerm: string
   setSearchTerm: (v: string) => void
-  onSearch: () => void
   categoryFilter: string
   setCategoryFilter: (v: string) => void
   stockFilter: string
@@ -23,7 +22,7 @@ interface Props {
 export default function Filters({
   searchTerm,
   setSearchTerm,
-  onSearch,
+
   categoryFilter,
   setCategoryFilter,
   stockFilter,
@@ -46,9 +45,6 @@ export default function Filters({
               placeholder="جستجو بر اساس نام یا برند..."
               value={searchTerm}
               onChange={(e: any) => setSearchTerm(e.target.value)}
-              onKeyPress={(e: any) => {
-                if (e.key === 'Enter') onSearch()
-              }}
               startContent={<Search className="w-4 h-4 text-gray-400" />}
               variant="bordered"
               classNames={{
@@ -56,15 +52,6 @@ export default function Filters({
                 inputWrapper: 'border-gray-300 hover:border-primary h-10',
               }}
             />
-            <Button
-              isIconOnly
-              color="primary"
-              variant="flat"
-              onPress={onSearch}
-              className="h-10"
-            >
-              <Search className="w-4 h-4" />
-            </Button>
             {searchTerm && (
               <Button
                 isIconOnly
@@ -72,7 +59,6 @@ export default function Filters({
                 variant="flat"
                 onPress={() => {
                   setSearchTerm('')
-                  onSearch()
                 }}
                 className="h-10"
               >
@@ -102,21 +88,9 @@ export default function Filters({
               value: 'text-gray-900 dark:text-white',
             }}
           >
-            {(categories || []).map((category: any) => {
-              const categoryIcon =
-                PRODUCT_CATEGORIES.find((c) => c.id === category.slug)?.icon ||
-                '📦'
-              return (
-                <SelectItem
-                  key={category.id}
-                  startContent={
-                    <span className="text-base">{categoryIcon}</span>
-                  }
-                >
-                  {category.name}
-                </SelectItem>
-              )
-            })}
+            {(categories || []).map((category: any) => (
+              <SelectItem key={category.id}>{category.name}</SelectItem>
+            ))}
           </Select>
         </div>
 

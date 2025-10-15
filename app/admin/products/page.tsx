@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { Button } from '@heroui/button'
 import { Input } from '@heroui/input'
 import { Card, CardBody, CardHeader } from '@heroui/card'
@@ -106,6 +106,12 @@ export default function AdminProducts() {
   // Inline price editing
   const [editingPriceId, setEditingPriceId] = useState<string | null>(null)
   const [tempPrice, setTempPrice] = useState<string>('')
+
+  // Debounce searchTerm -> searchQuery to auto-run search while typing
+  useEffect(() => {
+    const t = setTimeout(() => setSearchQuery(searchTerm), 800)
+    return () => clearTimeout(t)
+  }, [searchTerm])
 
   const formatPersianDate = (dateString: string) => {
     const date = new Date(dateString)
@@ -648,7 +654,6 @@ export default function AdminProducts() {
           <Filters
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
-            onSearch={() => setSearchQuery(searchTerm)}
             categoryFilter={categoryFilter}
             setCategoryFilter={setCategoryFilter}
             stockFilter={stockFilter}
