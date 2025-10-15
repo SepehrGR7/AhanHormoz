@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, CardBody } from '@heroui/card'
-import { Package, Eye, EyeOff, Layers } from 'lucide-react'
+import { Package, X, Check, Layers } from 'lucide-react'
 
 interface Props {
   total: number
@@ -44,7 +44,7 @@ export default function StatsCards({
             </p>
           </div>
           <div className="p-3 bg-green-100 rounded-full dark:bg-green-900">
-            <Eye className="w-6 h-6 text-green-600 dark:text-green-400" />
+            <Check className="w-6 h-6 text-green-600 dark:text-green-400" />
           </div>
         </CardBody>
       </Card>
@@ -60,7 +60,7 @@ export default function StatsCards({
             </p>
           </div>
           <div className="p-3 bg-red-100 rounded-full dark:bg-red-900">
-            <EyeOff className="w-6 h-6 text-red-600 dark:text-red-400" />
+            <X className="w-6 h-6 text-red-600 dark:text-red-400" />
           </div>
         </CardBody>
       </Card>
