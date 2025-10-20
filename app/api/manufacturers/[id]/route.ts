@@ -22,7 +22,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
           success: false,
           error: 'Manufacturer not found',
         },
-        { status: 404 },
+        { status: 404 }
       )
     }
 
@@ -37,7 +37,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
         success: false,
         error: 'Failed to fetch manufacturer',
       },
-      { status: 500 },
+      { status: 500 }
     )
   }
 }
@@ -59,7 +59,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
           success: false,
           error: 'Manufacturer not found',
         },
-        { status: 404 },
+        { status: 404 }
       )
     }
 
@@ -86,7 +86,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
             success: false,
             error: 'Manufacturer with this name already exists',
           },
-          { status: 400 },
+          { status: 400 }
         )
       }
 
@@ -110,7 +110,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
         success: false,
         error: 'Failed to update manufacturer',
       },
-      { status: 500 },
+      { status: 500 }
     )
   }
 }
@@ -131,7 +131,7 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
           success: false,
           error: 'Manufacturer not found',
         },
-        { status: 404 },
+        { status: 404 }
       )
     }
 
@@ -151,7 +151,7 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
         success: false,
         error: 'Failed to delete manufacturer',
       },
-      { status: 500 },
+      { status: 500 }
     )
   }
 }

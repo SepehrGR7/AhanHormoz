@@ -1,22 +1,22 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { Card } from './ui/card';
-import { Button } from './ui/button';
-import { CalendarDays, Clock3, ArrowRight, ArrowLeft } from 'lucide-react';
+import Image from 'next/image'
+import Link from 'next/link'
+import { Card } from './ui/card'
+import { Button } from './ui/button'
+import { CalendarDays, Clock3, ArrowRight, ArrowLeft } from 'lucide-react'
 
 export interface BlogPost {
-  id: string;
-  title: string;
-  excerpt: string;
-  content: string;
-  image: string;
-  date: string;
-  readTime: string;
-  author: string;
+  id: string
+  title: string
+  excerpt: string
+  content: string
+  image: string
+  date: string
+  readTime: string
+  author: string
 }
 
 interface BlogPostCardProps {
-  post: BlogPost;
+  post: BlogPost
 }
 
 export function BlogPostCard({ post }: BlogPostCardProps) {
@@ -38,36 +38,36 @@ export function BlogPostCard({ post }: BlogPostCardProps) {
 
       <div className="relative p-6 flex flex-col flex-1">
         {/* بج اطلاعات */}
-        <div className="flex items-center gap-3 mb-4">
+        <div className="flex items-center gap-3 mb-4 justify-end">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/60 dark:bg-slate-800/60 border border-gray-200/50 dark:border-gray-700/50 rounded-full text-xs">
+            <span className="text-gray-700 dark:text-gray-300">
+              {post.readTime}
+            </span>
+            <Clock3 size={14} className="text-green-600 dark:text-green-400" />
+          </div>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/60 dark:bg-slate-800/60 border border-gray-200/50 dark:border-gray-700/50 rounded-full text-xs">
+            <span className="text-gray-700 dark:text-gray-300">
+              {post.date}
+            </span>
             <CalendarDays
               size={14}
               className="text-blue-600 dark:text-blue-400"
             />
-            <span className="text-gray-700 dark:text-gray-300">
-              {post.date}
-            </span>
-          </div>
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/60 dark:bg-slate-800/60 border border-gray-200/50 dark:border-gray-700/50 rounded-full text-xs">
-            <Clock3 size={14} className="text-green-600 dark:text-green-400" />
-            <span className="text-gray-700 dark:text-gray-300">
-              {post.readTime}
-            </span>
           </div>
         </div>
 
         <div className="flex-1">
-          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors text-right">
             {post.title}
           </h3>
-          <p className="text-gray-600 dark:text-gray-300 line-clamp-3 leading-relaxed">
+          <p className="text-gray-600 dark:text-gray-300 line-clamp-3 leading-relaxed text-right">
             {post.excerpt}
           </p>
         </div>
 
-        <div className="mt-6 pt-4 border-t border-gray-200/50 dark:border-gray-700/50">
+        <div className="mt-6 pt-4 border-t border-gray-200/50 dark:border-gray-700/50 flex justify-end">
           <Link
-            href={`/manufacturers/${post.id}`}
+            href={`/manufacturers/${encodeURIComponent(post.id)}`}
             className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-full text-sm font-medium transition-all duration-300 hover:shadow-lg hover:scale-105 hover:from-blue-600 hover:to-cyan-600"
           >
             <span>ادامه مطلب</span>
@@ -79,5 +79,5 @@ export function BlogPostCard({ post }: BlogPostCardProps) {
       {/* خط تزئینی پایین */}
       <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-blue-500/20 to-transparent"></div>
     </div>
-  );
+  )
 }

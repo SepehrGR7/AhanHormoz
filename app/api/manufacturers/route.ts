@@ -71,7 +71,7 @@ export async function GET(request: NextRequest) {
         success: false,
         error: 'Failed to fetch manufacturers',
       },
-      { status: 500 },
+      { status: 500 }
     )
   }
 }
@@ -88,7 +88,7 @@ export async function POST(request: NextRequest) {
           success: false,
           error: 'Name is required',
         },
-        { status: 400 },
+        { status: 400 }
       )
     }
 
@@ -110,7 +110,7 @@ export async function POST(request: NextRequest) {
           success: false,
           error: 'Manufacturer with this name already exists',
         },
-        { status: 400 },
+        { status: 400 }
       )
     }
 
@@ -127,7 +127,7 @@ export async function POST(request: NextRequest) {
         success: true,
         data: manufacturer,
       },
-      { status: 201 },
+      { status: 201 }
     )
   } catch (error) {
     console.error('Error creating manufacturer:', error)
@@ -136,7 +136,7 @@ export async function POST(request: NextRequest) {
         success: false,
         error: 'Failed to create manufacturer',
       },
-      { status: 500 },
+      { status: 500 }
     )
   }
 }

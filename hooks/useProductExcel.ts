@@ -39,6 +39,7 @@ export function useProductExcel(): UseProductExcelReturn {
 
   const exportProducts = (products: Product[]) => {
     const exportData = products.map((product: Product) => ({
+      id: product.id,
       'نام محصول': product.name,
       برند: product.brand || '-',
       سایز: product.size || '-',
@@ -54,6 +55,7 @@ export function useProductExcel(): UseProductExcelReturn {
 
     // Set column widths for better readability
     const colWidths = [
+      { wch: 20 }, // id
       { wch: 25 }, // Name
       { wch: 15 }, // Brand
       { wch: 15 }, // Size
@@ -70,6 +72,7 @@ export function useProductExcel(): UseProductExcelReturn {
   const downloadTemplate = () => {
     const templateData = [
       {
+        id: '',
         'نام محصول': 'نمونه محصول',
         برند: 'نمونه برند',
         سایز: '10x20',
@@ -85,6 +88,7 @@ export function useProductExcel(): UseProductExcelReturn {
     XLSX.utils.book_append_sheet(wb, ws, 'محصولات')
 
     const colWidths = [
+      { wch: 20 },
       { wch: 25 },
       { wch: 15 },
       { wch: 15 },
@@ -123,9 +127,14 @@ export function useProductExcel(): UseProductExcelReturn {
         categories?.map((c) => c.name)
       )
 
-      // Map imported data to products
+      // Map imported data to products (support id-based updates)
       const importedProducts = jsonData.map((row: any, index: number) => {
         console.log(`Row ${index + 1}:`, row)
+
+        // Try to read id from common columns (id, شناسه, ID)
+        const id =
+          (row['id'] || row['شناسه'] || row['ID'] || '').toString().trim() ||
+          undefined
 
         // Find category by name (case-insensitive and trim spaces)
         const categoryName = String(row['دسته‌بندی'] || '').trim()
@@ -154,6 +163,7 @@ export function useProductExcel(): UseProductExcelReturn {
         }
 
         return {
+          id,
           name: String(row['نام محصول'] || '').trim(),
           brand: String(row['برند'] || '').trim(),
           size: String(row['سایز'] || '').trim(),
@@ -166,17 +176,25 @@ export function useProductExcel(): UseProductExcelReturn {
 
       console.log('📦 Processed products:', importedProducts)
 
-      // Validate data
-      const invalidProducts = importedProducts.filter(
-        (p) =>
+      // Validate data:
+      // - If id is present, at least one field should be provided for update
+      // - If id is absent, require full fields to create a new product
+      const invalidProducts = importedProducts.filter((p) => {
+        if (p.id) {
+          // For updates, just check if we have at least a valid ID
+          return !p.id || p.id.trim() === ''
+        }
+        // For new products, require all essential fields
+        return (
           !p.name || !p.brand || !p.categoryId || !p.subcategory || !p.price
-      )
+        )
+      })
 
       if (invalidProducts.length > 0) {
         console.error('❌ Invalid products found:', invalidProducts)
         addToast({
           title: 'خطا',
-          description: `${invalidProducts.length} محصول دارای اطلاعات ناقص است. لطفاً فایل را بررسی کنید.`,
+          description: `${invalidProducts.length} ردیف دارای اطلاعات ناقص است. لطفاً فایل را بررسی کنید.`,
           color: 'danger',
         })
         return
@@ -193,23 +211,59 @@ export function useProductExcel(): UseProductExcelReturn {
 
       if (response.ok) {
         const result = await response.json()
+        console.log('✅ Import success:', result)
         mutateProducts()
+
+        // API returns { success: true, results: { updated, created, failed, errors } }
+        const stats = result.results || result
+
         addToast({
           title: 'موفقیت',
-          description: `${result.count} محصول با موفقیت وارد شدند`,
+          description: `${stats.updated || 0} بروزرسانی، ${stats.created || 0} ایجاد، ${stats.failed || 0} خطا.`,
           color: 'success',
         })
+
+        // Show errors if any
+        if (stats.errors && stats.errors.length > 0) {
+          console.warn('⚠️ Import errors:', stats.errors)
+        }
 
         // Clear file input
         if (event.target) {
           event.target.value = ''
         }
       } else {
-        const error = await response.json()
-        console.error('API Error:', error)
+        // Try to parse JSON body, otherwise include status text
+        let errorBody: any = null
+        let errorMessage = `خطای سرور (${response.status})`
+
+        try {
+          const text = await response.text()
+          console.error('❌ API Response (non-ok):', {
+            status: response.status,
+            statusText: response.statusText,
+            body: text,
+          })
+
+          if (text) {
+            try {
+              errorBody = JSON.parse(text)
+              errorMessage =
+                errorBody.error ||
+                errorBody.message ||
+                errorBody.details ||
+                errorMessage
+            } catch {
+              errorMessage = text || errorMessage
+            }
+          }
+        } catch (err) {
+          console.error('❌ Failed to read error response:', err)
+        }
+
         addToast({
           title: 'خطا',
-          description: error.error || 'خطا در وارد کردن محصولات',
+          description: errorMessage,
           color: 'danger',
         })
       }

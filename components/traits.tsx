@@ -1,9 +1,9 @@
-import TraitItem from './traitItem';
-import { traitItems } from '@/config/traitItems';
+import TraitItem from './traitItem'
+import { traitItems } from '@/config/traitItems'
 
 export default function Traits() {
   return (
-    <section className="relative w-full py-16 overflow-hidden">
+    <section className="relative w-full py-5 overflow-hidden">
       {/* bg-gradient-to-br from-slate-50 to-white dark:from-slate-900 dark:to-slate-800"> */}
       {/* Background decorative elements */}
       {/* <div className="absolute top-0 left-0 w-40 h-40 -translate-x-20 -translate-y-20 rounded-full bg-gradient-to-br from-blue-100/30 to-purple-100/30 dark:from-blue-900/20 dark:to-purple-900/20"></div>
@@ -50,5 +50,5 @@ export default function Traits() {
         </div>
       </div>
     </section>
-  );
+  )
 }

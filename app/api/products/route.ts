@@ -1,51 +1,51 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { NextRequest, NextResponse } from 'next/server'
+import { prisma } from '@/lib/prisma'
 
 // GET /api/products - Get all products with optional filtering
 export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
-    const category = searchParams.get('category');
-    const subcategory = searchParams.get('subcategory');
-    const brand = searchParams.get('brand');
-    const inStock = searchParams.get('inStock');
-    const search = searchParams.get('search');
-    const page = parseInt(searchParams.get('page') || '1');
-    const limit = parseInt(searchParams.get('limit') || '10');
-    const sortBy = searchParams.get('sortBy') || 'createdAt';
-    const sortOrder = searchParams.get('sortOrder') || 'desc';
+    const { searchParams } = new URL(request.url)
+    const category = searchParams.get('category')
+    const subcategory = searchParams.get('subcategory')
+    const brand = searchParams.get('brand')
+    const inStock = searchParams.get('inStock')
+    const search = searchParams.get('search')
+    const page = parseInt(searchParams.get('page') || '1')
+    const limit = parseInt(searchParams.get('limit') || '10')
+    const sortBy = searchParams.get('sortBy') || 'createdAt'
+    const sortOrder = searchParams.get('sortOrder') || 'desc'
 
     // Build where clause
-    const where: any = {};
+    const where: any = {}
 
     if (category) {
       // Check if category is an ID (cuid format) or slug
-      const isCuid = category.startsWith('c') && category.length > 20;
+      const isCuid = category.startsWith('c') && category.length > 20
 
       if (isCuid) {
-        where.categoryId = category;
+        where.categoryId = category
       } else {
         where.category = {
           slug: category,
-        };
+        }
       }
     }
 
     if (subcategory) {
-      where.subcategory = subcategory;
+      where.subcategory = subcategory
     }
 
     if (brand) {
       where.brand = {
         contains: brand,
         mode: 'insensitive',
-      };
+      }
     }
 
     if (inStock === 'true') {
-      where.inStock = true;
+      where.inStock = true
     } else if (inStock === 'false') {
-      where.inStock = false;
+      where.inStock = false
     }
 
     if (search) {
@@ -68,11 +68,11 @@ export async function GET(request: NextRequest) {
             mode: 'insensitive',
           },
         },
-      ];
+      ]
     }
 
     // Calculate skip for pagination
-    const skip = (page - 1) * limit;
+    const skip = (page - 1) * limit
 
     // Get products with relations
     const [products, total] = await Promise.all([
@@ -94,12 +94,12 @@ export async function GET(request: NextRequest) {
         take: limit,
       }),
       prisma.product.count({ where }),
-    ]);
+    ])
 
     // Calculate pagination info
-    const totalPages = Math.ceil(total / limit);
-    const hasNextPage = page < totalPages;
-    const hasPrevPage = page > 1;
+    const totalPages = Math.ceil(total / limit)
+    const hasNextPage = page < totalPages
+    const hasPrevPage = page > 1
 
     return NextResponse.json({
       success: true,
@@ -114,23 +114,23 @@ export async function GET(request: NextRequest) {
           hasPrevPage,
         },
       },
-    });
+    })
   } catch (error) {
-    console.error('Error fetching products:', error);
+    console.error('Error fetching products:', error)
     return NextResponse.json(
       {
         success: false,
         error: 'Failed to fetch products',
       },
       { status: 500 }
-    );
+    )
   }
 }
 
 // POST /api/products - Create a new product
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
+    const body = await request.json()
 
     // Validate required fields
     const requiredFields = [
@@ -139,7 +139,7 @@ export async function POST(request: NextRequest) {
       'brand',
       'price',
       'subcategory',
-    ];
+    ]
     for (const field of requiredFields) {
       if (!body[field]) {
         return NextResponse.json(
@@ -148,7 +148,7 @@ export async function POST(request: NextRequest) {
             error: `Missing required field: ${field}`,
           },
           { status: 400 }
-        );
+        )
       }
     }
 
@@ -157,12 +157,12 @@ export async function POST(request: NextRequest) {
       .toLowerCase()
       .replace(/[^a-z0-9\u0600-\u06FF\s-]/g, '') // Allow Persian characters
       .replace(/\s+/g, '-')
-      .trim();
+      .trim()
 
     // Check if category exists
     const categoryExists = await prisma.productCategory.findUnique({
       where: { id: body.categoryId },
-    });
+    })
 
     if (!categoryExists) {
       return NextResponse.json(
@@ -172,13 +172,13 @@ export async function POST(request: NextRequest) {
           details: `Category with ID ${body.categoryId} not found`,
         },
         { status: 400 }
-      );
+      )
     }
 
     // Check if slug already exists
     const existingProduct = await prisma.product.findUnique({
       where: { slug },
-    });
+    })
 
     if (existingProduct) {
       return NextResponse.json(
@@ -187,7 +187,7 @@ export async function POST(request: NextRequest) {
           error: 'Product with this name already exists',
         },
         { status: 400 }
-      );
+      )
     }
 
     // Prepare product data with default values for arrays
@@ -221,7 +221,7 @@ export async function POST(request: NextRequest) {
       meshSize: body.meshSize || null,
       packageType: body.packageType || null,
       specifications: body.specifications || null,
-    };
+    }
 
     // Create the product
     const product = await prisma.product.create({
@@ -235,7 +235,7 @@ export async function POST(request: NextRequest) {
           },
         },
       },
-    });
+    })
 
     return NextResponse.json(
       {
@@ -243,9 +243,9 @@ export async function POST(request: NextRequest) {
         data: product,
       },
       { status: 201 }
-    );
+    )
   } catch (error) {
-    console.error('Error creating product:', error);
+    console.error('Error creating product:', error)
     return NextResponse.json(
       {
         success: false,
@@ -253,6 +253,6 @@ export async function POST(request: NextRequest) {
         details: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 }
-    );
+    )
   }
 }

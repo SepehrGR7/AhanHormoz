@@ -69,6 +69,9 @@ model Product {
 
   // Order relationships
   orderItems OrderItem[]
+  
+  // Price history relationship
+  priceHistory PriceHistory[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -144,6 +147,7 @@ model OrderItem {
 model PriceHistory {
   id           String   @id @default(cuid())
   productId    String
+  product      Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   oldPrice     Float
   newPrice     Float
   changeType   String // "افزایش" | "کاهش" | "ثابت"
@@ -156,6 +160,7 @@ model PriceHistory {
   @@index([productId])
   @@index([changedAt])
   @@index([changeType])
+  @@index([productId, changedAt(sort: Desc)]) // برای دریافت آخرین قیمت
   @@map("price_history")
 }
 

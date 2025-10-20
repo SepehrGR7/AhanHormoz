@@ -1,12 +1,12 @@
-'use client';
+'use client'
 
-import { useState, useEffect } from 'react';
-import { useRouter, useParams } from 'next/navigation';
-import { Button } from '@heroui/button';
-import { Input } from '@heroui/input';
-import { Card, CardBody, CardHeader } from '@heroui/card';
-import { Spinner } from '@heroui/spinner';
-import { addToast } from '@heroui/toast';
+import { useState, useEffect } from 'react'
+import { useRouter, useParams } from 'next/navigation'
+import { Button } from '@heroui/button'
+import { Input } from '@heroui/input'
+import { Card, CardBody, CardHeader } from '@heroui/card'
+import { Spinner } from '@heroui/spinner'
+import { addToast } from '@heroui/toast'
 import {
   Factory,
   ArrowLeft,
@@ -16,25 +16,25 @@ import {
   Phone,
   MapPin,
   Image as ImageIcon,
-} from 'lucide-react';
+} from 'lucide-react'
 
 interface ManufacturerFormData {
-  name: string;
-  description: string;
-  logo: string;
-  website: string;
-  email: string;
-  phone: string;
-  address: string;
+  name: string
+  description: string
+  logo: string
+  website: string
+  email: string
+  phone: string
+  address: string
 }
 
 export default function ManufacturerEditPage() {
-  const router = useRouter();
-  const params = useParams();
-  const isNew = params.id === 'new';
+  const router = useRouter()
+  const params = useParams()
+  const isNew = params.id === 'new'
 
-  const [loading, setLoading] = useState(!isNew);
-  const [saving, setSaving] = useState(false);
+  const [loading, setLoading] = useState(!isNew)
+  const [saving, setSaving] = useState(false)
   const [formData, setFormData] = useState<ManufacturerFormData>({
     name: '',
     description: '',
@@ -43,23 +43,23 @@ export default function ManufacturerEditPage() {
     email: '',
     phone: '',
     address: '',
-  });
+  })
 
   // Fetch manufacturer data if editing
   useEffect(() => {
     if (!isNew) {
-      fetchManufacturer();
+      fetchManufacturer()
     }
-  }, [params.id]);
+  }, [params.id])
 
   const fetchManufacturer = async () => {
     try {
-      setLoading(true);
-      const response = await fetch(`/api/manufacturers/${params.id}`);
-      const result = await response.json();
+      setLoading(true)
+      const response = await fetch(`/api/manufacturers/${params.id}`)
+      const result = await response.json()
 
       if (result.success) {
-        const manufacturer = result.data;
+        const manufacturer = result.data
         setFormData({
           name: manufacturer.name || '',
           description: manufacturer.description || '',
@@ -68,30 +68,30 @@ export default function ManufacturerEditPage() {
           email: manufacturer.email || '',
           phone: manufacturer.phone || '',
           address: manufacturer.address || '',
-        });
+        })
       } else {
         addToast({
           title: 'خطا',
           description: 'خطا در دریافت اطلاعات کارخانه',
           color: 'danger',
-        });
-        router.push('/admin/manufacturers');
+        })
+        router.push('/admin/manufacturers')
       }
     } catch (error) {
-      console.error('Error fetching manufacturer:', error);
+      console.error('Error fetching manufacturer:', error)
       addToast({
         title: 'خطا',
         description: 'خطا در برقراری ارتباط با سرور',
         color: 'danger',
-      });
-      router.push('/admin/manufacturers');
+      })
+      router.push('/admin/manufacturers')
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
 
     // Validation
     if (!formData.name.trim()) {
@@ -99,18 +99,18 @@ export default function ManufacturerEditPage() {
         title: 'خطا',
         description: 'نام کارخانه الزامی است',
         color: 'warning',
-      });
-      return;
+      })
+      return
     }
 
     try {
-      setSaving(true);
+      setSaving(true)
 
       const url = isNew
         ? '/api/manufacturers'
-        : `/api/manufacturers/${params.id}`;
+        : `/api/manufacturers/${params.id}`
 
-      const method = isNew ? 'POST' : 'PUT';
+      const method = isNew ? 'POST' : 'PUT'
 
       const response = await fetch(url, {
         method,
@@ -118,9 +118,9 @@ export default function ManufacturerEditPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
-      });
+      })
 
-      const result = await response.json();
+      const result = await response.json()
 
       if (result.success) {
         addToast({
@@ -129,26 +129,26 @@ export default function ManufacturerEditPage() {
             ? 'کارخانه با موفقیت ایجاد شد'
             : 'کارخانه با موفقیت بروزرسانی شد',
           color: 'success',
-        });
-        router.push('/admin/manufacturers');
+        })
+        router.push('/admin/manufacturers')
       } else {
         addToast({
           title: 'خطا',
           description: result.error || 'خطا در ذخیره اطلاعات',
           color: 'danger',
-        });
+        })
       }
     } catch (error) {
-      console.error('Error saving manufacturer:', error);
+      console.error('Error saving manufacturer:', error)
       addToast({
         title: 'خطا',
         description: 'خطا در ذخیره اطلاعات',
         color: 'danger',
-      });
+      })
     } finally {
-      setSaving(false);
+      setSaving(false)
     }
-  };
+  }
 
   const handleInputChange = (
     field: keyof ManufacturerFormData,
@@ -157,15 +157,15 @@ export default function ManufacturerEditPage() {
     setFormData((prev) => ({
       ...prev,
       [field]: value,
-    }));
-  };
+    }))
+  }
 
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
         <Spinner size="lg" />
       </div>
-    );
+    )
   }
 
   return (
@@ -247,7 +247,7 @@ export default function ManufacturerEditPage() {
                     alt="Logo preview"
                     className="object-cover w-16 h-16 rounded-lg"
                     onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-                      e.currentTarget.src = '/images/placeholder.png';
+                      e.currentTarget.src = '/images/placeholder.png'
                     }}
                   />
                   <div className="text-sm text-gray-500">پیش‌نمایش لوگو</div>
@@ -332,5 +332,5 @@ export default function ManufacturerEditPage() {
         </div>
       </form>
     </div>
-  );
+  )
 }

@@ -1,108 +1,108 @@
-'use client';
+'use client'
 
-import { useEffect, useState } from 'react';
-import { Card, CardBody } from '@heroui/card';
-import { Chip } from '@heroui/chip';
-import { Spinner } from '@heroui/spinner';
-import { Calendar, TrendingUp, ArrowUp, ArrowDown, Minus } from 'lucide-react';
-import moment from 'moment-jalaali';
+import { useEffect, useState } from 'react'
+import { Card, CardBody } from '@heroui/card'
+import { Chip } from '@heroui/chip'
+import { Spinner } from '@heroui/spinner'
+import { Calendar, TrendingUp, ArrowUp, ArrowDown, Minus } from 'lucide-react'
+import moment from 'moment-jalaali'
 
-moment.loadPersian({ usePersianDigits: true, dialect: 'persian-modern' });
+moment.loadPersian({ usePersianDigits: true, dialect: 'persian-modern' })
 
 interface PriceChange {
-  id: string;
-  time: string;
-  jalaliDate: string;
-  jalaliDateTime: string;
-  productName: string;
-  brand: string;
-  size: string;
-  category: string;
-  subcategory: string;
-  oldPrice: number;
-  newPrice: number;
-  changeType: string;
-  changeAmount: number;
-  notes?: string;
+  id: string
+  time: string
+  jalaliDate: string
+  jalaliDateTime: string
+  productName: string
+  brand: string
+  size: string
+  category: string
+  subcategory: string
+  oldPrice: number
+  newPrice: number
+  changeType: string
+  changeAmount: number
+  notes?: string
 }
 
 interface MomentNewsData {
-  success: boolean;
-  date: string;
+  success: boolean
+  date: string
   summary: {
-    totalChanges: number;
-    increases: number;
-    decreases: number;
-    stable: number;
-  };
-  changes: PriceChange[];
+    totalChanges: number
+    increases: number
+    decreases: number
+    stable: number
+  }
+  changes: PriceChange[]
 }
 
 export default function MomentNewsPage() {
-  const [data, setData] = useState<MomentNewsData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [data, setData] = useState<MomentNewsData | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   const fetchData = async () => {
     try {
-      setLoading(true);
-      const res = await fetch('/api/moment-news');
-      const result = await res.json();
+      setLoading(true)
+      const res = await fetch('/api/moment-news')
+      const result = await res.json()
 
       if (result.success) {
-        setData(result);
-        setError(null);
+        setData(result)
+        setError(null)
       } else {
-        setError(result.error || 'خطا در دریافت اطلاعات');
+        setError(result.error || 'خطا در دریافت اطلاعات')
       }
     } catch (err) {
-      setError('خطا در ارتباط با سرور');
-      console.error(err);
+      setError('خطا در ارتباط با سرور')
+      console.error(err)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData()
+  }, [])
 
   const getChangeIcon = (changeType: string) => {
     if (changeType === 'افزایش')
       return (
-        <span className="inline-flex items-center justify-center w-8 h-8 text-red-700 rounded-full bg-red-50">
+        <span className="inline-flex items-center justify-center w-8 h-8 text-green-700 rounded-full bg-green-50">
           <ArrowUp className="w-4 h-4" />
         </span>
-      );
+      )
 
     if (changeType === 'کاهش')
       return (
-        <span className="inline-flex items-center justify-center w-8 h-8 text-green-700 rounded-full bg-green-50">
+        <span className="inline-flex items-center justify-center w-8 h-8 text-red-700 rounded-full bg-red-50">
           <ArrowDown className="w-4 h-4" />
         </span>
-      );
+      )
 
     return (
       <span className="inline-flex items-center justify-center w-8 h-8 text-gray-700 bg-gray-100 rounded-full">
         <Minus className="w-4 h-4" />
       </span>
-    );
-  };
+    )
+  }
 
   // compact icons for table chips (smaller, no padded circle)
   const getCompactChangeIcon = (changeType: string) => {
     if (changeType === 'افزایش')
-      return <ArrowUp className="w-4 h-4 text-red-600" />;
+      return <ArrowUp className="w-4 h-4 text-green-600" />
     if (changeType === 'کاهش')
-      return <ArrowDown className="w-4 h-4 text-green-600" />;
-    return <Minus className="w-4 h-4 text-gray-600" />;
-  };
+      return <ArrowDown className="w-4 h-4 text-red-600" />
+    return <Minus className="w-4 h-4 text-gray-600" />
+  }
 
   const getChangeColor = (changeType: string) => {
-    if (changeType === 'افزایش') return 'danger';
-    if (changeType === 'کاهش') return 'success';
-    return 'default';
-  };
+    if (changeType === 'افزایش') return 'success'
+    if (changeType === 'کاهش') return 'danger'
+    return 'default'
+  }
 
   return (
     <div className="w-full">
@@ -178,7 +178,7 @@ export default function MomentNewsPage() {
                 <div className="relative text-center">
                   <div className="inline-flex items-center gap-3 px-4 py-2 mb-4 border rounded-full bg-white/60 dark:bg-slate-800/60 border-gray-200/50 dark:border-gray-700/50">
                     {getChangeIcon('افزایش')}
-                    <span className="text-sm font-medium text-red-800 dark:text-red-200">
+                    <span className="text-sm font-medium text-green-800 dark:text-green-200">
                       افزایش
                     </span>
                   </div>
@@ -195,7 +195,7 @@ export default function MomentNewsPage() {
                 <div className="relative text-center">
                   <div className="inline-flex items-center gap-3 px-4 py-2 mb-4 border rounded-full bg-white/60 dark:bg-slate-800/60 border-gray-200/50 dark:border-gray-700/50">
                     {getChangeIcon('کاهش')}
-                    <span className="text-sm font-medium text-green-800 dark:text-green-200">
+                    <span className="text-sm font-medium text-red-800 dark:text-red-200">
                       کاهش
                     </span>
                   </div>
@@ -328,5 +328,5 @@ export default function MomentNewsPage() {
         ) : null}
       </div>
     </div>
-  );
+  )
 }

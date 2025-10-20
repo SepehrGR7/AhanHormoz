@@ -1,21 +1,22 @@
-'use client';
+'use client'
 
-import { Product } from '@/types/products';
-import { Badge } from '@/components/ui/badge';
+import { Product } from '@/types/products'
+import { Badge } from '@/components/ui/badge'
 import {
   ShoppingCart,
   Phone,
   Calculator,
   TrendingUp,
+  TrendingDown,
+  Minus,
   ArrowUp,
   ArrowDown,
-  Minus,
-} from 'lucide-react';
+} from 'lucide-react'
 
 interface ProductCardProps {
-  product: Product;
-  onOrder: (product: Product) => void;
-  onCalculate: (product: Product) => void;
+  product: Product
+  onOrder: (product: Product) => void
+  onCalculate: (product: Product) => void
 }
 
 export default function ProductCard({
@@ -24,76 +25,69 @@ export default function ProductCard({
   onCalculate,
 }: ProductCardProps) {
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('fa-IR').format(price);
-  };
+    return new Intl.NumberFormat('fa-IR').format(price)
+  }
 
   // فرمت کردن زمان بروزرسانی
   const formatUpdateTime = (dateString: string) => {
-    const date = new Date(dateString);
+    const date = new Date(dateString)
     const time = date.toLocaleTimeString('fa-IR', {
       hour: '2-digit',
       minute: '2-digit',
-    });
-    const dateStr = date.toLocaleDateString('fa-IR');
-    return `${dateStr} - ${time}`;
-  };
+    })
+    const dateStr = date.toLocaleDateString('fa-IR')
+    return `${dateStr} - ${time}`
+  }
 
   // دریافت آیکون و رنگ بر اساس نوع تغییر قیمت
   const getPriceChangeIcon = () => {
-    if (!product.priceHistory) return null;
+    if (!product.priceHistory) return null
 
-    const { changeType } = product.priceHistory;
+    const { changeType } = product.priceHistory
 
     if (changeType === 'افزایش') {
-      return <ArrowUp className="w-4 h-4 text-red-500" />;
+      return <TrendingUp className="w-4 h-4 text-green-500" />
     } else if (changeType === 'کاهش') {
-      return <ArrowDown className="w-4 h-4 text-green-500" />;
+      return <TrendingDown className="w-4 h-4 text-red-500" />
     } else {
-      return <Minus className="w-4 h-4 text-slate-400" />;
+      return <Minus className="w-4 h-4 text-slate-400" />
     }
-  };
+  }
 
   const getPriceChangeBadge = () => {
-    if (!product.priceHistory) return null;
+    if (!product.priceHistory) return null
 
-    const { changeType, changeAmount } = product.priceHistory;
+    const { changeType, changeAmount } = product.priceHistory
 
-    let bgClass = 'bg-slate-100 text-slate-800 border-slate-200';
+    let bgClass = 'bg-slate-100 text-slate-800 border-slate-200'
     let darkBgClass =
-      'dark:bg-slate-800 dark:text-slate-200 dark:border-slate-700';
+      'dark:bg-slate-800 dark:text-slate-200 dark:border-slate-700'
 
     if (changeType === 'افزایش') {
-      bgClass = 'bg-red-100 text-red-800 border-red-200';
-      darkBgClass = 'dark:bg-red-900/30 dark:text-red-300 dark:border-red-800';
-    } else if (changeType === 'کاهش') {
-      bgClass = 'bg-green-100 text-green-800 border-green-200';
+      bgClass = 'bg-green-100 text-green-800 border-green-200'
       darkBgClass =
-        'dark:bg-green-900/30 dark:text-green-300 dark:border-green-800';
+        'dark:bg-green-900/30 dark:text-green-300 dark:border-green-800'
+    } else if (changeType === 'کاهش') {
+      bgClass = 'bg-red-100 text-red-800 border-red-200'
+      darkBgClass = 'dark:bg-red-900/30 dark:text-red-300 dark:border-red-800'
     }
 
     return (
-      <Badge className={`${bgClass} ${darkBgClass} flex items-center gap-1`}>
+      <Badge
+        className={`${bgClass} ${darkBgClass} flex items-center justify-center p-2`}
+        title={changeType}
+        aria-label={changeType}
+      >
         {getPriceChangeIcon()}
-        {changeType}
       </Badge>
-    );
-  };
+    )
+  }
 
   return (
     <div className="relative h-full group">
       <div className="relative flex flex-col h-full min-h-[320px] p-6 transition-all duration-500 bg-white border shadow-lg dark:bg-slate-800 rounded-2xl border-slate-200/50 dark:border-slate-700/50 hover:shadow-xl hover:shadow-blue-500/5 dark:hover:shadow-blue-400/5 hover:-translate-y-1 overflow-hidden">
-        {/* Stock status badge */}
-        <div className="relative z-10 flex items-center justify-between mb-4">
-          <Badge
-            variant={product.inStock ? 'default' : 'destructive'}
-            className={
-              product.inStock
-                ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 border-green-200 dark:border-green-800'
-                : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200 border-red-200 dark:border-red-800'
-            }
-          >
-            {product.inStock ? 'موجود' : 'ناموجود'}
-          </Badge>
+        {/* Price change badge (availability removed) */}
+        <div className="relative z-10 flex items-center justify-end mb-4">
           {getPriceChangeBadge()}
         </div>
 
@@ -131,9 +125,9 @@ export default function ProductCard({
               <div
                 className={`flex items-center gap-1 text-sm font-medium ${
                   product.priceHistory.changeType === 'افزایش'
-                    ? 'text-red-600 dark:text-red-400'
+                    ? 'text-green-600 dark:text-green-400'
                     : product.priceHistory.changeType === 'کاهش'
-                      ? 'text-green-600 dark:text-green-400'
+                      ? 'text-red-600 dark:text-red-400'
                       : 'text-slate-600 dark:text-slate-400'
                 }`}
               >
@@ -174,5 +168,5 @@ export default function ProductCard({
         </div>
       </div>
     </div>
-  );
+  )
 }

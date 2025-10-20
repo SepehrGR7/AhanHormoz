@@ -1,13 +1,13 @@
-import { Metadata } from 'next';
-import { BlogPostCard, BlogPost } from '@/components/blog-post';
-import { Factory } from 'lucide-react';
-import { prisma } from '@/lib/prisma';
+import { Metadata } from 'next'
+import { BlogPostCard, BlogPost } from '@/components/blog-post'
+import { Factory } from 'lucide-react'
+import { prisma } from '@/lib/prisma'
 
 export const metadata: Metadata = {
   title: 'تولید کنندگان',
   description:
     'آخرین مطالب و اخبار در مورد صنعت فولاد و تولیدکنندگان فولاد ایران',
-};
+}
 
 async function getManufacturers() {
   try {
@@ -15,7 +15,7 @@ async function getManufacturers() {
       orderBy: {
         createdAt: 'desc',
       },
-    });
+    })
 
     return manufacturers.map((manufacturer) => ({
       id: manufacturer.slug,
@@ -26,15 +26,15 @@ async function getManufacturers() {
       date: new Date(manufacturer.createdAt).toLocaleDateString('fa-IR'),
       readTime: '۵ دقیقه',
       author: 'تیم آهن هرمز',
-    }));
+    }))
   } catch (error) {
-    console.error('Error fetching manufacturers:', error);
-    return [];
+    console.error('Error fetching manufacturers:', error)
+    return []
   }
 }
 
 export default async function ManufacturersPage() {
-  const posts: BlogPost[] = await getManufacturers();
+  const posts: BlogPost[] = await getManufacturers()
   return (
     <main className="relative">
       {/* Hero Section */}
@@ -45,7 +45,7 @@ export default async function ManufacturersPage() {
 
         <div className="relative px-6 py-16 mx-auto max-w-7xl">
           <div className="text-center">
-            <div className="inline-flex items-center justify-center w-20 h-20 mb-6 border-2 rounded-full shadow-2xl bg-white/20 backdrop-blur-md border-white/30 mx-auto">
+            <div className="inline-flex items-center justify-center w-20 h-20 mx-auto mb-6 border-2 rounded-full shadow-2xl bg-white/20 backdrop-blur-md border-white/30">
               <Factory className="w-8 h-8 text-white drop-shadow-lg" />
             </div>
             <h1 className="mb-6 text-5xl font-bold text-white drop-shadow-2xl">
@@ -70,5 +70,5 @@ export default async function ManufacturersPage() {
         </div>
       </div>
     </main>
-  );
+  )
 }

@@ -12,11 +12,11 @@ export default async function AuthenticatedLayout({
   await requireAuth()
 
   return (
-    <div className='flex min-h-screen'>
+    <div className="flex min-h-screen">
       <AdminSidebar />
-      <div className='flex-1 flex flex-col pr-64'>
+      <div className="flex flex-col flex-1 pr-64">
         <AdminHeader />
-        <main className='flex-1 p-6 bg-gray-50 dark:bg-gray-900'>
+        <main className="flex-1 p-6 bg-gray-50 dark:bg-gray-900">
           {children}
         </main>
       </div>
