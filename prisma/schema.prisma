@@ -2,12 +2,16 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  // For serverless/Vercel (transaction mode doesn't support prepared statements)
+  previewFeatures = ["jsonProtocol"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  // directUrl برای migrations (اگر development و production URL متفاوت باشه)
+  // directUrl = env("DIRECT_URL")
 }
 
 model ProductCategory {
