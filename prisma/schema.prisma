@@ -2,9 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider      = "prisma-client-js"
-  // For serverless/Vercel (transaction mode doesn't support prepared statements)
-  previewFeatures = ["jsonProtocol"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -29,21 +27,21 @@ model ProductCategory {
 }
 
 model Product {
-  id          String   @id @default(cuid())
-  name        String
-  slug        String   @unique
-  description String?
-  brand       String
-  size        String
-  price       Float
-  previousPrice Float? // قیمت قبلی برای محاسبه نوسانات
-  changeType    String? @default("stable") // "increase", "decrease", "stable"
-  changeAmount  Float? // مقدار تغییر قیمت
+  id              String    @id @default(cuid())
+  name            String
+  slug            String    @unique
+  description     String?
+  brand           String
+  size            String
+  price           Float
+  previousPrice   Float? // قیمت قبلی برای محاسبه نوسانات
+  changeType      String?   @default("stable") // "increase", "decrease", "stable"
+  changeAmount    Float? // مقدار تغییر قیمت
   lastPriceChange DateTime? // آخرین زمان تغییر قیمت
-  unit        String   @default("kg") // kg, ton, piece
-  weight      Float?
-  inStock     Boolean  @default(true)
-  images      String[]
+  unit            String    @default("kg") // kg, ton, piece
+  weight          Float?
+  inStock         Boolean   @default(true)
+  images          String[]
 
   // Category relationship
   categoryId  String
@@ -73,7 +71,7 @@ model Product {
 
   // Order relationships
   orderItems OrderItem[]
-  
+
   // Price history relationship
   priceHistory PriceHistory[]
 
@@ -303,18 +301,18 @@ model ContactForm {
 }
 
 model QuickOrder {
-  id               String           @id @default(cuid())
-  customerName     String
-  companyName      String?
-  phoneNumber      String
-  city             String
-  productSpecs     String           @db.Text
-  quantity         String
-  deliveryDate     DateTime?
-  deliveryMethod   DeliveryMethod   @default(PICKUP)
-  additionalNotes  String?          @db.Text
-  status           QuickOrderStatus @default(PENDING)
-  productName      String?
+  id              String           @id @default(cuid())
+  customerName    String
+  companyName     String?
+  phoneNumber     String
+  city            String
+  productSpecs    String           @db.Text
+  quantity        String
+  deliveryDate    DateTime?
+  deliveryMethod  DeliveryMethod   @default(PICKUP)
+  additionalNotes String?          @db.Text
+  status          QuickOrderStatus @default(PENDING)
+  productName     String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
