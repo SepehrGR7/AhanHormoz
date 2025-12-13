@@ -122,7 +122,7 @@ export async function GET(request: NextRequest) {
         success: false,
         error: 'Failed to fetch products',
       },
-      { status: 500 }
+      { status: 500 },
     )
   }
 }
@@ -147,7 +147,7 @@ export async function POST(request: NextRequest) {
             success: false,
             error: `Missing required field: ${field}`,
           },
-          { status: 400 }
+          { status: 400 },
         )
       }
     }
@@ -171,7 +171,7 @@ export async function POST(request: NextRequest) {
           error: 'دسته‌بندی انتخاب شده وجود ندارد',
           details: `Category with ID ${body.categoryId} not found`,
         },
-        { status: 400 }
+        { status: 400 },
       )
     }
 
@@ -186,7 +186,7 @@ export async function POST(request: NextRequest) {
           success: false,
           error: 'Product with this name already exists',
         },
-        { status: 400 }
+        { status: 400 },
       )
     }
 
@@ -242,7 +242,7 @@ export async function POST(request: NextRequest) {
         success: true,
         data: product,
       },
-      { status: 201 }
+      { status: 201 },
     )
   } catch (error) {
     console.error('Error creating product:', error)
@@ -252,7 +252,7 @@ export async function POST(request: NextRequest) {
         error: 'Failed to create product',
         details: error instanceof Error ? error.message : 'Unknown error',
       },
-      { status: 500 }
+      { status: 500 },
     )
   }
 }
