@@ -1,8 +1,8 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import { Clock, MapPin, Mail, Phone } from 'lucide-react';
-import Map from '@/components/map';
+import { useState } from 'react'
+import { Clock, MapPin, Mail, Phone, Instagram } from 'lucide-react'
+import Map from '@/components/map'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -10,17 +10,17 @@ export default function ContactPage() {
     phone: '',
     email: '',
     message: '',
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<{
-    type: 'success' | 'error' | null;
-    message: string;
-  }>({ type: null, message: '' });
+    type: 'success' | 'error' | null
+    message: string
+  }>({ type: null, message: '' })
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus({ type: null, message: '' });
+    e.preventDefault()
+    setIsSubmitting(true)
+    setSubmitStatus({ type: null, message: '' })
 
     try {
       const response = await fetch('/api/contact', {
@@ -29,47 +29,47 @@ export default function ContactPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
-      });
+      })
 
-      const data = await response.json();
+      const data = await response.json()
 
       if (data.success) {
         setSubmitStatus({
           type: 'success',
           message: data.message,
-        });
+        })
         // Reset form
         setFormData({
           name: '',
           phone: '',
           email: '',
           message: '',
-        });
+        })
       } else {
         setSubmitStatus({
           type: 'error',
           message: data.error || 'خطا در ارسال پیام',
-        });
+        })
       }
     } catch (error) {
       setSubmitStatus({
         type: 'error',
         message: 'خطا در ارسال پیام. لطفاً دوباره تلاش کنید.',
-      });
+      })
     } finally {
-      setIsSubmitting(false);
+      setIsSubmitting(false)
     }
-  };
+  }
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
     setFormData((prev) => ({
       ...prev,
       [name]: value,
-    }));
-  };
+    }))
+  }
 
   return (
     <main className="relative">
@@ -147,16 +147,16 @@ export default function ContactPage() {
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
               {/* Phone Card */}
               <div className="relative p-8 overflow-hidden border shadow-2xl bg-white/80 dark:bg-slate-900/80 border-gray-200/60 dark:border-gray-700/50 rounded-3xl backdrop-blur-md">
-                <div className="relative flex items-start gap-4">
+                <div className="relative flex items-center h-full gap-8">
                   <div className="flex items-center justify-center w-16 h-16 transition-all duration-300 bg-white border-2 border-gray-300 rounded-full shadow-lg dark:bg-slate-900 hover:border-blue-400 hover:shadow-2xl group shrink-0">
                     <Phone className="w-8 h-8 text-black transition-colors duration-300 dark:text-white group-hover:text-blue-500" />
                   </div>
-                  <div>
+                  <div className="w-full">
                     <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-gray-100">
                       تلفن تماس
                     </h3>
-                    <p className="font-medium text-gray-700 dark:text-gray-200 dir-ltr">
-                      076-33XXX XXX
+                    <p className="font-medium text-gray-700 dark:text-gray-200">
+                      09125858047 <br /> 09170282820
                     </p>
                   </div>
                 </div>
@@ -164,16 +164,16 @@ export default function ContactPage() {
 
               {/* Email Card */}
               <div className="relative p-8 overflow-hidden border shadow-2xl bg-white/80 dark:bg-slate-900/80 border-gray-200/60 dark:border-gray-700/50 rounded-3xl backdrop-blur-md">
-                <div className="relative flex items-start gap-4">
+                <div className="relative flex items-center h-full gap-8">
                   <div className="flex items-center justify-center w-16 h-16 transition-all duration-300 bg-white border-2 border-gray-300 rounded-full shadow-lg dark:bg-slate-900 hover:border-blue-400 hover:shadow-2xl group shrink-0">
-                    <Mail className="w-8 h-8 text-black transition-colors duration-300 dark:text-white group-hover:text-blue-500" />
+                    <Instagram className="w-8 h-8 text-black transition-colors duration-300 dark:text-white group-hover:text-blue-500" />
                   </div>
                   <div>
                     <h3 className="mb-2 text-xl font-bold text-gray-900 dark:text-gray-100">
-                      ایمیل
+                      اینستاگرام
                     </h3>
                     <p className="font-medium text-gray-700 dark:text-gray-200">
-                      info@ahanhormoz.com
+                      ahanhromoz@
                     </p>
                   </div>
                 </div>
@@ -392,5 +392,5 @@ export default function ContactPage() {
         </div>
       </div>
     </main>
-  );
+  )
 }
