@@ -1,17 +1,17 @@
-import React, { Fragment } from 'react'
+import React, { Fragment } from 'react';
 import {
   Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
   ModalFooter,
-} from '@heroui/modal'
-import { Button } from '@heroui/button'
-import { Input } from '@heroui/input'
-import { Switch } from '@heroui/switch'
-import { Divider } from '@heroui/divider'
-import { Chip } from '@heroui/chip'
-import { Listbox, Transition } from '@headlessui/react'
+} from '@heroui/modal';
+import { Button } from '@heroui/button';
+import { Input } from '@heroui/input';
+import { Switch } from '@heroui/switch';
+import { Divider } from '@heroui/divider';
+import { Chip } from '@heroui/chip';
+import { Listbox, Transition } from '@headlessui/react';
 import {
   DollarSign,
   Edit,
@@ -28,7 +28,7 @@ import {
   X,
   ChevronDown,
   Check,
-} from 'lucide-react'
+} from 'lucide-react';
 
 export function BulkUpdateModal({
   isOpen,
@@ -175,7 +175,7 @@ export function BulkUpdateModal({
                       setBulkUpdateData({
                         ...bulkUpdateData,
                         categoryId: value || undefined,
-                      })
+                      });
                     }}
                   >
                     <div className="relative">
@@ -269,7 +269,7 @@ export function BulkUpdateModal({
         )}
       </ModalContent>
     </Modal>
-  )
+  );
 }
 
 export function BulkDeleteModal({
@@ -345,7 +345,7 @@ export function BulkDeleteModal({
         )}
       </ModalContent>
     </Modal>
-  )
+  );
 }
 
 export function DeleteSingleModal({
@@ -423,7 +423,7 @@ export function DeleteSingleModal({
         )}
       </ModalContent>
     </Modal>
-  )
+  );
 }
 
 export function EditProductModal({
@@ -537,7 +537,32 @@ export function EditProductModal({
                   />
                 </div>
 
-                {/* Price */}
+                {/* Weight */}
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                    <Ruler className="w-4 h-4 text-info" />
+                    وزن
+                  </label>
+                  <Input
+                    type="number"
+                    value={editProductData.weight?.toString() || ''}
+                    onChange={(e: any) =>
+                      setEditProductData({
+                        ...editProductData,
+                        weight: e.target.value
+                          ? parseFloat(e.target.value)
+                          : undefined,
+                      })
+                    }
+                    placeholder="وزن را وارد کنید (بر حسب kg یا ton)"
+                    variant="bordered"
+                    size="lg"
+                    step="0.1"
+                    classNames={{
+                      inputWrapper: 'border-default-200 hover:border-primary',
+                    }}
+                  />
+                </div>
                 <div className="space-y-2">
                   <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
                     <DollarSign className="w-4 h-4 text-success" />
@@ -578,7 +603,7 @@ export function EditProductModal({
                         ...editProductData,
                         categoryId: value,
                         subcategory: '',
-                      })
+                      });
                     }}
                   >
                     <div className="relative">
@@ -654,7 +679,7 @@ export function EditProductModal({
                       setEditProductData({
                         ...editProductData,
                         subcategory: value,
-                      })
+                      });
                     }}
                     disabled={!editProductData.categoryId}
                   >
@@ -794,7 +819,7 @@ export function EditProductModal({
         )}
       </ModalContent>
     </Modal>
-  )
+  );
 }
 
 export function AddProductModal({
@@ -907,7 +932,32 @@ export function AddProductModal({
                   />
                 </div>
 
-                {/* Price */}
+                {/* Weight */}
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                    <Ruler className="w-4 h-4 text-info" />
+                    وزن
+                  </label>
+                  <Input
+                    type="number"
+                    placeholder="وزن را وارد کنید"
+                    value={newProductData.weight?.toString() || ''}
+                    onChange={(e: any) =>
+                      setNewProductData({
+                        ...newProductData,
+                        weight: e.target.value
+                          ? parseFloat(e.target.value)
+                          : undefined,
+                      })
+                    }
+                    variant="bordered"
+                    size="lg"
+                    step="0.1"
+                    classNames={{
+                      inputWrapper: 'border-default-200 hover:border-primary',
+                    }}
+                  />
+                </div>
                 <div className="space-y-2">
                   <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
                     <DollarSign className="w-4 h-4 text-success" />
@@ -948,7 +998,7 @@ export function AddProductModal({
                         ...newProductData,
                         categoryId: value,
                         subcategory: '',
-                      })
+                      });
                     }}
                   >
                     <div className="relative">
@@ -1024,7 +1074,7 @@ export function AddProductModal({
                       setNewProductData({
                         ...newProductData,
                         subcategory: value,
-                      })
+                      });
                     }}
                     disabled={!newProductData.categoryId}
                   >
@@ -1170,5 +1220,5 @@ export function AddProductModal({
         )}
       </ModalContent>
     </Modal>
-  )
+  );
 }

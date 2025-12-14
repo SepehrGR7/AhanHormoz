@@ -39,7 +39,7 @@ model Product {
   changeAmount    Float? // مقدار تغییر قیمت
   lastPriceChange DateTime? // آخرین زمان تغییر قیمت
   unit            String    @default("kg") // kg, ton, piece
-  weight          Float?
+  weight          Float?    // Weight in kg/ton (stored as DOUBLE PRECISION in database)
   inStock         Boolean   @default(true)
   images          String[]
 

@@ -1,12 +1,11 @@
-'use client';
+'use client'
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { Product, ProductCategory } from '@/types/products';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import OrderRequestModal from '@/components/order-request-modal';
+import React, { useState } from 'react'
+import Link from 'next/link'
+import { Product, ProductCategory } from '@/types/products'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import OrderRequestModal from '@/components/order-request-modal'
 import {
   Calculator,
   Phone,
@@ -15,14 +14,14 @@ import {
   Heart,
   Share2,
   Eye,
-} from 'lucide-react';
+} from 'lucide-react'
 
 interface CategoryTableProps {
-  category: ProductCategory;
-  products: Product[];
-  onOrder: (product: Product) => void;
-  onCalculate: (product: Product) => void;
-  formatPrice?: (price: number) => string;
+  category: ProductCategory
+  products: Product[]
+  onOrder: (product: Product) => void
+  onCalculate: (product: Product) => void
+  formatPrice?: (price: number) => string
 }
 
 export default function CategoryTable({
@@ -32,24 +31,24 @@ export default function CategoryTable({
   onCalculate,
   formatPrice: customFormatPrice,
 }: CategoryTableProps) {
-  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false)
   const [selectedProductForOrder, setSelectedProductForOrder] = useState<{
-    name?: string;
-    specs?: string;
-  } | null>(null);
+    name?: string
+    specs?: string
+  } | null>(null)
 
   const openOrderModal = (product: Product) => {
     setSelectedProductForOrder({
       name: product.name,
       specs: product.description || '',
-    });
-    setIsOrderModalOpen(true);
-  };
+    })
+    setIsOrderModalOpen(true)
+  }
   const formatPrice =
     customFormatPrice ||
     ((price: number) => {
-      return new Intl.NumberFormat('fa-IR').format(price);
-    });
+      return new Intl.NumberFormat('fa-IR').format(price)
+    })
 
   return (
     <Card>
@@ -58,11 +57,11 @@ export default function CategoryTable({
           {/* Desktop table layout */}
           <table className="hidden w-full table-fixed lg:table">
             <colgroup>
-              <col style={{ width: '40%' }} />
+              <col style={{ width: '30%' }} />
+              <col style={{ width: '15%' }} />
               <col style={{ width: '15%' }} />
               <col style={{ width: '20%' }} />
-              <col style={{ width: '15%' }} />
-              <col style={{ width: '10%' }} />
+              <col style={{ width: '20%' }} />
             </colgroup>
             <thead>
               <tr className="border-b border-slate-200 dark:border-slate-700">
@@ -73,10 +72,10 @@ export default function CategoryTable({
                   سایز
                 </th>
                 <th className="px-2 py-3 font-semibold text-center text-slate-700 dark:text-slate-300">
-                  قیمت (تومان)
+                  وزن
                 </th>
                 <th className="px-2 py-3 font-semibold text-center text-slate-700 dark:text-slate-300">
-                  وضعیت
+                  قیمت (تومان)
                 </th>
                 <th className="px-2 py-3 font-semibold text-center text-slate-700 dark:text-slate-300">
                   عملیات
@@ -109,28 +108,16 @@ export default function CategoryTable({
                     </div>
                   </td>
                   <td className="px-2 py-4 text-center">
-                    <div className="font-semibold text-green-600 dark:text-green-400">
-                      {formatPrice(product.price)}
-                    </div>
-                    <div className="text-xs text-slate-500 dark:text-slate-400">
-                      {product.unit === 'kg'
-                        ? 'کیلوگرم'
-                        : product.unit === 'ton'
-                          ? 'تن'
-                          : 'عدد'}
+                    <div className="font-semibold text-slate-700 dark:text-slate-300">
+                      {product.weight
+                        ? product.weight
+                        : '-'}
                     </div>
                   </td>
                   <td className="px-2 py-4 text-center">
-                    <Badge
-                      variant={product.inStock ? 'default' : 'destructive'}
-                      className={
-                        product.inStock
-                          ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                          : ''
-                      }
-                    >
-                      {product.inStock ? 'موجود' : 'ناموجود'}
-                    </Badge>
+                    <div className="font-semibold text-green-600 dark:text-green-400">
+                      {formatPrice(product.price)}
+                    </div>
                   </td>
                   <td className="px-2 py-4 text-center">
                     <div className="flex items-center justify-center gap-2">
@@ -162,8 +149,7 @@ export default function CategoryTable({
             <colgroup>
               <col style={{ width: '45%' }} />
               <col style={{ width: '25%' }} />
-              <col style={{ width: '15%' }} />
-              <col style={{ width: '15%' }} />
+              <col style={{ width: '30%' }} />
             </colgroup>
             <thead>
               <tr className="border-b border-slate-200 dark:border-slate-700">
@@ -172,9 +158,6 @@ export default function CategoryTable({
                 </th>
                 <th className="px-2 py-3 font-semibold text-center text-slate-700 dark:text-slate-300">
                   قیمت
-                </th>
-                <th className="px-2 py-3 font-semibold text-center text-slate-700 dark:text-slate-300">
-                  وضعیت
                 </th>
                 <th className="px-2 py-3 font-semibold text-center text-slate-700 dark:text-slate-300">
                   عملیات
@@ -198,31 +181,20 @@ export default function CategoryTable({
                           {product.size}
                         </span>
                       </div>
+                      {product.weight && (
+                        <div className="flex items-center gap-2 mt-1 text-xs text-slate-500 dark:text-slate-400">
+                          <span className="whitespace-nowrap">وزن:</span>
+                          <span className="font-medium text-slate-700 dark:text-slate-300">
+                            {product.weight}
+                          </span>
+                        </div>
+                      )}
                     </div>
                   </td>
                   <td className="px-2 py-4 text-center">
                     <div className="text-sm font-semibold text-green-600 dark:text-green-400">
                       {formatPrice(product.price)}
                     </div>
-                    <div className="text-xs text-slate-500 dark:text-slate-400">
-                      {product.unit === 'kg'
-                        ? 'کیلوگرم'
-                        : product.unit === 'ton'
-                          ? 'تن'
-                          : 'عدد'}
-                    </div>
-                  </td>
-                  <td className="px-2 py-4 text-center">
-                    <Badge
-                      variant={product.inStock ? 'default' : 'destructive'}
-                      className={
-                        product.inStock
-                          ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 text-xs'
-                          : 'text-xs'
-                      }
-                    >
-                      {product.inStock ? 'موجود' : 'ناموجود'}
-                    </Badge>
                   </td>
                   <td className="px-1 py-4 text-center">
                     <div className="flex items-center justify-center gap-2">
@@ -260,5 +232,5 @@ export default function CategoryTable({
         )}
       </CardContent>
     </Card>
-  );
+  )
 }

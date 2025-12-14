@@ -55,6 +55,9 @@ export async function POST(request: NextRequest) {
           if (row.brand !== undefined && row.brand !== '')
             updateData.brand = row.brand
           if (row.size !== undefined) updateData.size = row.size
+          if (row.weight !== undefined && row.weight !== null && row.weight !== '') {
+            updateData.weight = Number(row.weight)
+          }
           if (row.price !== undefined && row.price !== null) {
             updateData.price = Number(row.price)
           }
@@ -158,6 +161,10 @@ export async function POST(request: NextRequest) {
               price: Number(row.price),
               categoryId: row.categoryId,
               subcategory: row.subcategory,
+              weight:
+                row.weight !== undefined && row.weight !== null && row.weight !== ''
+                  ? Number(row.weight)
+                  : undefined,
               inStock:
                 row.inStock === true ||
                 row.inStock === 'موجود' ||
