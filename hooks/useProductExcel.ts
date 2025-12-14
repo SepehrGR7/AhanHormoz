@@ -13,6 +13,8 @@ interface Product {
     name: string
   }
   subcategory: string
+  weight?: number
+  unit?: string
 }
 
 interface Category {
@@ -43,6 +45,7 @@ export function useProductExcel(): UseProductExcelReturn {
       'نام محصول': product.name,
       برند: product.brand || '-',
       سایز: product.size || '-',
+      وزن: product.weight || '',
       'قیمت (تومان)': product.price,
       موجودی: product.inStock ? 'موجود' : 'ناموجود',
       دسته‌بندی: product.category?.name || '-',
@@ -59,6 +62,7 @@ export function useProductExcel(): UseProductExcelReturn {
       { wch: 25 }, // Name
       { wch: 15 }, // Brand
       { wch: 15 }, // Size
+      { wch: 12 }, // Weight
       { wch: 15 }, // Price
       { wch: 12 }, // Stock
       { wch: 20 }, // Category
@@ -76,6 +80,7 @@ export function useProductExcel(): UseProductExcelReturn {
         'نام محصول': 'نمونه محصول',
         برند: 'نمونه برند',
         سایز: '10x20',
+        وزن: 12.5,
         'قیمت (تومان)': 1000000,
         موجودی: 'موجود',
         دسته‌بندی: 'تیرآهن',
@@ -92,6 +97,7 @@ export function useProductExcel(): UseProductExcelReturn {
       { wch: 25 },
       { wch: 15 },
       { wch: 15 },
+      { wch: 12 },
       { wch: 15 },
       { wch: 12 },
       { wch: 20 },
@@ -162,12 +168,27 @@ export function useProductExcel(): UseProductExcelReturn {
           price = parseFloat(priceValue.replace(/,/g, '')) || 0
         }
 
+        // Parse weight - can be number or empty
+        let weight: number | undefined = undefined
+        const weightValue = row['وزن']
+        if (weightValue !== undefined && weightValue !== null && weightValue !== '') {
+          if (typeof weightValue === 'number') {
+            weight = weightValue
+          } else if (typeof weightValue === 'string') {
+            const parsedWeight = parseFloat(weightValue.replace(/,/g, ''))
+            if (!isNaN(parsedWeight)) {
+              weight = parsedWeight
+            }
+          }
+        }
+
         return {
           id,
           name: String(row['نام محصول'] || '').trim(),
           brand: String(row['برند'] || '').trim(),
           size: String(row['سایز'] || '').trim(),
           price: price,
+          weight: weight,
           inStock: inStock,
           categoryId: category?.id || '',
           subcategory: String(row['زیردسته'] || '').trim(),
