@@ -207,6 +207,10 @@ model User {
   isActive  Boolean   @default(true)
   lastLogin DateTime?
 
+  // Account lockout fields
+  failedLoginAttempts Int       @default(0)
+  lockedUntil         DateTime?
+
   // NextAuth fields
   emailVerified DateTime?
   image         String?

@@ -3,6 +3,9 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import { prisma } from '@/lib/prisma'
 import bcrypt from 'bcryptjs'
 
+const LOCKOUT_DURATION_MS = 15 * 60 * 1000 // 15 minutes
+const MAX_FAILED_ATTEMPTS = 5
+
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -13,7 +16,7 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          return null
+          throw new Error('INVALID_CREDENTIALS')
         }
 
         try {
@@ -24,7 +27,26 @@ export const authOptions: NextAuthOptions = {
           })
 
           if (!user || !user.isActive) {
-            return null
+            throw new Error('INVALID_CREDENTIALS')
+          }
+
+          // Check if account is locked
+          if (user.lockedUntil && user.lockedUntil > new Date()) {
+            const remainingMs = user.lockedUntil.getTime() - Date.now()
+            const remainingMinutes = Math.ceil(remainingMs / (60 * 1000))
+            // Encode minutes in error message (NextAuth will pass this through)
+            throw new Error(`AccountLocked:${remainingMinutes}`)
+          }
+
+          // If lockout period has passed, reset the lockout
+          if (user.lockedUntil && user.lockedUntil <= new Date()) {
+            await prisma.user.update({
+              where: { id: user.id },
+              data: {
+                lockedUntil: null,
+                failedLoginAttempts: 0,
+              },
+            })
           }
 
           const isPasswordValid = await bcrypt.compare(
@@ -33,13 +55,31 @@ export const authOptions: NextAuthOptions = {
           )
 
           if (!isPasswordValid) {
-            return null
+            // Increment failed login attempts
+            const newFailedAttempts = (user.failedLoginAttempts || 0) + 1
+            const shouldLock = newFailedAttempts >= MAX_FAILED_ATTEMPTS
+
+            await prisma.user.update({
+              where: { id: user.id },
+              data: {
+                failedLoginAttempts: newFailedAttempts,
+                lockedUntil: shouldLock
+                  ? new Date(Date.now() + LOCKOUT_DURATION_MS)
+                  : user.lockedUntil,
+              },
+            })
+
+            throw new Error('INVALID_CREDENTIALS')
           }
 
-          // Update last login
+          // Password is valid - reset failed attempts and update last login
           await prisma.user.update({
             where: { id: user.id },
-            data: { lastLogin: new Date() },
+            data: {
+              lastLogin: new Date(),
+              failedLoginAttempts: 0,
+              lockedUntil: null,
+            },
           })
 
           return {
@@ -50,9 +90,16 @@ export const authOptions: NextAuthOptions = {
             image: user.image,
             lastLogin: user.lastLogin,
           }
-        } catch (error) {
+        } catch (error: any) {
+          // Re-throw our custom errors
+          if (error.message?.startsWith('AccountLocked:')) {
+            throw error
+          }
+          if (error.message === 'INVALID_CREDENTIALS') {
+            throw error
+          }
           console.error('Auth error:', error)
-          return null
+          throw new Error('INVALID_CREDENTIALS')
         }
       },
     }),

@@ -29,8 +29,15 @@ function AdminLoginForm() {
 
     // Check for auth errors in URL
     const authError = searchParams.get('error');
-    if (authError) {
-      setError('احراز هویت ناموفق. لطفاً دوباره تلاش کنید.');
+    const minutes = searchParams.get('minutes');
+    if (authError && !error) { // Only set if error is not already set
+      if (authError === 'RateLimitExceeded') {
+        setError(`تعداد تلاش‌های ورود بیش از حد مجاز است. لطفاً ${minutes || '15'} دقیقه دیگر دوباره تلاش کنید.`);
+      } else if (authError === 'AccountLocked') {
+        setError(`حساب کاربری به دلیل تلاش‌های ناموفق متعدد به طور موقت قفل شده است. لطفاً ${minutes || '15'} دقیقه دیگر دوباره تلاش کنید.`);
+      } else {
+        setError('احراز هویت ناموفق. لطفاً دوباره تلاش کنید.');
+      }
     }
   }, [router, searchParams]);
 
@@ -53,7 +60,19 @@ function AdminLoginForm() {
       });
 
       if (result?.error) {
-        setError('ایمیل یا رمز عبور نادرست است');
+        // Handle different error types
+        // Check if error contains account lockout info
+        // NextAuth might pass the error through, or we need to check the URL
+        const errorFromUrl = searchParams.get('error')
+        if (result.error.includes('AccountLocked') || errorFromUrl === 'AccountLocked') {
+          // Try to extract minutes from error message or URL
+          const match = result.error.match(/AccountLocked:(\d+)/) || 
+                       searchParams.get('minutes')
+          const minutes = match ? (typeof match === 'string' ? match : match[1]) : '15'
+          setError(`حساب کاربری به دلیل تلاش‌های ناموفق متعدد به طور موقت قفل شده است. لطفاً ${minutes} دقیقه دیگر دوباره تلاش کنید.`)
+        } else {
+          setError('ایمیل یا رمز عبور نادرست است')
+        }
       } else if (result?.ok) {
         // Successful login, redirect to dashboard
         window.location.href = '/admin/dashboard';
