@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { updateProductPrice } from '@/lib/price-updater';
+import { checkApiRateLimitAndRespond } from '@/lib/rate-limit';
 
 interface RouteParams {
   params: Promise<{
@@ -10,6 +11,12 @@ interface RouteParams {
 
 // GET /api/products/[id] - Get a single product
 export async function GET(request: NextRequest, { params }: RouteParams) {
+  // Check rate limit
+  const rateLimitResponse = checkApiRateLimitAndRespond(request)
+  if (rateLimitResponse) {
+    return rateLimitResponse
+  }
+
   try {
     const { id } = await params;
 
@@ -55,6 +62,12 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 
 // PATCH /api/products/[id] - Update a product (partial update)
 export async function PATCH(request: NextRequest, { params }: RouteParams) {
+  // Check rate limit (stricter for write operations)
+  const rateLimitResponse = checkApiRateLimitAndRespond(request, 50, 15 * 60 * 1000)
+  if (rateLimitResponse) {
+    return rateLimitResponse
+  }
+
   try {
     const { id } = await params;
     const body = await request.json();
@@ -163,6 +176,12 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
 
 // PUT /api/products/[id] - Update a product
 export async function PUT(request: NextRequest, { params }: RouteParams) {
+  // Check rate limit (stricter for write operations)
+  const rateLimitResponse = checkApiRateLimitAndRespond(request, 50, 15 * 60 * 1000)
+  if (rateLimitResponse) {
+    return rateLimitResponse
+  }
+
   try {
     const { id } = await params;
     const body = await request.json();
@@ -271,6 +290,12 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
 
 // DELETE /api/products/[id] - Delete a product
 export async function DELETE(request: NextRequest, { params }: RouteParams) {
+  // Check rate limit (stricter for write operations)
+  const rateLimitResponse = checkApiRateLimitAndRespond(request, 30, 15 * 60 * 1000)
+  if (rateLimitResponse) {
+    return rateLimitResponse
+  }
+
   try {
     const { id } = await params;
 

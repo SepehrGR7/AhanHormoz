@@ -1,8 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { checkApiRateLimitAndRespond } from '@/lib/rate-limit'
 
 // GET /api/categories - Get all categories
 export async function GET(request: NextRequest) {
+  const rateLimitResponse = checkApiRateLimitAndRespond(request)
+  if (rateLimitResponse) {
+    return rateLimitResponse
+  }
+
   try {
     const { searchParams } = new URL(request.url)
     const includeProducts = searchParams.get('includeProducts') === 'true'
@@ -50,6 +56,11 @@ export async function GET(request: NextRequest) {
 
 // POST /api/categories - Create a new category
 export async function POST(request: NextRequest) {
+  const rateLimitResponse = checkApiRateLimitAndRespond(request, 50, 15 * 60 * 1000)
+  if (rateLimitResponse) {
+    return rateLimitResponse
+  }
+
   try {
     const body = await request.json()
 

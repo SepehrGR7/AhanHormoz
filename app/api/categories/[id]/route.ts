@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
+import { checkApiRateLimitAndRespond } from '@/lib/rate-limit'
 
 interface RouteParams {
   params: Promise<{
@@ -9,6 +10,11 @@ interface RouteParams {
 
 // GET /api/categories/[id] - Get a single category
 export async function GET(request: NextRequest, { params }: RouteParams) {
+  const rateLimitResponse = checkApiRateLimitAndRespond(request)
+  if (rateLimitResponse) {
+    return rateLimitResponse
+  }
+
   try {
     const { id } = await params
     const { searchParams } = new URL(request.url)
@@ -70,6 +76,11 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 
 // PUT /api/categories/[id] - Update a category
 export async function PUT(request: NextRequest, { params }: RouteParams) {
+  const rateLimitResponse = checkApiRateLimitAndRespond(request, 50, 15 * 60 * 1000)
+  if (rateLimitResponse) {
+    return rateLimitResponse
+  }
+
   try {
     const { id } = await params
     const body = await request.json()
@@ -143,6 +154,11 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
 
 // DELETE /api/categories/[id] - Delete a category
 export async function DELETE(request: NextRequest, { params }: RouteParams) {
+  const rateLimitResponse = checkApiRateLimitAndRespond(request, 30, 15 * 60 * 1000)
+  if (rateLimitResponse) {
+    return rateLimitResponse
+  }
+
   try {
     const { id } = await params
 

@@ -2,9 +2,15 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
 import { requireAuth, logAdminAction } from '@/lib/admin-auth'
 import bcrypt from 'bcryptjs'
+import { checkApiRateLimitAndRespond } from '@/lib/rate-limit'
 
 // Get all admin users (Super Admin only)
 export async function GET(request: NextRequest) {
+  const rateLimitResponse = checkApiRateLimitAndRespond(request)
+  if (rateLimitResponse) {
+    return rateLimitResponse
+  }
+
   try {
     const session = await requireAuth()
 
@@ -43,7 +49,12 @@ export async function GET(request: NextRequest) {
 
 // Create new admin user (Super Admin only)
 export async function POST(request: NextRequest) {
-  try {
+  const rateLimitResponse = checkApiRateLimitAndRespond(request, 50, 15 * 60 * 1000)
+  if (rateLimitResponse) {
+    return rateLimitResponse
+  }
+
+    try {
     const session = await requireAuth()
 
     if (session.user.role !== 'SUPER_ADMIN') {
