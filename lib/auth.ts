@@ -38,7 +38,8 @@ export const authOptions: NextAuthOptions = {
             throw new Error(`AccountLocked:${remainingMinutes}`)
           }
 
-          // If lockout period has passed, reset the lockout
+          // If lockout period has passed, reset the lockout and get fresh user data
+          let currentFailedAttempts = user.failedLoginAttempts || 0
           if (user.lockedUntil && user.lockedUntil <= new Date()) {
             await prisma.user.update({
               where: { id: user.id },
@@ -47,6 +48,8 @@ export const authOptions: NextAuthOptions = {
                 failedLoginAttempts: 0,
               },
             })
+            // Reset counter after unlocking
+            currentFailedAttempts = 0
           }
 
           const isPasswordValid = await bcrypt.compare(
@@ -55,8 +58,8 @@ export const authOptions: NextAuthOptions = {
           )
 
           if (!isPasswordValid) {
-            // Increment failed login attempts
-            const newFailedAttempts = (user.failedLoginAttempts || 0) + 1
+            // Increment failed login attempts using the current (possibly reset) value
+            const newFailedAttempts = currentFailedAttempts + 1
             const shouldLock = newFailedAttempts >= MAX_FAILED_ATTEMPTS
 
             await prisma.user.update({
