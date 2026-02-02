@@ -9,7 +9,7 @@ const handler = NextAuth(authOptions)
 // Wrap the handler to add rate limiting for sign-in requests
 export async function POST(
   request: NextRequest,
-  { params }: { params: { nextauth: string[] } }
+  { params }: { params: Promise<{ nextauth: string[] }> }
 ) {
   // Check if this is a sign-in request by checking the pathname
   const pathname = request.nextUrl.pathname
@@ -33,8 +33,9 @@ export async function POST(
   const formData = await clonedRequest.formData()
   const email = formData.get('email')?.toString()
 
-  // Pass the original request to NextAuth (it will read the body itself)
-  const response = await handler(request as any, { params } as any)
+  // Await params before passing to NextAuth
+  const resolvedParams = await params
+  const response = await handler(request as any, { params: resolvedParams } as any)
   
   // Check if response is a redirect to error page - might be AccountLocked
   if (response instanceof Response && response.status === 307) {
@@ -69,7 +70,8 @@ export async function POST(
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { nextauth: string[] } }
+  { params }: { params: Promise<{ nextauth: string[] }> }
 ) {
-  return handler(request as any, { params } as any)
+  const resolvedParams = await params
+  return handler(request as any, { params: resolvedParams } as any)
 }
