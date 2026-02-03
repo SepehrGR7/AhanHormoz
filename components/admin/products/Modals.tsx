@@ -313,11 +313,11 @@ export function BulkDeleteModal({
                         <AlertCircle className='w-8 h-8 text-danger' />
                       </div>
                     </div>
-                    <p className='text-lg font-semibold'>
+                    <p className='text-lg'>
                       آیا از حذف{' '}
-                      <Chip color='danger' variant='flat' size='lg'>
+                      <span className='font-extrabold'>
                         {selectedCount} محصول
-                      </Chip>{' '}
+                      </span>{' '}
                       مطمئن هستید؟
                     </p>
                     <p className='text-sm text-default-500'>
