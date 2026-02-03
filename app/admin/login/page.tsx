@@ -70,6 +70,10 @@ function AdminLoginForm() {
                        searchParams.get('minutes')
           const minutes = match ? (typeof match === 'string' ? match : match[1]) : '15'
           setError(`حساب کاربری به دلیل تلاش‌های ناموفق متعدد به طور موقت قفل شده است. لطفاً ${minutes} دقیقه دیگر دوباره تلاش کنید.`)
+        } else if (errorFromUrl === 'RateLimitExceeded') {
+          // Rate limit error from URL
+          const minutes = searchParams.get('minutes') || '15'
+          setError(`تعداد تلاش‌های ورود بیش از حد مجاز است. لطفاً ${minutes} دقیقه دیگر دوباره تلاش کنید.`)
         } else {
           setError('ایمیل یا رمز عبور نادرست است')
         }
