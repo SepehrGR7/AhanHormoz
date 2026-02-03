@@ -11,16 +11,27 @@ export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ nextauth: string[] }> }
 ) {
-  // Check if this is a sign-in request by checking the pathname
+  // Clone request to read body without consuming original
+  const clonedRequest = request.clone()
+  const formData = await clonedRequest.formData()
+  const email = formData.get('email')?.toString()
+  const password = formData.get('password')?.toString()
+  
+  // Check if this is a sign-in request by checking:
+  // 1. Pathname contains signin or callback/credentials
+  // 2. Request body contains email and password (login attempt)
   const pathname = request.nextUrl.pathname
-  const isSignIn = pathname.includes('/signin')
+  const isSignIn = 
+    (pathname.includes('/signin') || pathname.includes('/callback/credentials')) &&
+    email &&
+    password
   
   if (isSignIn) {
     const ip = getClientIP(request)
     const rateLimit = checkRateLimit(ip)
     
     if (rateLimit.isLimited) {
-      // Redirect to login page with error query parameter
+      // Redirect to login page with rate limit error
       const loginUrl = new URL('/admin/login', request.url)
       loginUrl.searchParams.set('error', 'RateLimitExceeded')
       loginUrl.searchParams.set('minutes', rateLimit.remainingMinutes.toString())
@@ -28,14 +39,29 @@ export async function POST(
     }
   }
 
-  // Clone the request to read body without consuming it
-  const clonedRequest = request.clone()
-  const formData = await clonedRequest.formData()
-  const email = formData.get('email')?.toString()
+  // Recreate the request body for NextAuth since we read from clone
+  const body = new URLSearchParams()
+  for (const [key, value] of formData.entries()) {
+    body.append(key, value.toString())
+  }
+
+  // Create a new NextRequest preserving all properties
+  const reconstructedRequest = new NextRequest(request.url, {
+    method: request.method,
+    headers: new Headers(request.headers),
+    body: body.toString(),
+  })
+  
+  // Preserve nextUrl which NextAuth needs
+  Object.defineProperty(reconstructedRequest, 'nextUrl', {
+    value: request.nextUrl,
+    writable: false,
+    enumerable: true,
+  })
 
   // Await params before passing to NextAuth
   const resolvedParams = await params
-  const response = await handler(request as any, { params: resolvedParams } as any)
+  const response = await handler(reconstructedRequest as any, { params: resolvedParams } as any)
   
   // Check if response is a redirect to error page - might be AccountLocked
   if (response instanceof Response && response.status === 307) {
