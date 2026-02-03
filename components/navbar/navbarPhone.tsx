@@ -3,9 +3,9 @@ import Link from 'next/link'
 
 export default function NavbarPhone() {
   return (
-    <div className='flex items-center gap-3 group'>
+    <div className='flex gap-3 items-center group'>
       <div className='relative'>
-        <div className='absolute inset-0 bg-primary/20 rounded-full blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300'></div>
+        <div className='absolute inset-0 rounded-full opacity-0 blur-lg transition-opacity duration-300 bg-primary/20 group-hover:opacity-100'></div>
         <div className='relative bg-gradient-to-br from-primary/10 to-primary/5 p-2.5 rounded-full border border-primary/20'>
           <Headset size={20} className='text-primary' />
         </div>
@@ -13,19 +13,18 @@ export default function NavbarPhone() {
       <div className='flex flex-col'>
         <Link
           href='tel:0769999'
-          className='group/link flex flex-col items-start transition-all duration-300'
+          className='flex flex-col items-start transition-all duration-300 group/link'
         >
-          <p className='text-xs text-default-500 font-medium group-hover/link:text-primary transition-colors duration-300'>
+          <p className='text-xs font-medium transition-colors duration-300 text-default-500 group-hover/link:text-primary'>
             مشاوره و خرید
           </p>
-          <div className='flex items-center gap-1'>
+          <div className='flex gap-1 items-center'>
             <Phone
               size={12}
-              className='text-primary/60 group-hover/link:text-primary transition-colors duration-300'
+              className='transition-colors duration-300 text-primary/60 group-hover/link:text-primary'
             />
-            <p className='text-sm font-bold text-foreground group-hover/link:text-primary transition-colors duration-300'>
-              <span className='text-xs'>076</span>-
-              <span className='text-base'>9999</span>
+            <p className='text-sm font-bold transition-colors duration-300 text-foreground group-hover/link:text-primary'>
+              <span className='text-base'>09125858047</span>
             </p>
           </div>
         </Link>
