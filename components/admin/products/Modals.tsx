@@ -1,17 +1,17 @@
-import React, { Fragment } from 'react';
+import React, { Fragment } from 'react'
 import {
   Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
   ModalFooter,
-} from '@heroui/modal';
-import { Button } from '@heroui/button';
-import { Input } from '@heroui/input';
-import { Switch } from '@heroui/switch';
-import { Divider } from '@heroui/divider';
-import { Chip } from '@heroui/chip';
-import { Listbox, Transition } from '@headlessui/react';
+} from '@heroui/modal'
+import { Button } from '@heroui/button'
+import { Input } from '@heroui/input'
+import { Switch } from '@heroui/switch'
+import { Divider } from '@heroui/divider'
+import { Chip } from '@heroui/chip'
+import { Listbox, Transition } from '@headlessui/react'
 import {
   DollarSign,
   Edit,
@@ -28,7 +28,7 @@ import {
   X,
   ChevronDown,
   Check,
-} from 'lucide-react';
+} from 'lucide-react'
 
 export function BulkUpdateModal({
   isOpen,
@@ -43,8 +43,8 @@ export function BulkUpdateModal({
     <Modal
       isOpen={isOpen}
       onOpenChange={onOpenChange}
-      size="2xl"
-      backdrop="blur"
+      size='2xl'
+      backdrop='blur'
       classNames={{
         backdrop:
           'bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-opacity-20',
@@ -53,30 +53,30 @@ export function BulkUpdateModal({
       <ModalContent>
         {(onClose: any) => (
           <>
-            <ModalHeader className="flex flex-col gap-1 pb-4 border-b border-divider">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-primary/10">
-                  <Edit className="w-5 h-5 text-primary" />
+            <ModalHeader className='flex flex-col gap-1 pb-4 border-b border-divider'>
+              <div className='flex items-center gap-3'>
+                <div className='p-2 rounded-lg bg-primary/10'>
+                  <Edit className='w-5 h-5 text-primary' />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold">ویرایش گروهی محصولات</h3>
-                  <p className="text-sm font-normal text-default-500">
+                  <h3 className='text-xl font-bold'>ویرایش گروهی محصولات</h3>
+                  <p className='text-sm font-normal text-default-500'>
                     {selectedCount} محصول انتخاب شده
                   </p>
                 </div>
               </div>
             </ModalHeader>
-            <ModalBody className="py-6">
-              <div className="space-y-5">
+            <ModalBody className='py-6'>
+              <div className='space-y-5'>
                 {/* Price Section */}
-                <div className="space-y-2">
-                  <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                    <DollarSign className="w-4 h-4 text-success" />
+                <div className='space-y-2'>
+                  <label className='flex items-center gap-2 text-sm font-semibold text-foreground'>
+                    <DollarSign className='w-4 h-4 text-success' />
                     قیمت جدید (تومان)
                   </label>
                   <Input
-                    type="number"
-                    placeholder="قیمت جدید را وارد کنید"
+                    type='number'
+                    placeholder='قیمت جدید را وارد کنید'
                     value={bulkUpdateData.price?.toString() || ''}
                     onChange={(e: any) =>
                       setBulkUpdateData({
@@ -86,10 +86,10 @@ export function BulkUpdateModal({
                           : undefined,
                       })
                     }
-                    variant="bordered"
-                    size="lg"
+                    variant='bordered'
+                    size='lg'
                     startContent={
-                      <DollarSign className="w-4 h-4 text-default-400" />
+                      <DollarSign className='w-4 h-4 text-default-400' />
                     }
                     classNames={{
                       input: 'text-lg',
@@ -101,12 +101,12 @@ export function BulkUpdateModal({
                 <Divider />
 
                 {/* Stock Status Section */}
-                <div className="space-y-3">
-                  <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                    <Package className="w-4 h-4 text-warning" />
+                <div className='space-y-3'>
+                  <label className='flex items-center gap-2 text-sm font-semibold text-foreground'>
+                    <Package className='w-4 h-4 text-warning' />
                     وضعیت موجودی
                   </label>
-                  <div className="flex gap-3">
+                  <div className='flex gap-3'>
                     <Button
                       variant={
                         bulkUpdateData.inStock === true ? 'solid' : 'bordered'
@@ -114,8 +114,8 @@ export function BulkUpdateModal({
                       color={
                         bulkUpdateData.inStock === true ? 'success' : 'default'
                       }
-                      className="flex-1"
-                      startContent={<Eye className="w-4 h-4" />}
+                      className='flex-1'
+                      startContent={<Eye className='w-4 h-4' />}
                       onPress={() =>
                         setBulkUpdateData({ ...bulkUpdateData, inStock: true })
                       }
@@ -129,7 +129,7 @@ export function BulkUpdateModal({
                       color={
                         bulkUpdateData.inStock === false ? 'danger' : 'default'
                       }
-                      className="flex-1"
+                      className='flex-1'
                       onPress={() =>
                         setBulkUpdateData({ ...bulkUpdateData, inStock: false })
                       }
@@ -147,8 +147,8 @@ export function BulkUpdateModal({
                           ? 'primary'
                           : 'default'
                       }
-                      className="flex-1"
-                      startContent={<X className="w-4 h-4" />}
+                      className='flex-1'
+                      startContent={<X className='w-4 h-4' />}
                       onPress={() =>
                         setBulkUpdateData({
                           ...bulkUpdateData,
@@ -164,9 +164,9 @@ export function BulkUpdateModal({
                 <Divider />
 
                 {/* Category Section */}
-                <div className="space-y-2">
-                  <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                    <Layers className="w-4 h-4 text-secondary" />
+                <div className='space-y-2'>
+                  <label className='flex items-center gap-2 text-sm font-semibold text-foreground'>
+                    <Layers className='w-4 h-4 text-secondary' />
                     دسته‌بندی
                   </label>
                   <Listbox
@@ -175,33 +175,33 @@ export function BulkUpdateModal({
                       setBulkUpdateData({
                         ...bulkUpdateData,
                         categoryId: value || undefined,
-                      });
+                      })
                     }}
                   >
-                    <div className="relative">
-                      <Listbox.Button className="relative w-full py-3 pl-10 pr-3 text-right transition-colors bg-transparent border-2 rounded-lg cursor-pointer border-default-200 hover:border-primary">
-                        <span className="block truncate text-foreground">
+                    <div className='relative'>
+                      <Listbox.Button className='relative w-full py-3 pl-10 pr-3 text-right transition-colors bg-transparent border-2 rounded-lg cursor-pointer border-default-200 hover:border-primary'>
+                        <span className='block truncate text-foreground'>
                           {bulkUpdateData.categoryId
                             ? categories?.find(
                                 (cat: any) =>
-                                  cat.id === bulkUpdateData.categoryId
+                                  cat.id === bulkUpdateData.categoryId,
                               )?.name || 'انتخاب دسته‌بندی'
                             : 'انتخاب دسته‌بندی'}
                         </span>
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none">
+                        <span className='absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none'>
                           <ChevronDown
-                            className="w-5 h-5 text-default-400"
-                            aria-hidden="true"
+                            className='w-5 h-5 text-default-400'
+                            aria-hidden='true'
                           />
                         </span>
                       </Listbox.Button>
                       <Transition
                         as={Fragment}
-                        leave="transition ease-in duration-100"
-                        leaveFrom="opacity-100"
-                        leaveTo="opacity-0"
+                        leave='transition ease-in duration-100'
+                        leaveFrom='opacity-100'
+                        leaveTo='opacity-0'
                       >
-                        <Listbox.Options className="absolute z-50 w-full py-1 mt-1 overflow-auto border rounded-lg shadow-lg max-h-44 bg-content1 border-divider">
+                        <Listbox.Options className='absolute z-50 w-full py-1 mt-1 overflow-auto border rounded-lg shadow-lg max-h-44 bg-content1 border-divider'>
                           {categories?.map((category: any) => (
                             <Listbox.Option
                               key={category.id}
@@ -220,8 +220,8 @@ export function BulkUpdateModal({
                                     className={`absolute inset-y-0 left-0 flex items-center pl-3 text-primary ${selected ? '' : 'opacity-0'}`}
                                   >
                                     <Check
-                                      className="w-5 h-5"
-                                      aria-hidden="true"
+                                      className='w-5 h-5'
+                                      aria-hidden='true'
                                     />
                                   </span>
                                   <span
@@ -240,10 +240,10 @@ export function BulkUpdateModal({
                 </div>
 
                 {/* Info Banner */}
-                <div className="flex items-start gap-3 p-4 border rounded-lg bg-primary/5 border-primary/20">
-                  <AlertCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                  <div className="text-sm text-default-700">
-                    <p className="mb-1 font-semibold">توجه:</p>
+                <div className='flex items-start gap-3 p-4 border rounded-lg bg-primary/5 border-primary/20'>
+                  <AlertCircle className='w-5 h-5 text-primary mt-0.5 flex-shrink-0' />
+                  <div className='text-sm text-default-700'>
+                    <p className='mb-1 font-semibold'>توجه:</p>
                     <p>
                       فقط فیلدهایی که مقدار دارند، برای محصولات انتخاب شده
                       به‌روزرسانی خواهند شد.
@@ -252,15 +252,15 @@ export function BulkUpdateModal({
                 </div>
               </div>
             </ModalBody>
-            <ModalFooter className="pt-4 border-t border-divider">
-              <Button variant="light" onPress={onClose} size="lg">
+            <ModalFooter className='pt-4 border-t border-divider'>
+              <Button variant='light' onPress={onClose} size='lg'>
                 انصراف
               </Button>
               <Button
-                color="primary"
+                color='primary'
                 onPress={onUpdate}
-                size="lg"
-                startContent={<CheckCircle2 className="w-4 h-4" />}
+                size='lg'
+                startContent={<CheckCircle2 className='w-4 h-4' />}
               >
                 اعمال تغییرات
               </Button>
@@ -269,7 +269,7 @@ export function BulkUpdateModal({
         )}
       </ModalContent>
     </Modal>
-  );
+  )
 }
 
 export function BulkDeleteModal({
@@ -282,7 +282,7 @@ export function BulkDeleteModal({
     <Modal
       isOpen={isOpen}
       onOpenChange={onOpenChange}
-      backdrop="blur"
+      backdrop='blur'
       classNames={{
         backdrop:
           'bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-opacity-20',
@@ -291,36 +291,36 @@ export function BulkDeleteModal({
       <ModalContent>
         {(onClose: any) => (
           <>
-            <ModalHeader className="flex flex-col gap-1 pb-4 border-b border-divider">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-danger/10">
-                  <Trash2 className="w-5 h-5 text-danger" />
+            <ModalHeader className='flex flex-col gap-1 pb-4 border-b border-divider'>
+              <div className='flex items-center gap-3'>
+                <div className='p-2 rounded-lg bg-danger/10'>
+                  <Trash2 className='w-5 h-5 text-danger' />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold">حذف گروهی محصولات</h3>
-                  <p className="text-sm font-normal text-default-500">
+                  <h3 className='text-xl font-bold'>حذف گروهی محصولات</h3>
+                  <p className='text-sm font-normal text-default-500'>
                     تأیید حذف دسته‌جمعی
                   </p>
                 </div>
               </div>
             </ModalHeader>
-            <ModalBody className="py-6">
-              <div className="space-y-4">
-                <div className="flex items-center justify-center p-6 rounded-lg bg-danger/5">
-                  <div className="space-y-3 text-center">
-                    <div className="flex justify-center">
-                      <div className="p-3 rounded-full bg-danger/10">
-                        <AlertCircle className="w-8 h-8 text-danger" />
+            <ModalBody className='py-6'>
+              <div className='space-y-4'>
+                <div className='flex items-center justify-center p-6 rounded-lg bg-danger/5'>
+                  <div className='space-y-3 text-center'>
+                    <div className='flex justify-center'>
+                      <div className='p-3 rounded-full bg-danger/10'>
+                        <AlertCircle className='w-8 h-8 text-danger' />
                       </div>
                     </div>
-                    <p className="text-lg font-semibold">
+                    <p className='text-lg font-semibold'>
                       آیا از حذف{' '}
-                      <Chip color="danger" variant="flat" size="lg">
+                      <Chip color='danger' variant='flat' size='lg'>
                         {selectedCount} محصول
                       </Chip>{' '}
                       مطمئن هستید؟
                     </p>
-                    <p className="text-sm text-default-500">
+                    <p className='text-sm text-default-500'>
                       این عمل قابل بازگشت نیست و تمام اطلاعات محصولات حذف خواهند
                       شد.
                     </p>
@@ -328,15 +328,15 @@ export function BulkDeleteModal({
                 </div>
               </div>
             </ModalBody>
-            <ModalFooter className="pt-4 border-t border-divider">
-              <Button variant="light" onPress={onClose} size="lg">
+            <ModalFooter className='pt-4 border-t border-divider'>
+              <Button variant='light' onPress={onClose} size='lg'>
                 انصراف
               </Button>
               <Button
-                color="danger"
+                color='danger'
                 onPress={onDelete}
-                size="lg"
-                startContent={<Trash2 className="w-4 h-4" />}
+                size='lg'
+                startContent={<Trash2 className='w-4 h-4' />}
               >
                 حذف محصولات
               </Button>
@@ -345,7 +345,7 @@ export function BulkDeleteModal({
         )}
       </ModalContent>
     </Modal>
-  );
+  )
 }
 
 export function DeleteSingleModal({
@@ -358,7 +358,7 @@ export function DeleteSingleModal({
     <Modal
       isOpen={isOpen}
       onOpenChange={onOpenChange}
-      backdrop="blur"
+      backdrop='blur'
       classNames={{
         backdrop:
           'bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-opacity-20',
@@ -367,37 +367,37 @@ export function DeleteSingleModal({
       <ModalContent>
         {(onClose: any) => (
           <>
-            <ModalHeader className="flex flex-col gap-1 pb-4 border-b border-divider">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-danger/10">
-                  <Trash2 className="w-5 h-5 text-danger" />
+            <ModalHeader className='flex flex-col gap-1 pb-4 border-b border-divider'>
+              <div className='flex items-center gap-3'>
+                <div className='p-2 rounded-lg bg-danger/10'>
+                  <Trash2 className='w-5 h-5 text-danger' />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold">حذف محصول</h3>
-                  <p className="text-sm font-normal text-default-500">
+                  <h3 className='text-xl font-bold'>حذف محصول</h3>
+                  <p className='text-sm font-normal text-default-500'>
                     تأیید حذف محصول
                   </p>
                 </div>
               </div>
             </ModalHeader>
-            <ModalBody className="py-6">
-              <div className="space-y-4">
-                <div className="p-5 border rounded-lg bg-danger/5 border-danger/20">
-                  <div className="flex items-start gap-3">
-                    <AlertCircle className="w-5 h-5 text-danger mt-0.5 flex-shrink-0" />
-                    <div className="space-y-2">
-                      <p className="font-semibold text-foreground">
+            <ModalBody className='py-6'>
+              <div className='space-y-4'>
+                <div className='p-5 border rounded-lg bg-danger/5 border-danger/20'>
+                  <div className='flex items-start gap-3'>
+                    <AlertCircle className='w-5 h-5 text-danger mt-0.5 flex-shrink-0' />
+                    <div className='space-y-2'>
+                      <p className='font-semibold text-foreground'>
                         در حال حذف محصول:
                       </p>
                       <Chip
-                        color="primary"
-                        variant="flat"
-                        size="lg"
-                        startContent={<Package className="w-4 h-4" />}
+                        color='primary'
+                        variant='flat'
+                        size='lg'
+                        startContent={<Package className='w-4 h-4' />}
                       >
                         {product?.name}
                       </Chip>
-                      <p className="mt-3 text-sm text-default-500">
+                      <p className='mt-3 text-sm text-default-500'>
                         این عمل قابل بازگشت نیست. تمام اطلاعات مربوط به این
                         محصول به طور کامل حذف خواهد شد.
                       </p>
@@ -406,15 +406,15 @@ export function DeleteSingleModal({
                 </div>
               </div>
             </ModalBody>
-            <ModalFooter className="pt-4 border-t border-divider">
-              <Button variant="light" onPress={onClose} size="lg">
+            <ModalFooter className='pt-4 border-t border-divider'>
+              <Button variant='light' onPress={onClose} size='lg'>
                 انصراف
               </Button>
               <Button
-                color="danger"
+                color='danger'
                 onPress={onConfirm}
-                size="lg"
-                startContent={<Trash2 className="w-4 h-4" />}
+                size='lg'
+                startContent={<Trash2 className='w-4 h-4' />}
               >
                 حذف قطعی
               </Button>
@@ -423,7 +423,7 @@ export function DeleteSingleModal({
         )}
       </ModalContent>
     </Modal>
-  );
+  )
 }
 
 export function EditProductModal({
@@ -439,9 +439,9 @@ export function EditProductModal({
     <Modal
       isOpen={isOpen}
       onOpenChange={onOpenChange}
-      size="3xl"
-      scrollBehavior="inside"
-      backdrop="blur"
+      size='3xl'
+      scrollBehavior='inside'
+      backdrop='blur'
       classNames={{
         backdrop:
           'bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-opacity-20',
@@ -450,26 +450,26 @@ export function EditProductModal({
       <ModalContent>
         {(onClose: any) => (
           <>
-            <ModalHeader className="flex flex-col gap-1 pb-4 border-b border-divider">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-primary/10">
-                  <Edit className="w-5 h-5 text-primary" />
+            <ModalHeader className='flex flex-col gap-1 pb-4 border-b border-divider'>
+              <div className='flex items-center gap-3'>
+                <div className='p-2 rounded-lg bg-primary/10'>
+                  <Edit className='w-5 h-5 text-primary' />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold">ویرایش محصول</h3>
-                  <p className="text-sm font-normal text-default-500">
+                  <h3 className='text-xl font-bold'>ویرایش محصول</h3>
+                  <p className='text-sm font-normal text-default-500'>
                     ویرایش اطلاعات "{editingProduct?.name}"
                   </p>
                 </div>
               </div>
             </ModalHeader>
-            <ModalBody className="py-6">
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <ModalBody className='py-6'>
+              <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
                 {/* Product Name */}
-                <div className="space-y-2">
-                  <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                    <Package className="w-4 h-4 text-primary" />
-                    نام محصول <span className="text-danger">*</span>
+                <div className='space-y-2'>
+                  <label className='flex items-center gap-2 text-sm font-semibold text-foreground'>
+                    <Package className='w-4 h-4 text-primary' />
+                    نام محصول <span className='text-danger'>*</span>
                   </label>
                   <Input
                     value={editProductData.name}
@@ -479,9 +479,9 @@ export function EditProductModal({
                         name: e.target.value,
                       })
                     }
-                    placeholder="نام محصول را وارد کنید"
-                    variant="bordered"
-                    size="lg"
+                    placeholder='نام محصول را وارد کنید'
+                    variant='bordered'
+                    size='lg'
                     isRequired
                     classNames={{
                       inputWrapper: 'border-default-200 hover:border-primary',
@@ -490,10 +490,10 @@ export function EditProductModal({
                 </div>
 
                 {/* Brand */}
-                <div className="space-y-2">
-                  <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                    <Tag className="w-4 h-4 text-secondary" />
-                    برند <span className="text-danger">*</span>
+                <div className='space-y-2'>
+                  <label className='flex items-center gap-2 text-sm font-semibold text-foreground'>
+                    <Tag className='w-4 h-4 text-secondary' />
+                    برند <span className='text-danger'>*</span>
                   </label>
                   <Input
                     value={editProductData.brand}
@@ -503,9 +503,9 @@ export function EditProductModal({
                         brand: e.target.value,
                       })
                     }
-                    placeholder="نام برند را وارد کنید"
-                    variant="bordered"
-                    size="lg"
+                    placeholder='نام برند را وارد کنید'
+                    variant='bordered'
+                    size='lg'
                     isRequired
                     classNames={{
                       inputWrapper: 'border-default-200 hover:border-primary',
@@ -514,10 +514,10 @@ export function EditProductModal({
                 </div>
 
                 {/* Size */}
-                <div className="space-y-2">
-                  <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                    <Ruler className="w-4 h-4 text-warning" />
-                    سایز <span className="text-danger">*</span>
+                <div className='space-y-2'>
+                  <label className='flex items-center gap-2 text-sm font-semibold text-foreground'>
+                    <Ruler className='w-4 h-4 text-warning' />
+                    سایز <span className='text-danger'>*</span>
                   </label>
                   <Input
                     value={editProductData.size}
@@ -527,9 +527,9 @@ export function EditProductModal({
                         size: e.target.value,
                       })
                     }
-                    placeholder="مثال: 12، 16، 20"
-                    variant="bordered"
-                    size="lg"
+                    placeholder='مثال: 12، 16، 20'
+                    variant='bordered'
+                    size='lg'
                     isRequired
                     classNames={{
                       inputWrapper: 'border-default-200 hover:border-primary',
@@ -538,13 +538,13 @@ export function EditProductModal({
                 </div>
 
                 {/* Weight */}
-                <div className="space-y-2">
-                  <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                    <Ruler className="w-4 h-4 text-info" />
+                <div className='space-y-2'>
+                  <label className='flex items-center gap-2 text-sm font-semibold text-foreground'>
+                    <Ruler className='w-4 h-4 text-info' />
                     وزن
                   </label>
                   <Input
-                    type="number"
+                    type='number'
                     value={editProductData.weight?.toString() || ''}
                     onChange={(e: any) =>
                       setEditProductData({
@@ -554,22 +554,22 @@ export function EditProductModal({
                           : undefined,
                       })
                     }
-                    placeholder="وزن را وارد کنید (بر حسب kg یا ton)"
-                    variant="bordered"
-                    size="lg"
-                    step="0.1"
+                    placeholder='وزن را وارد کنید (بر حسب kg یا ton)'
+                    variant='bordered'
+                    size='lg'
+                    step='0.1'
                     classNames={{
                       inputWrapper: 'border-default-200 hover:border-primary',
                     }}
                   />
                 </div>
-                <div className="space-y-2">
-                  <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                    <DollarSign className="w-4 h-4 text-success" />
-                    قیمت (تومان) <span className="text-danger">*</span>
+                <div className='space-y-2'>
+                  <label className='flex items-center gap-2 text-sm font-semibold text-foreground'>
+                    <DollarSign className='w-4 h-4 text-success' />
+                    قیمت (تومان) <span className='text-danger'>*</span>
                   </label>
                   <Input
-                    type="number"
+                    type='number'
                     value={editProductData.price.toString()}
                     onChange={(e: any) =>
                       setEditProductData({
@@ -577,12 +577,12 @@ export function EditProductModal({
                         price: parseFloat(e.target.value) || 0,
                       })
                     }
-                    placeholder="قیمت را وارد کنید"
-                    variant="bordered"
-                    size="lg"
+                    placeholder='قیمت را وارد کنید'
+                    variant='bordered'
+                    size='lg'
                     isRequired
                     startContent={
-                      <DollarSign className="w-4 h-4 text-default-400" />
+                      <DollarSign className='w-4 h-4 text-default-400' />
                     }
                     classNames={{
                       inputWrapper: 'border-default-200 hover:border-primary',
@@ -591,10 +591,10 @@ export function EditProductModal({
                 </div>
 
                 {/* Category */}
-                <div className="space-y-2">
-                  <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                    <Layers className="w-4 h-4 text-secondary" />
-                    دسته‌بندی <span className="text-danger">*</span>
+                <div className='space-y-2'>
+                  <label className='flex items-center gap-2 text-sm font-semibold text-foreground'>
+                    <Layers className='w-4 h-4 text-secondary' />
+                    دسته‌بندی <span className='text-danger'>*</span>
                   </label>
                   <Listbox
                     value={editProductData.categoryId}
@@ -603,33 +603,33 @@ export function EditProductModal({
                         ...editProductData,
                         categoryId: value,
                         subcategory: '',
-                      });
+                      })
                     }}
                   >
-                    <div className="relative">
-                      <Listbox.Button className="relative w-full py-3 pl-10 pr-3 text-right transition-colors bg-transparent border-2 rounded-lg cursor-pointer border-default-200 hover:border-primary">
-                        <span className="block truncate text-foreground">
+                    <div className='relative'>
+                      <Listbox.Button className='relative w-full py-3 pl-10 pr-3 text-right transition-colors bg-transparent border-2 rounded-lg cursor-pointer border-default-200 hover:border-primary'>
+                        <span className='block truncate text-foreground'>
                           {editProductData.categoryId
                             ? categories?.find(
                                 (cat: any) =>
-                                  cat.id === editProductData.categoryId
+                                  cat.id === editProductData.categoryId,
                               )?.name || 'دسته‌بندی را انتخاب کنید'
                             : 'دسته‌بندی را انتخاب کنید'}
                         </span>
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none">
+                        <span className='absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none'>
                           <ChevronDown
-                            className="w-5 h-5 text-default-400"
-                            aria-hidden="true"
+                            className='w-5 h-5 text-default-400'
+                            aria-hidden='true'
                           />
                         </span>
                       </Listbox.Button>
                       <Transition
                         as={Fragment}
-                        leave="transition ease-in duration-100"
-                        leaveFrom="opacity-100"
-                        leaveTo="opacity-0"
+                        leave='transition ease-in duration-100'
+                        leaveFrom='opacity-100'
+                        leaveTo='opacity-0'
                       >
-                        <Listbox.Options className="absolute z-50 w-full py-1 mt-1 overflow-auto border rounded-lg shadow-lg max-h-44 bg-content1 border-divider">
+                        <Listbox.Options className='absolute z-50 w-full py-1 mt-1 overflow-auto border rounded-lg shadow-lg max-h-44 bg-content1 border-divider'>
                           {categories?.map((category: any) => (
                             <Listbox.Option
                               key={category.id}
@@ -650,10 +650,10 @@ export function EditProductModal({
                                     {category.name}
                                   </span>
                                   {selected && (
-                                    <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-primary">
+                                    <span className='absolute inset-y-0 right-0 flex items-center pr-3 text-primary'>
                                       <Check
-                                        className="w-5 h-5"
-                                        aria-hidden="true"
+                                        className='w-5 h-5'
+                                        aria-hidden='true'
                                       />
                                     </span>
                                   )}
@@ -668,10 +668,10 @@ export function EditProductModal({
                 </div>
 
                 {/* Subcategory */}
-                <div className="space-y-2">
-                  <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                    <Layers className="w-4 h-4 text-secondary" />
-                    زیر دسته‌بندی <span className="text-danger">*</span>
+                <div className='space-y-2'>
+                  <label className='flex items-center gap-2 text-sm font-semibold text-foreground'>
+                    <Layers className='w-4 h-4 text-secondary' />
+                    زیر دسته‌بندی <span className='text-danger'>*</span>
                   </label>
                   <Listbox
                     value={editProductData.subcategory}
@@ -679,11 +679,11 @@ export function EditProductModal({
                       setEditProductData({
                         ...editProductData,
                         subcategory: value,
-                      });
+                      })
                     }}
                     disabled={!editProductData.categoryId}
                   >
-                    <div className="relative">
+                    <div className='relative'>
                       <Listbox.Button
                         className={`relative w-full cursor-pointer rounded-lg border-2 border-default-200 bg-transparent py-3 pl-10 pr-3 text-right transition-colors ${
                           !editProductData.categoryId
@@ -691,31 +691,31 @@ export function EditProductModal({
                             : 'hover:border-primary'
                         }`}
                       >
-                        <span className="block truncate text-foreground">
+                        <span className='block truncate text-foreground'>
                           {editProductData.subcategory ||
                             (editProductData.categoryId
                               ? 'انتخاب کنید'
                               : 'ابتدا دسته‌بندی را انتخاب کنید')}
                         </span>
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none">
+                        <span className='absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none'>
                           <ChevronDown
-                            className="w-5 h-5 text-default-400"
-                            aria-hidden="true"
+                            className='w-5 h-5 text-default-400'
+                            aria-hidden='true'
                           />
                         </span>
                       </Listbox.Button>
                       {editProductData.categoryId && (
                         <Transition
                           as={Fragment}
-                          leave="transition ease-in duration-100"
-                          leaveFrom="opacity-100"
-                          leaveTo="opacity-0"
+                          leave='transition ease-in duration-100'
+                          leaveFrom='opacity-100'
+                          leaveTo='opacity-0'
                         >
-                          <Listbox.Options className="absolute z-50 w-full py-1 mt-1 overflow-auto border rounded-lg shadow-lg max-h-44 bg-content1 border-divider">
+                          <Listbox.Options className='absolute z-50 w-full py-1 mt-1 overflow-auto border rounded-lg shadow-lg max-h-44 bg-content1 border-divider'>
                             {categories
                               ?.find(
                                 (cat: any) =>
-                                  cat.id === editProductData.categoryId
+                                  cat.id === editProductData.categoryId,
                               )
                               ?.subcategories?.map((subcategory: string) => (
                                 <Listbox.Option
@@ -735,8 +735,8 @@ export function EditProductModal({
                                         className={`absolute inset-y-0 left-0 flex items-center pl-3 text-primary ${selected ? '' : 'opacity-0'}`}
                                       >
                                         <Check
-                                          className="w-5 h-5"
-                                          aria-hidden="true"
+                                          className='w-5 h-5'
+                                          aria-hidden='true'
                                         />
                                       </span>
                                       <span
@@ -756,12 +756,12 @@ export function EditProductModal({
                 </div>
 
                 {/* Stock Status */}
-                <div className="space-y-3 md:col-span-2">
-                  <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                    <Package className="w-4 h-4 text-warning" />
+                <div className='space-y-3 md:col-span-2'>
+                  <label className='flex items-center gap-2 text-sm font-semibold text-foreground'>
+                    <Package className='w-4 h-4 text-warning' />
                     وضعیت موجودی
                   </label>
-                  <div className="flex gap-3">
+                  <div className='flex gap-3'>
                     <Button
                       variant={
                         editProductData.inStock === true ? 'solid' : 'bordered'
@@ -769,8 +769,8 @@ export function EditProductModal({
                       color={
                         editProductData.inStock === true ? 'success' : 'default'
                       }
-                      className="flex-1"
-                      size="lg"
+                      className='flex-1'
+                      size='lg'
                       onPress={() =>
                         setEditProductData({
                           ...editProductData,
@@ -787,8 +787,8 @@ export function EditProductModal({
                       color={
                         editProductData.inStock === false ? 'danger' : 'default'
                       }
-                      className="flex-1"
-                      size="lg"
+                      className='flex-1'
+                      size='lg'
                       onPress={() =>
                         setEditProductData({
                           ...editProductData,
@@ -802,15 +802,15 @@ export function EditProductModal({
                 </div>
               </div>
             </ModalBody>
-            <ModalFooter className="pt-4 border-t border-divider">
-              <Button variant="light" onPress={onClose} size="lg">
+            <ModalFooter className='pt-4 border-t border-divider'>
+              <Button variant='light' onPress={onClose} size='lg'>
                 انصراف
               </Button>
               <Button
-                color="primary"
+                color='primary'
                 onPress={onSave}
-                size="lg"
-                startContent={<CheckCircle2 className="w-4 h-4" />}
+                size='lg'
+                startContent={<CheckCircle2 className='w-4 h-4' />}
               >
                 ذخیره تغییرات
               </Button>
@@ -819,7 +819,7 @@ export function EditProductModal({
         )}
       </ModalContent>
     </Modal>
-  );
+  )
 }
 
 export function AddProductModal({
@@ -834,9 +834,9 @@ export function AddProductModal({
     <Modal
       isOpen={isOpen}
       onOpenChange={onOpenChange}
-      size="3xl"
-      scrollBehavior="inside"
-      backdrop="blur"
+      size='3xl'
+      scrollBehavior='inside'
+      backdrop='blur'
       classNames={{
         backdrop:
           'bg-gradient-to-t from-zinc-900 to-zinc-900/10 backdrop-opacity-20',
@@ -845,29 +845,28 @@ export function AddProductModal({
       <ModalContent>
         {(onClose: any) => (
           <>
-            <ModalHeader className="flex flex-col gap-1 pb-4 border-b border-divider">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-success/10">
-                  <Plus className="w-5 h-5 text-success" />
+            <ModalHeader className='flex flex-col gap-1 pb-4 border-b border-divider'>
+              <div className='flex items-center gap-3'>
+                <div className='p-2 rounded-lg bg-success/10'>
+                  <Plus className='w-5 h-5 text-success' />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold">افزودن محصول جدید</h3>
-                  <p className="text-sm font-normal text-default-500">
+                  <h3 className='text-xl font-bold'>افزودن محصول جدید</h3>
+                  <p className='text-sm font-normal text-default-500'>
                     اطلاعات محصول را با دقت وارد کنید
                   </p>
                 </div>
               </div>
             </ModalHeader>
-            <ModalBody className="py-6">
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <ModalBody className='py-6'>
+              <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
                 {/* Product Name */}
-                <div className="space-y-2">
-                  <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                    <Package className="w-4 h-4 text-primary" />
-                    نام محصول <span className="text-danger">*</span>
+                <div className='space-y-2'>
+                  <label className='flex items-center gap-2 text-sm font-semibold text-foreground'>
+                    نام محصول <span className='text-danger'>*</span>
                   </label>
                   <Input
-                    placeholder="نام محصول را وارد کنید"
+                    placeholder='نام محصول را وارد کنید'
                     value={newProductData.name}
                     onChange={(e: any) =>
                       setNewProductData({
@@ -875,8 +874,8 @@ export function AddProductModal({
                         name: e.target.value,
                       })
                     }
-                    variant="bordered"
-                    size="lg"
+                    variant='bordered'
+                    size='lg'
                     isRequired
                     classNames={{
                       inputWrapper: 'border-default-200 hover:border-primary',
@@ -885,13 +884,12 @@ export function AddProductModal({
                 </div>
 
                 {/* Brand */}
-                <div className="space-y-2">
-                  <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                    <Tag className="w-4 h-4 text-secondary" />
-                    برند <span className="text-danger">*</span>
+                <div className='space-y-2'>
+                  <label className='flex items-center gap-2 text-sm font-semibold text-foreground'>
+                    برند <span className='text-danger'>*</span>
                   </label>
                   <Input
-                    placeholder="نام برند را وارد کنید"
+                    placeholder='نام برند را وارد کنید'
                     value={newProductData.brand}
                     onChange={(e: any) =>
                       setNewProductData({
@@ -899,8 +897,8 @@ export function AddProductModal({
                         brand: e.target.value,
                       })
                     }
-                    variant="bordered"
-                    size="lg"
+                    variant='bordered'
+                    size='lg'
                     isRequired
                     classNames={{
                       inputWrapper: 'border-default-200 hover:border-primary',
@@ -909,13 +907,12 @@ export function AddProductModal({
                 </div>
 
                 {/* Size */}
-                <div className="space-y-2">
-                  <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                    <Ruler className="w-4 h-4 text-warning" />
-                    سایز <span className="text-danger">*</span>
+                <div className='space-y-2'>
+                  <label className='flex items-center gap-2 text-sm font-semibold text-foreground'>
+                    سایز <span className='text-danger'>*</span>
                   </label>
                   <Input
-                    placeholder="مثال: 12، 16، 20"
+                    placeholder='مثال: 12، 16، 20'
                     value={newProductData.size}
                     onChange={(e: any) =>
                       setNewProductData({
@@ -923,8 +920,8 @@ export function AddProductModal({
                         size: e.target.value,
                       })
                     }
-                    variant="bordered"
-                    size="lg"
+                    variant='bordered'
+                    size='lg'
                     isRequired
                     classNames={{
                       inputWrapper: 'border-default-200 hover:border-primary',
@@ -933,14 +930,13 @@ export function AddProductModal({
                 </div>
 
                 {/* Weight */}
-                <div className="space-y-2">
-                  <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                    <Ruler className="w-4 h-4 text-info" />
+                <div className='space-y-2'>
+                  <label className='flex items-center gap-2 text-sm font-semibold text-foreground'>
                     وزن
                   </label>
                   <Input
-                    type="number"
-                    placeholder="وزن را وارد کنید"
+                    type='number'
+                    placeholder='وزن را وارد کنید'
                     value={newProductData.weight?.toString() || ''}
                     onChange={(e: any) =>
                       setNewProductData({
@@ -950,22 +946,21 @@ export function AddProductModal({
                           : undefined,
                       })
                     }
-                    variant="bordered"
-                    size="lg"
-                    step="0.1"
+                    variant='bordered'
+                    size='lg'
+                    step='0.1'
                     classNames={{
                       inputWrapper: 'border-default-200 hover:border-primary',
                     }}
                   />
                 </div>
-                <div className="space-y-2">
-                  <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                    <DollarSign className="w-4 h-4 text-success" />
-                    قیمت (تومان) <span className="text-danger">*</span>
+                <div className='space-y-2'>
+                  <label className='flex items-center gap-2 text-sm font-semibold text-foreground'>
+                    قیمت (تومان) <span className='text-danger'>*</span>
                   </label>
                   <Input
-                    type="number"
-                    placeholder="قیمت را وارد کنید"
+                    type='number'
+                    placeholder='قیمت را وارد کنید'
                     value={newProductData.price.toString()}
                     onChange={(e: any) =>
                       setNewProductData({
@@ -973,12 +968,9 @@ export function AddProductModal({
                         price: parseFloat(e.target.value) || 0,
                       })
                     }
-                    variant="bordered"
-                    size="lg"
+                    variant='bordered'
+                    size='lg'
                     isRequired
-                    startContent={
-                      <DollarSign className="w-4 h-4 text-default-400" />
-                    }
                     classNames={{
                       inputWrapper: 'border-default-200 hover:border-primary',
                     }}
@@ -986,10 +978,9 @@ export function AddProductModal({
                 </div>
 
                 {/* Category */}
-                <div className="space-y-2">
-                  <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                    <Layers className="w-4 h-4 text-secondary" />
-                    دسته‌بندی <span className="text-danger">*</span>
+                <div className='space-y-2'>
+                  <label className='flex items-center gap-2 text-sm font-semibold text-foreground'>
+                    دسته‌بندی <span className='text-danger'>*</span>
                   </label>
                   <Listbox
                     value={newProductData.categoryId}
@@ -998,33 +989,33 @@ export function AddProductModal({
                         ...newProductData,
                         categoryId: value,
                         subcategory: '',
-                      });
+                      })
                     }}
                   >
-                    <div className="relative">
-                      <Listbox.Button className="relative w-full py-3 pl-10 pr-3 text-right transition-colors bg-transparent border-2 rounded-lg cursor-pointer border-default-200 hover:border-primary">
-                        <span className="block truncate text-foreground">
+                    <div className='relative'>
+                      <Listbox.Button className='relative w-full py-3 pl-10 pr-3 text-right transition-colors bg-transparent border-2 rounded-lg cursor-pointer border-default-200 hover:border-primary'>
+                        <span className='block truncate text-foreground'>
                           {newProductData.categoryId
                             ? categories?.find(
                                 (cat: any) =>
-                                  cat.id === newProductData.categoryId
+                                  cat.id === newProductData.categoryId,
                               )?.name || 'دسته‌بندی را انتخاب کنید'
                             : 'دسته‌بندی را انتخاب کنید'}
                         </span>
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none">
+                        <span className='absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none'>
                           <ChevronDown
-                            className="w-5 h-5 text-default-400"
-                            aria-hidden="true"
+                            className='w-5 h-5 text-default-400'
+                            aria-hidden='true'
                           />
                         </span>
                       </Listbox.Button>
                       <Transition
                         as={Fragment}
-                        leave="transition ease-in duration-100"
-                        leaveFrom="opacity-100"
-                        leaveTo="opacity-0"
+                        leave='transition ease-in duration-100'
+                        leaveFrom='opacity-100'
+                        leaveTo='opacity-0'
                       >
-                        <Listbox.Options className="absolute z-50 w-full py-1 mt-1 overflow-auto border rounded-lg shadow-lg max-h-55 bg-content1 border-divider">
+                        <Listbox.Options className='absolute z-50 w-full py-1 mt-1 overflow-auto border rounded-lg shadow-lg max-h-55 bg-content1 border-divider'>
                           {categories?.map((category: any) => (
                             <Listbox.Option
                               key={category.id}
@@ -1043,8 +1034,8 @@ export function AddProductModal({
                                     className={`absolute inset-y-0 left-0 flex items-center pl-3 text-primary ${selected ? '' : 'opacity-0'}`}
                                   >
                                     <Check
-                                      className="w-5 h-5"
-                                      aria-hidden="true"
+                                      className='w-5 h-5'
+                                      aria-hidden='true'
                                     />
                                   </span>
                                   <span
@@ -1063,10 +1054,9 @@ export function AddProductModal({
                 </div>
 
                 {/* Subcategory */}
-                <div className="space-y-2">
-                  <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                    <Layers className="w-4 h-4 text-secondary" />
-                    زیر دسته‌بندی <span className="text-danger">*</span>
+                <div className='space-y-2'>
+                  <label className='flex items-center gap-2 text-sm font-semibold text-foreground'>
+                    زیر دسته‌بندی <span className='text-danger'>*</span>
                   </label>
                   <Listbox
                     value={newProductData.subcategory}
@@ -1074,11 +1064,11 @@ export function AddProductModal({
                       setNewProductData({
                         ...newProductData,
                         subcategory: value,
-                      });
+                      })
                     }}
                     disabled={!newProductData.categoryId}
                   >
-                    <div className="relative">
+                    <div className='relative'>
                       <Listbox.Button
                         className={`relative w-full cursor-pointer rounded-lg border-2 border-default-200 bg-transparent py-3 pl-10 pr-3 text-right transition-colors ${
                           !newProductData.categoryId
@@ -1086,31 +1076,31 @@ export function AddProductModal({
                             : 'hover:border-primary'
                         }`}
                       >
-                        <span className="block truncate text-foreground">
+                        <span className='block truncate text-foreground'>
                           {newProductData.subcategory ||
                             (newProductData.categoryId
                               ? 'انتخاب کنید'
                               : 'ابتدا دسته‌بندی را انتخاب کنید')}
                         </span>
-                        <span className="absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none">
+                        <span className='absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none'>
                           <ChevronDown
-                            className="w-5 h-5 text-default-400"
-                            aria-hidden="true"
+                            className='w-5 h-5 text-default-400'
+                            aria-hidden='true'
                           />
                         </span>
                       </Listbox.Button>
                       {newProductData.categoryId && (
                         <Transition
                           as={Fragment}
-                          leave="transition ease-in duration-100"
-                          leaveFrom="opacity-100"
-                          leaveTo="opacity-0"
+                          leave='transition ease-in duration-100'
+                          leaveFrom='opacity-100'
+                          leaveTo='opacity-0'
                         >
-                          <Listbox.Options className="absolute z-50 w-full py-1 mt-1 overflow-auto border rounded-lg shadow-lg max-h-55 bg-content1 border-divider">
+                          <Listbox.Options className='absolute z-50 w-full py-1 mt-1 overflow-auto border rounded-lg shadow-lg max-h-55 bg-content1 border-divider'>
                             {categories
                               ?.find(
                                 (cat: any) =>
-                                  cat.id === newProductData.categoryId
+                                  cat.id === newProductData.categoryId,
                               )
                               ?.subcategories?.map((subcategory: string) => (
                                 <Listbox.Option
@@ -1130,8 +1120,8 @@ export function AddProductModal({
                                         className={`absolute inset-y-0 left-0 flex items-center pl-3 text-primary ${selected ? '' : 'opacity-0'}`}
                                       >
                                         <Check
-                                          className="w-5 h-5"
-                                          aria-hidden="true"
+                                          className='w-5 h-5'
+                                          aria-hidden='true'
                                         />
                                       </span>
                                       <span
@@ -1151,12 +1141,11 @@ export function AddProductModal({
                 </div>
 
                 {/* Stock Status */}
-                <div className="space-y-3 md:col-span-2">
-                  <label className="flex items-center gap-2 text-sm font-semibold text-foreground">
-                    <Package className="w-4 h-4 text-warning" />
+                <div className='space-y-3 md:col-span-2'>
+                  <label className='flex items-center gap-2 text-sm font-semibold text-foreground'>
                     وضعیت موجودی
                   </label>
-                  <div className="flex gap-3">
+                  <div className='flex gap-3'>
                     <Button
                       variant={
                         newProductData.inStock === true ? 'solid' : 'bordered'
@@ -1164,8 +1153,8 @@ export function AddProductModal({
                       color={
                         newProductData.inStock === true ? 'success' : 'default'
                       }
-                      className="flex-1"
-                      size="lg"
+                      className='flex-1'
+                      size='lg'
                       onPress={() =>
                         setNewProductData({ ...newProductData, inStock: true })
                       }
@@ -1179,8 +1168,8 @@ export function AddProductModal({
                       color={
                         newProductData.inStock === false ? 'danger' : 'default'
                       }
-                      className="flex-1"
-                      size="lg"
+                      className='flex-1'
+                      size='lg'
                       onPress={() =>
                         setNewProductData({ ...newProductData, inStock: false })
                       }
@@ -1191,10 +1180,10 @@ export function AddProductModal({
                 </div>
 
                 {/* Info Banner */}
-                <div className="flex items-start gap-3 p-4 border rounded-lg md:col-span-2 bg-primary/5 border-primary/20">
-                  <AlertCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-                  <div className="text-sm text-default-700">
-                    <p className="mb-1 font-semibold">نکته مهم:</p>
+                <div className='flex items-start gap-3 p-4 border rounded-lg md:col-span-2 bg-primary/5 border-primary/20'>
+                  <AlertCircle className='w-5 h-5 text-primary mt-0.5 flex-shrink-0' />
+                  <div className='text-sm text-default-700'>
+                    <p className='mb-1 font-semibold'>نکته مهم:</p>
                     <p>
                       لطفاً تمام فیلدهای ستاره‌دار را با دقت تکمیل کنید. این
                       اطلاعات برای مدیریت صحیح محصولات ضروری است.
@@ -1203,15 +1192,15 @@ export function AddProductModal({
                 </div>
               </div>
             </ModalBody>
-            <ModalFooter className="pt-4 border-t border-divider">
-              <Button variant="light" onPress={onClose} size="lg">
+            <ModalFooter className='pt-4 border-t border-divider'>
+              <Button variant='light' onPress={onClose} size='lg'>
                 انصراف
               </Button>
               <Button
-                color="success"
+                color='success'
                 onPress={onSave}
-                size="lg"
-                startContent={<Plus className="w-4 h-4" />}
+                size='lg'
+                startContent={<Plus className='w-4 h-4' />}
               >
                 افزودن محصول
               </Button>
@@ -1220,5 +1209,5 @@ export function AddProductModal({
         )}
       </ModalContent>
     </Modal>
-  );
+  )
 }
