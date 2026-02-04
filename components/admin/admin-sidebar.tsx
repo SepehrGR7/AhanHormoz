@@ -47,7 +47,7 @@ const sidebarItems = [
     icon: ClipboardList,
   },
   {
-    title: 'تنظیمات',
+    title: 'تنظیمات پروفایل',
     href: '/admin/settings',
     icon: Settings,
   },
