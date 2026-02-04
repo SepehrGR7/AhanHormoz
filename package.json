@@ -39,7 +39,7 @@
     "@heroui/switch": "2.2.22",
     "@heroui/system": "2.4.20",
     "@heroui/table": "^2.2.27",
-    "@heroui/theme": "2.4.20",
+    "@heroui/theme": "^2.4.24",
     "@heroui/toast": "^2.0.17",
     "@heroui/user": "^2.2.22",
     "@prisma/client": "^6.17.0",
