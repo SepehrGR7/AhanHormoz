@@ -128,6 +128,11 @@ export const authOptions: NextAuthOptions = {
       }
       return session
     },
+    async redirect({ url, baseUrl }) {
+      // Only allow redirects to the same origin
+      if (url.startsWith(baseUrl)) return url
+      return baseUrl
+    },
   },
   pages: {
     signIn: '/admin/login',
