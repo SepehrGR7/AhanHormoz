@@ -1,6 +1,6 @@
 [build]
   # Build command - install dependencies and build
-  command = "yarn install && yarn build"
+  command = "npx prisma generate && yarn build"
   publish = ".next"
 
 # Next.js plugin for Netlify (handles API routes automatically)
