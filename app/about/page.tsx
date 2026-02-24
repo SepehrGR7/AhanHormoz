@@ -21,8 +21,7 @@ export default function AboutPage() {
               درباره آهن هرمز
             </h1>
             <p className='max-w-3xl mx-auto text-xl font-medium leading-relaxed text-white/95 drop-shadow-lg'>
-              فروش تخصصی انواع آهن‌آلات ساختمانی و صنعتی با تضمین اصالت و قیمت
-              رقابتی
+              فروش تخصصی انواع آهن‌آلات ساختمانی و صنعتی با تضمین اصالت و قیمت رقابتی
             </p>
             <div className='flex items-center justify-center gap-6 mt-8 text-sm'>
               <div className='flex items-center gap-2 px-3 py-2 border rounded-full bg-white/10 backdrop-blur-sm border-white/20'>
@@ -60,7 +59,7 @@ export default function AboutPage() {
                 </span>
               </div>
               <h3 className='mb-2 text-4xl font-bold text-gray-900 dark:text-white'>
-                +۱۵۰
+                150+
               </h3>
               <p className='font-medium text-gray-600 dark:text-gray-300'>
                 پروژه موفق
@@ -76,7 +75,7 @@ export default function AboutPage() {
                 </span>
               </div>
               <h3 className='mb-2 text-4xl font-bold text-gray-900 dark:text-white'>
-                +۲۰۰۰
+                2000+
               </h3>
               <p className='font-medium text-gray-600 dark:text-gray-300'>
                 مشتری راضی
@@ -92,7 +91,7 @@ export default function AboutPage() {
                 </span>
               </div>
               <h3 className='mb-2 text-4xl font-bold text-gray-900 dark:text-white'>
-                ۱۰+
+                10+
               </h3>
               <p className='font-medium text-gray-600 dark:text-gray-300'>
                 سال تجربه
@@ -109,15 +108,14 @@ export default function AboutPage() {
             </h2>
             <div className='space-y-4 text-slate-600 dark:text-slate-400'>
               <p className='leading-relaxed'>
-                شرکت بتن پیام هرمز فعالیت خود را از سال 1372 در حوزه ساخت و ساز
-                آغاز کرده و همواره با ارائه خدمات حرفه ای، کیفیت برتر و تعهد
-                کاری جایگاه ویژه ای در صنعت کسب کرده است.
+                شرکت بتن پیام هرمز فعالیت خود را از سال 1372 در حوزه ساخت و ساز آغاز
+                کرده و همواره با ارائه خدمات حرفه ای، کیفیت برتر و تعهد کاری جایگاه
+                ویژه ای در صنعت کسب کرده است.
               </p>
               <p className='leading-relaxed'>
-                از سال 1398 با توسعه فعالیت های خود وارد بازار آهن و مقاطع
-                فولادی شده و با تأمین میلگرد ، تیرآهن ، ورق ، پروفیل و سایر
-                محصولات فولادی به یکی از تأمین کنندگان معتبر در این حوزه تبدیل
-                شده ایم.
+                از سال 1398 با توسعه فعالیت های خود وارد بازار آهن و مقاطع فولادی شده
+                و با تأمین میلگرد ، تیرآهن ، ورق ، پروفیل و سایر محصولات فولادی به
+                یکی از تأمین کنندگان معتبر در این حوزه تبدیل شده ایم.
               </p>
             </div>
           </div>
@@ -134,19 +132,18 @@ export default function AboutPage() {
             </h2>
             <div className='space-y-4 text-slate-600 dark:text-slate-400'>
               <p className='leading-relaxed'>
-                باید چند فاکتور مهم را در نظر بگیرید تا خریدی مطمئن و مقرون به
-                صرفه داشته باشید:
+                باید چند فاکتور مهم را در نظر بگیرید تا خریدی مطمئن و مقرون به صرفه
+                داشته باشید:
               </p>
               <p className='leading-relaxed'>
-                1. نوع و مشخصات محصول نوع آهن آلات : میلگرد ، تیرآهن ، ورق ،
-                قوطی ، نبشی ، و ... <br /> ابعاد و استاندارد ها : توجه به طول ،
-                ضخامت و استاندارد های تولید ( مانند ST52 ، ST37 و ... ) <br />{' '}
-                کاربرد : مشخص کنید که محصول برای ساختمان سازی ، سوله ، صنعت یا
-                مصارف دیگر است.
+                1. نوع و مشخصات محصول نوع آهن آلات : میلگرد ، تیرآهن ، ورق ، قوطی ،
+                نبشی ، و ... <br /> ابعاد و استاندارد ها : توجه به طول ، ضخامت و
+                استاندارد های تولید ( مانند ST52 ، ST37 و ... ) <br /> کاربرد : مشخص
+                کنید که محصول برای ساختمان سازی ، سوله ، صنعت یا مصارف دیگر است.
               </p>
               <p>
-                2. قیمت و نوسانات بازار بررسی نواسات قیمت آهن در بازار و مقایسه
-                نرخ ها ، خرید در زمان مناسب با توجه به تحلیل روند قیمتی
+                2. قیمت و نوسانات بازار بررسی نواسات قیمت آهن در بازار و مقایسه نرخ
+                ها ، خرید در زمان مناسب با توجه به تحلیل روند قیمتی
               </p>
               <p>
                 3. کیفیت و برند تولیدکننده انتخاب برند های معتبر با تأییدیه های
@@ -233,7 +230,7 @@ export default function AboutPage() {
                   </span>
                 </Link>
                 <Link
-                  href='/pricing'
+                  href='/products'
                   className='relative px-8 py-3 font-semibold text-white transition-all duration-300 border group bg-white/10 backdrop-blur-sm border-white/20 rounded-xl hover:bg-white hover:scale-105 hover:shadow-lg hover:shadow-white/20'
                 >
                   <span className='relative z-10 transition-colors duration-300 group-hover:text-blue-600'>
