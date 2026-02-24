@@ -29,7 +29,7 @@ export default function Footer() {
               <h3 className='text-xl font-bold'>آهن هرمز</h3>
             </div>
             <p className='mb-4 text-sm text-muted-foreground'>
-              ارائه دهنده محصولات با کیفیت فولادی و خدمات برتر به مشتریان عزیز
+              فروش عمده و جزئی مقاطع فولادی | تضمین بهترین قیمت و کیفیت
             </p>
             <div className='flex gap-3'>
               <Link
@@ -59,34 +59,26 @@ export default function Footer() {
             <ul className='space-y-2'>
               <li>
                 <Link
+                  href='/products'
+                  className='text-sm text-muted-foreground hover:text-primary'
+                >
+                  محصولات
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href='/moment-news'
+                  className='text-sm text-muted-foreground hover:text-primary'
+                >
+                  قیمت لحظه‌ای
+                </Link>
+              </li>
+              <li>
+                <Link
                   href='/about'
                   className='text-sm text-muted-foreground hover:text-primary'
                 >
                   درباره ما
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href='/blog'
-                  className='text-sm text-muted-foreground hover:text-primary'
-                >
-                  وبلاگ
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href='/pricing'
-                  className='text-sm text-muted-foreground hover:text-primary'
-                >
-                  قیمت‌ها
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href='/docs'
-                  className='text-sm text-muted-foreground hover:text-primary'
-                >
-                  مستندات
                 </Link>
               </li>
             </ul>
@@ -136,9 +128,14 @@ export default function Footer() {
             <h3 className='mb-4 text-lg font-semibold'>تماس با ما</h3>
             <div className='space-y-2'>
               <p className='text-sm text-muted-foreground'>
-                آدرس: تهران، خیابان ولیعصر، خیابان فرشته
+                آدرس: بندرعباس، شهرک اندیشه، پشت کتابخانه ایت الله خامنه ای، بالای
+                دفتر پیشخوان، شرکت بازرگانی و ساختمانی بتن پیام هرمز
               </p>
-              <p className='text-sm text-muted-foreground'>تلفن: ۰۲۱-۱۲۳۴۵۶۷۸</p>
+              <p className='text-sm text-muted-foreground'>
+                <Link href='tel:09125858047' className='hover:text-primary'>
+                  تلفن: 09125858047
+                </Link>
+              </p>
               <p className='text-sm text-muted-foreground'>
                 ایمیل: info@ahanhormoz.ir
               </p>
