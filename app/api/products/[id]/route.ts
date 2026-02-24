@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { updateProductPrice } from '@/lib/price-updater';
 import { checkApiRateLimitAndRespond } from '@/lib/rate-limit';
+import { generateUniqueSlug } from '@/lib/slug-generator';
 
 interface RouteParams {
   params: Promise<{
@@ -12,9 +13,9 @@ interface RouteParams {
 // GET /api/products/[id] - Get a single product
 export async function GET(request: NextRequest, { params }: RouteParams) {
   // Check rate limit
-  const rateLimitResponse = checkApiRateLimitAndRespond(request)
+  const rateLimitResponse = checkApiRateLimitAndRespond(request);
   if (rateLimitResponse) {
-    return rateLimitResponse
+    return rateLimitResponse;
   }
 
   try {
@@ -40,7 +41,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
           success: false,
           error: 'Product not found',
         },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -55,7 +56,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
         success: false,
         error: 'Failed to fetch product',
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -63,9 +64,13 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 // PATCH /api/products/[id] - Update a product (partial update)
 export async function PATCH(request: NextRequest, { params }: RouteParams) {
   // Check rate limit (stricter for write operations)
-  const rateLimitResponse = checkApiRateLimitAndRespond(request, 50, 15 * 60 * 1000)
+  const rateLimitResponse = checkApiRateLimitAndRespond(
+    request,
+    50,
+    15 * 60 * 1000,
+  );
   if (rateLimitResponse) {
-    return rateLimitResponse
+    return rateLimitResponse;
   }
 
   try {
@@ -83,38 +88,28 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
           success: false,
           error: 'Product not found',
         },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
-    // If name is being updated, regenerate slug
+    // If name is being updated, regenerate slug with conflict handling
     let updateData = { ...body };
     if (body.name && body.name !== existingProduct.name) {
-      const newSlug = body.name
-        .toLowerCase()
-        .replace(/[^a-z0-9\u0600-\u06FF\s-]/g, '') // Allow Persian characters
-        .replace(/\s+/g, '-')
-        .trim();
-
-      // Check if new slug conflicts with existing products (excluding current)
-      const slugConflict = await prisma.product.findFirst({
-        where: {
-          slug: newSlug,
-          id: { not: id },
-        },
-      });
-
-      if (slugConflict) {
+      try {
+        const newSlug = await generateUniqueSlug(body.name, id);
+        updateData.slug = newSlug;
+      } catch (error) {
         return NextResponse.json(
           {
             success: false,
-            error: 'Product with this name already exists',
+            error:
+              error instanceof Error
+                ? error.message
+                : 'Failed to generate unique slug',
           },
-          { status: 400 }
+          { status: 400 },
         );
       }
-
-      updateData.slug = newSlug;
     }
 
     // اگر قیمت در request موجود است، در تاریخچه ثبت کن (حتی اگر تغییر نکرده باشد)
@@ -122,7 +117,7 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
       const priceUpdateResult = await updateProductPrice(
         id,
         body.price,
-        body.priceChangeNote || 'تغییر قیمت از پنل ادمین'
+        body.priceChangeNote || 'تغییر قیمت از پنل ادمین',
       );
 
       if (!priceUpdateResult.success) {
@@ -131,7 +126,7 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
             success: false,
             error: priceUpdateResult.error,
           },
-          { status: 500 }
+          { status: 500 },
         );
       }
 
@@ -169,7 +164,7 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
         success: false,
         error: 'Failed to update product',
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -177,9 +172,13 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
 // PUT /api/products/[id] - Update a product
 export async function PUT(request: NextRequest, { params }: RouteParams) {
   // Check rate limit (stricter for write operations)
-  const rateLimitResponse = checkApiRateLimitAndRespond(request, 50, 15 * 60 * 1000)
+  const rateLimitResponse = checkApiRateLimitAndRespond(
+    request,
+    50,
+    15 * 60 * 1000,
+  );
   if (rateLimitResponse) {
-    return rateLimitResponse
+    return rateLimitResponse;
   }
 
   try {
@@ -197,38 +196,28 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
           success: false,
           error: 'Product not found',
         },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
-    // If name is being updated, regenerate slug
+    // If name is being updated, regenerate slug with conflict handling
     let updateData = { ...body };
     if (body.name && body.name !== existingProduct.name) {
-      const newSlug = body.name
-        .toLowerCase()
-        .replace(/[^a-z0-9\u0600-\u06FF\s-]/g, '') // Allow Persian characters
-        .replace(/\s+/g, '-')
-        .trim();
-
-      // Check if new slug conflicts with existing products (excluding current)
-      const slugConflict = await prisma.product.findFirst({
-        where: {
-          slug: newSlug,
-          id: { not: id },
-        },
-      });
-
-      if (slugConflict) {
+      try {
+        const newSlug = await generateUniqueSlug(body.name, id);
+        updateData.slug = newSlug;
+      } catch (error) {
         return NextResponse.json(
           {
             success: false,
-            error: 'Product with this name already exists',
+            error:
+              error instanceof Error
+                ? error.message
+                : 'Failed to generate unique slug',
           },
-          { status: 400 }
+          { status: 400 },
         );
       }
-
-      updateData.slug = newSlug;
     }
 
     // اگر قیمت در request موجود است، در تاریخچه ثبت کن (حتی اگر تغییر نکرده باشد)
@@ -236,7 +225,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
       const priceUpdateResult = await updateProductPrice(
         id,
         body.price,
-        body.priceChangeNote || 'تغییر قیمت از پنل ادمین'
+        body.priceChangeNote || 'تغییر قیمت از پنل ادمین',
       );
 
       if (!priceUpdateResult.success) {
@@ -245,7 +234,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
             success: false,
             error: priceUpdateResult.error,
           },
-          { status: 500 }
+          { status: 500 },
         );
       }
 
@@ -283,7 +272,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
         success: false,
         error: 'Failed to update product',
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -291,9 +280,13 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
 // DELETE /api/products/[id] - Delete a product
 export async function DELETE(request: NextRequest, { params }: RouteParams) {
   // Check rate limit (stricter for write operations)
-  const rateLimitResponse = checkApiRateLimitAndRespond(request, 30, 15 * 60 * 1000)
+  const rateLimitResponse = checkApiRateLimitAndRespond(
+    request,
+    30,
+    15 * 60 * 1000,
+  );
   if (rateLimitResponse) {
-    return rateLimitResponse
+    return rateLimitResponse;
   }
 
   try {
@@ -310,7 +303,7 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
           success: false,
           error: 'Product not found',
         },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -325,7 +318,7 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
           success: false,
           error: 'Cannot delete product that has been ordered',
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -345,7 +338,7 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
         success: false,
         error: 'Failed to delete product',
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
