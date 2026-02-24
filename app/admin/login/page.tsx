@@ -172,17 +172,6 @@ function AdminLoginForm() {
             >
               {isLoading ? 'در حال ورود...' : 'ورود'}
             </Button>
-
-            <div className='mt-4 text-sm text-center text-default-500'>
-              <p>حساب‌های آزمایشی:</p>
-              <p>
-                <strong>سوپر ادمین:</strong> superadmin@ahanhormoz.com /
-                superadmin123
-              </p>
-              <p>
-                <strong>ادمین:</strong> admin@ahanhormoz.com / admin123
-              </p>
-            </div>
           </form>
         </CardBody>
       </Card>
