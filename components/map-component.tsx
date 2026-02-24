@@ -37,7 +37,7 @@ export default function MapComponent() {
 
       // اضافه کردن مارکر برای بندرعباس
       const marker = L.marker(bandarAbbasCenter).addTo(map)
-      marker.bindPopup('<b>دفتر آهن هرمز</b><br>بندرعباس').openPopup()
+      marker.bindPopup('<b>دفتر آهن هرمز</b>').openPopup()
 
       // تنظیم محدوده نمایش روی بندرعباس
       map.setView(bandarAbbasCenter, 13)
