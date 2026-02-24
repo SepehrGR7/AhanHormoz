@@ -116,7 +116,7 @@ export default function CategoryTable({
                   </td>
                   <td className="px-2 py-4 text-center">
                     <div className="font-semibold text-green-600 dark:text-green-400">
-                      {formatPrice(product.price)}
+                      {product.price > 0 ? formatPrice(product.price) : 'تماس بگیرید'}
                     </div>
                   </td>
                   <td className="px-2 py-4 text-center">
