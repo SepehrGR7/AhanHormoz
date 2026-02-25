@@ -475,7 +475,8 @@ export default function AdminUsersPage() {
                       variant='bordered'
                       selectedKeys={new Set([u.role])}
                       isDisabled={
-                        quickUpdatingId === u.id || (currentUserId && u.id === currentUserId)
+                        quickUpdatingId === u.id ||
+                        Boolean(currentUserId && u.id === currentUserId)
                       }
                       onSelectionChange={(keys) => {
                         const selected = Array.from(keys)[0] as Role
@@ -497,7 +498,8 @@ export default function AdminUsersPage() {
                       <Switch
                         isSelected={u.isActive}
                         isDisabled={
-                          quickUpdatingId === u.id || (currentUserId && u.id === currentUserId)
+                          quickUpdatingId === u.id ||
+                          Boolean(currentUserId && u.id === currentUserId)
                         }
                         onValueChange={(v) => {
                           if (v !== u.isActive) quickPatch(u, { isActive: v })
