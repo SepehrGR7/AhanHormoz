@@ -16,31 +16,34 @@ const apiRateLimitMap = new Map<string, RateLimitEntry>()
 const LOGIN_MAX_ATTEMPTS = 5
 const LOGIN_WINDOW_MS = 15 * 60 * 1000 // 15 minutes
 
-const API_MAX_ATTEMPTS = 100 // More lenient for API endpoints
+const API_MAX_ATTEMPTS = 1000 // More lenient for API endpoints
 const API_WINDOW_MS = 15 * 60 * 1000 // 15 minutes
 
 /**
  * Clean up expired entries periodically
  */
-const cleanupInterval = setInterval(() => {
-  const now = Date.now()
-  
-  // Clean up login rate limit map
-  const loginEntries = Array.from(loginRateLimitMap.entries())
-  for (const [ip, entry] of loginEntries) {
-    if (entry.resetTime < now) {
-      loginRateLimitMap.delete(ip)
+const cleanupInterval = setInterval(
+  () => {
+    const now = Date.now()
+
+    // Clean up login rate limit map
+    const loginEntries = Array.from(loginRateLimitMap.entries())
+    for (const [ip, entry] of loginEntries) {
+      if (entry.resetTime < now) {
+        loginRateLimitMap.delete(ip)
+      }
     }
-  }
-  
-  // Clean up API rate limit map
-  const apiEntries = Array.from(apiRateLimitMap.entries())
-  for (const [ip, entry] of apiEntries) {
-    if (entry.resetTime < now) {
-      apiRateLimitMap.delete(ip)
+
+    // Clean up API rate limit map
+    const apiEntries = Array.from(apiRateLimitMap.entries())
+    for (const [ip, entry] of apiEntries) {
+      if (entry.resetTime < now) {
+        apiRateLimitMap.delete(ip)
+      }
     }
-  }
-}, 5 * 60 * 1000) // Clean up every 5 minutes
+  },
+  5 * 60 * 1000,
+) // Clean up every 5 minutes
 
 /**
  * Check if an IP address has exceeded the rate limit for login
@@ -55,7 +58,7 @@ export function checkRateLimit(ip: string): {
     ip,
     loginRateLimitMap,
     LOGIN_MAX_ATTEMPTS,
-    LOGIN_WINDOW_MS
+    LOGIN_WINDOW_MS,
   )
 }
 
@@ -69,7 +72,7 @@ export function checkRateLimit(ip: string): {
 export function checkApiRateLimit(
   ip: string,
   maxAttempts: number = API_MAX_ATTEMPTS,
-  windowMs: number = API_WINDOW_MS
+  windowMs: number = API_WINDOW_MS,
 ): {
   isLimited: boolean
   remainingMinutes: number
@@ -89,7 +92,7 @@ function checkRateLimitWithConfig(
   ip: string,
   rateLimitMap: Map<string, RateLimitEntry>,
   maxAttempts: number,
-  windowMs: number
+  windowMs: number,
 ): {
   isLimited: boolean
   remainingMinutes: number
@@ -156,7 +159,7 @@ export function getClientIP(request: Request): string {
  */
 export function resetRateLimit(
   ip: string,
-  type: 'login' | 'api' | 'all' = 'all'
+  type: 'login' | 'api' | 'all' = 'all',
 ): void {
   if (type === 'login' || type === 'all') {
     loginRateLimitMap.delete(ip)
@@ -176,7 +179,7 @@ export function resetRateLimit(
 export function checkApiRateLimitAndRespond(
   request: Request,
   maxAttempts: number = API_MAX_ATTEMPTS,
-  windowMs: number = API_WINDOW_MS
+  windowMs: number = API_WINDOW_MS,
 ): Response | null {
   const ip = getClientIP(request)
   const rateLimit = checkApiRateLimit(ip, maxAttempts, windowMs)
@@ -195,7 +198,7 @@ export function checkApiRateLimitAndRespond(
           'Content-Type': 'application/json',
           'Retry-After': String(rateLimit.remainingMinutes * 60),
         },
-      }
+      },
     )
   }
 
