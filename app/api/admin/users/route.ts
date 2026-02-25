@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { requireAuth, logAdminAction } from '@/lib/admin-auth'
+import { getAuthSession, logAdminAction } from '@/lib/admin-auth'
 import bcrypt from 'bcryptjs'
 import { checkApiRateLimitAndRespond } from '@/lib/rate-limit'
 
@@ -12,11 +12,18 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const session = await requireAuth()
+    const session = await getAuthSession()
+
+    if (!session || !session.user) {
+      return NextResponse.json(
+        { success: false, error: 'Not authenticated' },
+        { status: 401 },
+      )
+    }
 
     if (session.user.role !== 'SUPER_ADMIN') {
       return NextResponse.json(
-        { error: 'Insufficient permissions' },
+        { success: false, error: 'Insufficient permissions' },
         { status: 403 },
       )
     }
@@ -37,11 +44,11 @@ export async function GET(request: NextRequest) {
       },
     })
 
-    return NextResponse.json({ users })
+    return NextResponse.json({ success: true, data: { users } })
   } catch (error) {
     console.error('Get users error:', error)
     return NextResponse.json(
-      { error: 'Failed to fetch users' },
+      { success: false, error: 'Failed to fetch users' },
       { status: 500 },
     )
   }
@@ -49,17 +56,28 @@ export async function GET(request: NextRequest) {
 
 // Create new admin user (Super Admin only)
 export async function POST(request: NextRequest) {
-  const rateLimitResponse = checkApiRateLimitAndRespond(request, 50, 15 * 60 * 1000)
+  const rateLimitResponse = checkApiRateLimitAndRespond(
+    request,
+    50,
+    15 * 60 * 1000,
+  )
   if (rateLimitResponse) {
     return rateLimitResponse
   }
 
-    try {
-    const session = await requireAuth()
+  try {
+    const session = await getAuthSession()
+
+    if (!session || !session.user) {
+      return NextResponse.json(
+        { success: false, error: 'Not authenticated' },
+        { status: 401 },
+      )
+    }
 
     if (session.user.role !== 'SUPER_ADMIN') {
       return NextResponse.json(
-        { error: 'Insufficient permissions' },
+        { success: false, error: 'Insufficient permissions' },
         { status: 403 },
       )
     }
@@ -70,7 +88,10 @@ export async function POST(request: NextRequest) {
     // Validate required fields
     if (!email || !password || !name || !role) {
       return NextResponse.json(
-        { error: 'Email, password, name, and role are required' },
+        {
+          success: false,
+          error: 'Email, password, name, and role are required',
+        },
         { status: 400 },
       )
     }
@@ -82,7 +103,7 @@ export async function POST(request: NextRequest) {
 
     if (existingUser) {
       return NextResponse.json(
-        { error: 'User with this email already exists' },
+        { success: false, error: 'User with this email already exists' },
         { status: 400 },
       )
     }
@@ -123,12 +144,12 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       message: 'User created successfully',
-      user,
+      data: user,
     })
   } catch (error) {
     console.error('Create user error:', error)
     return NextResponse.json(
-      { error: 'Failed to create user' },
+      { success: false, error: 'Failed to create user' },
       { status: 500 },
     )
   }
