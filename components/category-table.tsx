@@ -165,9 +165,9 @@ export default function CategoryTable({
           {/* Mobile table layout */}
           <table className="w-full table-fixed lg:hidden">
             <colgroup>
-              <col style={{ width: '45%' }} />
+              <col style={{ width: '55%' }} />
+              <col style={{ width: '20%' }} />
               <col style={{ width: '25%' }} />
-              <col style={{ width: '30%' }} />
             </colgroup>
             <thead>
               <tr className="border-b border-slate-200 dark:border-slate-700">
@@ -190,7 +190,7 @@ export default function CategoryTable({
                 >
                   <td className="px-2 py-4">
                     <div className="overflow-hidden">
-                      <div className="text-sm font-medium truncate text-slate-900 dark:text-slate-100">
+                      <div className="text-sm font-medium leading-snug line-clamp-2 text-slate-900 dark:text-slate-100">
                         {product.name}
                       </div>
                       <div className="flex items-center gap-2 mt-1 text-xs text-slate-500 dark:text-slate-400">
