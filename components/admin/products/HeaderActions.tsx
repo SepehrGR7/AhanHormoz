@@ -1,13 +1,13 @@
-import React from 'react'
-import { Button } from '@heroui/button'
-import { Upload, Download, Plus, Package } from 'lucide-react'
+import React from 'react';
+import { Button } from '@heroui/button';
+import { Upload, Download, Plus, Package } from 'lucide-react';
 
 interface Props {
-  fileInputRef: React.RefObject<HTMLInputElement>
-  onImportClick: () => void
-  onFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void
-  onExport: () => void
-  onAdd: () => void
+  fileInputRef: React.RefObject<HTMLInputElement>;
+  onImportClick: () => void;
+  onFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onExport: () => void;
+  onAdd: () => void;
 }
 
 export default function HeaderActions({
@@ -30,7 +30,6 @@ export default function HeaderActions({
         startContent={<Upload className="w-4 h-4" />}
         variant="bordered"
         onClick={onImportClick}
-        className="hover:bg-default-50 dark:hover:bg-default-900"
       >
         وارد کردن Excel
       </Button>
@@ -50,5 +49,5 @@ export default function HeaderActions({
         افزودن محصول جدید
       </Button>
     </div>
-  )
+  );
 }
