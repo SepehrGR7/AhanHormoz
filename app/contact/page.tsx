@@ -191,8 +191,8 @@ export default function ContactPage() {
                     آدرس ما
                   </h3>
                   <p className='font-medium text-gray-700 dark:text-gray-200'>
-                    بندرعباس، شهرک اندیشه، پشت کتابخانه ایت الله خامنه ای، بالای دفتر
-                    پیشخوان، شرکت بازرگانی و ساختمانی بتن پیام هرمز
+                    بندرعباس، شهرک اندیشه، پشت کتابخانه ایت الله خامنه ای، بالای
+                    دفتر پیشخوان، شرکت بازرگانی و ساختمانی بتن پیام هرمز
                   </p>
                 </div>
               </div>
@@ -278,7 +278,7 @@ export default function ContactPage() {
                 <textarea
                   id='message'
                   name='message'
-                  rows={4}
+                  rows={16}
                   value={formData.message}
                   onChange={handleInputChange}
                   required
@@ -371,7 +371,9 @@ export default function ContactPage() {
                             : 'text-red-800 dark:text-red-200'
                         }`}
                       >
-                        {submitStatus.type === 'success' ? 'موفقیت‌آمیز!' : 'خطا!'}
+                        {submitStatus.type === 'success'
+                          ? 'موفقیت‌آمیز!'
+                          : 'خطا!'}
                       </p>
                       <p
                         className={`text-sm ${
