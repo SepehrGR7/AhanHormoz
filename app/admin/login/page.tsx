@@ -8,6 +8,23 @@ import { Input } from '@heroui/input'
 import { Card, CardBody, CardHeader } from '@heroui/card'
 import { EyeOff, Eye, Lock, AlertCircle } from 'lucide-react'
 
+function getLoginErrorMessage(rawError?: string | null) {
+  if (!rawError) return 'احراز هویت ناموفق. لطفاً دوباره تلاش کنید.'
+
+  // NextAuth / Credentials common values
+  if (rawError === 'CredentialsSignin') return 'ایمیل یا رمز عبور نادرست است'
+
+  // Custom server error codes from Credentials authorize()
+  if (rawError.includes('USER_INACTIVE')) return 'این کاربر غیرفعال است'
+  if (rawError.includes('USER_NOT_FOUND')) return 'کاربری با این ایمیل وجود ندارد'
+  if (rawError.includes('WRONG_PASSWORD')) return 'رمز عبور نادرست است'
+
+  // Backwards compatibility: previously everything returned INVALID_CREDENTIALS
+  if (rawError.includes('INVALID_CREDENTIALS')) return 'ایمیل یا رمز عبور نادرست است'
+
+  return rawError
+}
+
 function AdminLoginForm() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -41,7 +58,7 @@ function AdminLoginForm() {
           `حساب کاربری به دلیل تلاش‌های ناموفق متعدد به طور موقت قفل شده است. لطفاً ${minutes || '15'} دقیقه دیگر دوباره تلاش کنید.`,
         )
       } else {
-        setError('احراز هویت ناموفق. لطفاً دوباره تلاش کنید.')
+        setError(getLoginErrorMessage(authError))
       }
     }
   }, [router, searchParams])
@@ -87,10 +104,8 @@ function AdminLoginForm() {
           setError(
             `تعداد تلاش‌های ورود بیش از حد مجاز است. لطفاً ${minutes} دقیقه دیگر دوباره تلاش کنید.`,
           )
-        } else if (result.error === 'CredentialsSignin') {
-          setError('ایمیل یا رمز عبور نادرست است')
         } else {
-          setError(result.error || 'خطایی رخ داده است. لطفاً دوباره تلاش کنید.')
+          setError(getLoginErrorMessage(result.error))
         }
       } else if (result?.ok) {
         // Successful login, redirect to dashboard

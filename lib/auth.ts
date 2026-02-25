@@ -26,8 +26,12 @@ export const authOptions: NextAuthOptions = {
             },
           })
 
-          if (!user || !user.isActive) {
-            throw new Error('INVALID_CREDENTIALS')
+          if (!user) {
+            throw new Error('USER_NOT_FOUND')
+          }
+
+          if (!user.isActive) {
+            throw new Error('USER_INACTIVE')
           }
 
           // Check if account is locked
@@ -72,7 +76,7 @@ export const authOptions: NextAuthOptions = {
               },
             })
 
-            throw new Error('INVALID_CREDENTIALS')
+            throw new Error('WRONG_PASSWORD')
           }
 
           // Password is valid - reset failed attempts and update last login
@@ -98,7 +102,12 @@ export const authOptions: NextAuthOptions = {
           if (error.message?.startsWith('AccountLocked:')) {
             throw error
           }
-          if (error.message === 'INVALID_CREDENTIALS') {
+          if (
+            error.message === 'INVALID_CREDENTIALS' ||
+            error.message === 'USER_NOT_FOUND' ||
+            error.message === 'USER_INACTIVE' ||
+            error.message === 'WRONG_PASSWORD'
+          ) {
             throw error
           }
           console.error('Auth error:', error)
