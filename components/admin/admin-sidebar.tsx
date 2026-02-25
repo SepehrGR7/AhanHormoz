@@ -37,11 +37,6 @@ const sidebarItems = [
     icon: FolderTree,
   },
   {
-    title: 'تولیدکنندگان',
-    href: '/admin/manufacturers',
-    icon: Building2,
-  },
-  {
     title: 'سفارشات',
     href: '/admin/orders',
     icon: ClipboardList,
@@ -83,10 +78,7 @@ export default function AdminSidebar() {
       <div className='flex items-center justify-between h-16 px-4 border-b border-gray-200 dark:border-gray-700'>
         <Link
           href='/admin/dashboard'
-          className={cn(
-            'flex items-center gap-3',
-            collapsed && 'justify-center',
-          )}
+          className={cn('flex items-center gap-3', collapsed && 'justify-center')}
         >
           <Package className='w-8 h-8 text-primary' />
           {!collapsed && <span className='text-xl font-bold'>آهن هرمز</span>}
