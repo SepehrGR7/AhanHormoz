@@ -249,7 +249,7 @@ export default function AdminProducts() {
     if (checked) {
       setSelectedProducts([...selectedProducts, productId])
     } else {
-      setSelectedProducts(selectedProducts.filter((id) => id !== productId))
+      setSelectedProducts(selectedProducts.filter(id => id !== productId))
     }
   }
 
@@ -635,6 +635,39 @@ export default function AdminProducts() {
     }
   }
 
+  // helper that builds query string with current filters and optional pagination override
+  const buildQuery = (override: Record<string, string> = {}) => {
+    const params: Record<string, string> = {
+      page: '1',
+      limit: '1000000', // large number to fetch all
+    }
+    if (searchQuery) params.search = searchQuery
+    if (categoryFilter) params.category = categoryFilter
+    if (stockFilter) params.inStock = stockFilter
+    if (sortDescriptor.column) {
+      params.sortBy = String(sortDescriptor.column)
+      params.sortOrder =
+        sortDescriptor.direction === 'ascending' ? 'asc' : 'desc'
+    }
+    return new URLSearchParams({ ...params, ...override }).toString()
+  }
+
+  // fetch full product list using current filters and export them
+  const handleExportAll = async () => {
+    try {
+      const query = buildQuery()
+      const res = await fetch(`/api/products?${query}`)
+      const data = await res.json()
+      if (data.success && data.data.products) {
+        exportProducts(data.data.products)
+      } else {
+        console.error('Export failed:', data.error)
+      }
+    } catch (err) {
+      console.error('Error fetching products for export:', err)
+    }
+  }
+
   // Inline weight editing handlers
   const handleWeightClick = (product: Product) => {
     setEditingWeightId(product.id)
@@ -710,25 +743,25 @@ export default function AdminProducts() {
   }
 
   return (
-    <div className="space-y-6" dir="rtl">
+    <div className='space-y-6' dir='rtl'>
       {/* Header Section */}
-      <div className="flex items-center justify-between">
+      <div className='flex items-center justify-between'>
         <div>
-          <h1 className="flex items-center gap-3 text-3xl font-bold text-gray-900 dark:text-white">
-            <Package className="w-8 h-8 text-primary" />
+          <h1 className='flex items-center gap-3 text-3xl font-bold text-gray-900 dark:text-white'>
+            <Package className='w-8 h-8 text-primary' />
             مدیریت محصولات
           </h1>
-          <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+          <p className='mt-2 text-sm text-gray-500 dark:text-gray-400'>
             مشاهده، ویرایش و مدیریت تمام محصولات فروشگاه
           </p>
         </div>
         <HeaderActions
           fileInputRef={fileInputRef}
           onImportClick={handleImportClick}
-          onFileChange={(e) =>
+          onFileChange={e =>
             handleFileImport(e, categories, mutateProducts, addToast)
           }
-          onExport={() => exportProducts(sortedProducts)}
+          onExport={handleExportAll}
           onAdd={handleAddProduct}
         />
       </div>
@@ -740,7 +773,7 @@ export default function AdminProducts() {
 
       {/* Filters */}
       <Card>
-        <CardBody className="py-3">
+        <CardBody className='py-3'>
           <Filters
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
@@ -765,15 +798,15 @@ export default function AdminProducts() {
 
       {/* Products Table */}
       <Card>
-        <CardHeader className="flex items-center gap-2 pb-3">
-          <Package className="w-5 h-5 text-primary" />
-          <h3 className="text-lg font-semibold">
+        <CardHeader className='flex items-center gap-2 pb-3'>
+          <Package className='w-5 h-5 text-primary' />
+          <h3 className='text-lg font-semibold'>
             لیست محصولات ({sortedProducts.length})
           </h3>
         </CardHeader>
-        <CardBody className="overflow-x-auto">
+        <CardBody className='overflow-x-auto'>
           <Table
-            aria-label="Products table"
+            aria-label='Products table'
             sortDescriptor={sortDescriptor}
             onSortChange={setSortDescriptor}
             classNames={{
@@ -792,76 +825,76 @@ export default function AdminProducts() {
                   onValueChange={handleSelectAll}
                 />
               </TableColumn>
-              <TableColumn key="name" allowsSorting>
+              <TableColumn key='name' allowsSorting>
                 نام محصول
               </TableColumn>
-              <TableColumn key="brand" allowsSorting>
+              <TableColumn key='brand' allowsSorting>
                 برند
               </TableColumn>
-              <TableColumn key="size" allowsSorting>
+              <TableColumn key='size' allowsSorting>
                 سایز
               </TableColumn>
-              <TableColumn key="weight" allowsSorting>
+              <TableColumn key='weight' allowsSorting>
                 وزن
               </TableColumn>
-              <TableColumn key="price" allowsSorting>
+              <TableColumn key='price' allowsSorting>
                 قیمت (تومان)
               </TableColumn>
-              <TableColumn key="inStock" allowsSorting>
+              <TableColumn key='inStock' allowsSorting>
                 موجودی
               </TableColumn>
-              <TableColumn key="category" allowsSorting>
+              <TableColumn key='category' allowsSorting>
                 دسته‌بندی
               </TableColumn>
-              <TableColumn key="subcategory">زیردسته</TableColumn>
+              <TableColumn key='subcategory'>زیردسته</TableColumn>
               <TableColumn width={150}>عملیات</TableColumn>
             </TableHeader>
-            <TableBody isLoading={isLoading} emptyContent="هیچ محصولی یافت نشد">
+            <TableBody isLoading={isLoading} emptyContent='هیچ محصولی یافت نشد'>
               {sortedProducts.map((product: Product) => (
                 <TableRow
                   key={product.id}
-                  className="transition-colors hover:bg-gray-50 dark:hover:bg-gray-800"
+                  className='transition-colors hover:bg-gray-50 dark:hover:bg-gray-800'
                 >
                   <TableCell>
                     <Checkbox
                       isSelected={selectedProducts.includes(product.id)}
-                      onValueChange={(checked) =>
+                      onValueChange={checked =>
                         handleSelectProduct(product.id, checked)
                       }
                     />
                   </TableCell>
                   <TableCell>
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 bg-blue-100 rounded-lg dark:bg-blue-900">
-                        <Package className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                    <div className='flex items-center gap-3'>
+                      <div className='p-2 bg-blue-100 rounded-lg dark:bg-blue-900'>
+                        <Package className='w-4 h-4 text-blue-600 dark:text-blue-400' />
                       </div>
-                      <span className="font-medium text-gray-900 dark:text-white">
+                      <span className='font-medium text-gray-900 dark:text-white'>
                         {product.name}
                       </span>
                     </div>
                   </TableCell>
                   <TableCell>
-                    <span className="text-gray-600 dark:text-gray-400">
+                    <span className='text-gray-600 dark:text-gray-400'>
                       {product.brand}
                     </span>
                   </TableCell>
                   <TableCell>
-                    <span className="font-medium text-gray-900 dark:text-white">
+                    <span className='font-medium text-gray-900 dark:text-white'>
                       {product.size || 'نامشخص'}
                     </span>
                   </TableCell>
                   <TableCell>
                     {editingWeightId === product.id ? (
                       <Input
-                        type="number"
+                        type='number'
                         value={tempWeight}
-                        onChange={(e) => setTempWeight(e.target.value)}
+                        onChange={e => setTempWeight(e.target.value)}
                         onBlur={() => handleWeightBlur(product)}
-                        onKeyDown={(e) => handleWeightKeyDown(e, product)}
+                        onKeyDown={e => handleWeightKeyDown(e, product)}
                         autoFocus
-                        size="sm"
-                        variant="bordered"
-                        step="0.1"
+                        size='sm'
+                        variant='bordered'
+                        step='0.1'
                         classNames={{
                           input:
                             'text-blue-600 dark:text-blue-400 font-bold text-right',
@@ -870,27 +903,25 @@ export default function AdminProducts() {
                       />
                     ) : (
                       <span
-                        className="font-medium text-gray-600 cursor-pointer dark:text-gray-400 hover:underline"
+                        className='font-medium text-gray-600 cursor-pointer dark:text-gray-400 hover:underline'
                         onClick={() => handleWeightClick(product)}
-                        title="کلیک کنید برای ویرایش"
+                        title='کلیک کنید برای ویرایش'
                       >
-                        {product.weight
-                          ? product.weight
-                          : '-'}
+                        {product.weight ? product.weight : '-'}
                       </span>
                     )}
                   </TableCell>
                   <TableCell>
                     {editingPriceId === product.id ? (
                       <Input
-                        type="number"
+                        type='number'
                         value={tempPrice}
-                        onChange={(e) => setTempPrice(e.target.value)}
+                        onChange={e => setTempPrice(e.target.value)}
                         onBlur={() => handlePriceBlur(product)}
-                        onKeyDown={(e) => handlePriceKeyDown(e, product)}
+                        onKeyDown={e => handlePriceKeyDown(e, product)}
                         autoFocus
-                        size="sm"
-                        variant="bordered"
+                        size='sm'
+                        variant='bordered'
                         classNames={{
                           input:
                             'text-green-600 dark:text-green-400 font-bold text-right',
@@ -899,9 +930,9 @@ export default function AdminProducts() {
                       />
                     ) : (
                       <span
-                        className="font-bold text-green-600 cursor-pointer dark:text-green-400 hover:underline"
+                        className='font-bold text-green-600 cursor-pointer dark:text-green-400 hover:underline'
                         onClick={() => handlePriceClick(product)}
-                        title="کلیک کنید برای ویرایش"
+                        title='کلیک کنید برای ویرایش'
                       >
                         {product.price.toLocaleString('fa-IR')}
                       </span>
@@ -909,45 +940,45 @@ export default function AdminProducts() {
                   </TableCell>
                   <TableCell>
                     <Chip
-                      size="sm"
-                      variant="flat"
+                      size='sm'
+                      variant='flat'
                       color={product.inStock ? 'success' : 'danger'}
                       onClick={() => handleStockToggle(product)}
-                      className="transition-opacity cursor-pointer hover:opacity-80"
-                      title="کلیک کنید برای تغییر وضعیت"
+                      className='transition-opacity cursor-pointer hover:opacity-80'
+                      title='کلیک کنید برای تغییر وضعیت'
                     >
                       {product.inStock ? 'موجود' : 'ناموجود'}
                     </Chip>
                   </TableCell>
                   <TableCell>
-                    <Chip size="sm" variant="bordered">
+                    <Chip size='sm' variant='bordered'>
                       {product.category.name}
                     </Chip>
                   </TableCell>
                   <TableCell>
-                    <span className="text-sm text-gray-500 dark:text-gray-400">
+                    <span className='text-sm text-gray-500 dark:text-gray-400'>
                       {product.subcategory}
                     </span>
                   </TableCell>
                   <TableCell>
-                    <div className="flex gap-1">
+                    <div className='flex gap-1'>
                       <Button
-                        size="sm"
-                        variant="light"
-                        color="primary"
+                        size='sm'
+                        variant='light'
+                        color='primary'
                         isIconOnly
                         onPress={() => handleEditProduct(product)}
                       >
-                        <Edit className="w-4 h-4" />
+                        <Edit className='w-4 h-4' />
                       </Button>
                       <Button
-                        size="sm"
-                        color="danger"
-                        variant="light"
+                        size='sm'
+                        color='danger'
+                        variant='light'
                         isIconOnly
                         onPress={() => handleDeleteProduct(product)}
                       >
-                        <Trash2 className="w-4 h-4" />
+                        <Trash2 className='w-4 h-4' />
                       </Button>
                     </div>
                   </TableCell>
@@ -956,72 +987,72 @@ export default function AdminProducts() {
             </TableBody>
           </Table>
         </CardBody>
-        <CardBody className="px-6 py-4 border-t border-gray-200 dark:border-gray-700">
-          <div className="flex items-center justify-between gap-4">
+        <CardBody className='px-6 py-4 border-t border-gray-200 dark:border-gray-700'>
+          <div className='flex items-center justify-between gap-4'>
             {/* Items per page selector */}
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-600 dark:text-gray-400">
+            <div className='flex items-center gap-2'>
+              <span className='text-sm text-gray-600 dark:text-gray-400'>
                 نمایش:
               </span>
               <Select
                 selectedKeys={new Set([itemsPerPage.toString()])}
-                onSelectionChange={(keys) => {
+                onSelectionChange={keys => {
                   const selected = Array.from(keys)[0] as string
                   setItemsPerPage(parseInt(selected))
                   setCurrentPage(1)
                 }}
-                variant="bordered"
-                size="sm"
-                className="w-20"
+                variant='bordered'
+                size='sm'
+                className='w-20'
                 classNames={{
                   trigger: 'h-9 min-h-9',
                 }}
-                aria-label="limit"
+                aria-label='limit'
               >
-                <SelectItem key="10">10</SelectItem>
-                <SelectItem key="20">20</SelectItem>
-                <SelectItem key="50">50</SelectItem>
-                <SelectItem key="100">100</SelectItem>
+                <SelectItem key='10'>10</SelectItem>
+                <SelectItem key='20'>20</SelectItem>
+                <SelectItem key='50'>50</SelectItem>
+                <SelectItem key='100'>100</SelectItem>
               </Select>
-              <span className="text-sm text-gray-600 dark:text-gray-400">
+              <span className='text-sm text-gray-600 dark:text-gray-400'>
                 مورد در هر صفحه
               </span>
             </div>
 
             {/* Pagination info */}
-            <div className="text-sm text-gray-600 dark:text-gray-400">
+            <div className='text-sm text-gray-600 dark:text-gray-400'>
               نمایش{' '}
-              <span className="font-semibold text-gray-900 dark:text-white">
+              <span className='font-semibold text-gray-900 dark:text-white'>
                 {pagination ? (currentPage - 1) * itemsPerPage + 1 : 0}
               </span>{' '}
               تا{' '}
-              <span className="font-semibold text-gray-900 dark:text-white">
+              <span className='font-semibold text-gray-900 dark:text-white'>
                 {pagination
                   ? Math.min(currentPage * itemsPerPage, pagination.total)
                   : 0}
               </span>{' '}
               از{' '}
-              <span className="font-semibold text-gray-900 dark:text-white">
+              <span className='font-semibold text-gray-900 dark:text-white'>
                 {pagination?.total || 0}
               </span>{' '}
               مورد
             </div>
 
             {/* Pagination buttons */}
-            <div className="flex items-center gap-2">
+            <div className='flex items-center gap-2'>
               <Button
                 isIconOnly
-                variant="bordered"
-                size="sm"
-                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                variant='bordered'
+                size='sm'
+                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                 isDisabled={currentPage === 1 || isLoading}
-                className="h-9 w-9"
+                className='h-9 w-9'
               >
-                <ChevronRight className="w-4 h-4" />
+                <ChevronRight className='w-4 h-4' />
               </Button>
 
               {/* Page numbers */}
-              <div className="flex items-center gap-1">
+              <div className='flex items-center gap-1'>
                 {pagination &&
                   Array.from(
                     { length: Math.min(5, pagination.totalPages) },
@@ -1037,7 +1068,7 @@ export default function AdminProducts() {
                         pageNum = currentPage - 2 + i
                       }
                       return pageNum
-                    }
+                    },
                   ).map((pageNum, idx, arr) => {
                     // Add ellipsis if needed
                     if (
@@ -1048,7 +1079,7 @@ export default function AdminProducts() {
                       return (
                         <span
                           key={`ellipsis-${pageNum}`}
-                          className="px-2 text-gray-600 dark:text-gray-400"
+                          className='px-2 text-gray-600 dark:text-gray-400'
                         >
                           ...
                         </span>
@@ -1058,10 +1089,10 @@ export default function AdminProducts() {
                       <Button
                         key={pageNum}
                         variant={currentPage === pageNum ? 'solid' : 'bordered'}
-                        size="sm"
+                        size='sm'
                         onClick={() => setCurrentPage(pageNum)}
                         isDisabled={isLoading}
-                        className="px-2 h-9 min-w-9"
+                        className='px-2 h-9 min-w-9'
                         color={currentPage === pageNum ? 'primary' : 'default'}
                       >
                         {pageNum}
@@ -1072,11 +1103,11 @@ export default function AdminProducts() {
 
               <Button
                 isIconOnly
-                variant="bordered"
-                size="sm"
+                variant='bordered'
+                size='sm'
                 onClick={() =>
-                  setCurrentPage((p) =>
-                    pagination ? Math.min(pagination.totalPages, p + 1) : p
+                  setCurrentPage(p =>
+                    pagination ? Math.min(pagination.totalPages, p + 1) : p,
                   )
                 }
                 isDisabled={
@@ -1084,9 +1115,9 @@ export default function AdminProducts() {
                   currentPage === pagination.totalPages ||
                   isLoading
                 }
-                className="h-9 w-9"
+                className='h-9 w-9'
               >
-                <ChevronLeft className="w-4 h-4" />
+                <ChevronLeft className='w-4 h-4' />
               </Button>
             </div>
           </div>
